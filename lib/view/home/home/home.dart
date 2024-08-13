@@ -1,7 +1,5 @@
-import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/home/home_cubit.dart';
-import 'package:aser_dash_board/logic/home/home_state.dart';
-import 'package:aser_dash_board/view/home/home/addAdvirtis/addAdevirtes.dart';
+import 'package:aser_dash_board/view/home/home/blog/showDetailsBlog.dart';
 import 'package:aser_dash_board/view/home/home/homeMain/homeMain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +27,8 @@ class Home extends StatelessWidget {
           Blog(blog: pageController,),
           Active(controller: pageController,),
           AddBlog(controller: pageController,),
+           Showdetailsblog(controller: pageController,)
+
 
 
 

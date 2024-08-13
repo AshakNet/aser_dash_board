@@ -27,6 +27,8 @@ class GetSystemProfitsLoading extends HomeState{}
 class GetSystemProfitsByIdSuccessful extends HomeState{}
 
 class ScrollSusccessfulLeft extends HomeState{}
+class ChangeReadLoaded extends HomeState{}
+
 class ScrollSusccessfulRigth extends HomeState{}
 
 
@@ -63,4 +65,14 @@ class GetAllBlogError extends HomeState{
   final String error;
 
   GetAllBlogError(this.error);
+}
+
+class GetOneBlogLoading extends HomeState{}
+
+class GetOneBlogSuccessful extends HomeState{}
+
+class GetOneBlogError extends HomeState{
+  final String error;
+
+  GetOneBlogError(this.error);
 }

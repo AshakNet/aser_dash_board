@@ -13,28 +13,21 @@ class HomeMain extends StatelessWidget {
 
   HomeMain({super.key, required this.controller});
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    // HomeCubit.get(context).table.addListener(() {
-    //   if (HomeCubit.get(context).table.position.pixels == HomeCubit.get(context).table.position.maxScrollExtent) {
-    //     HomeCubit.get(context).getAllBlog(10,10); // Load more data when scrolled to end
-    //   }
-    // });
+
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          body:
-          state is GetSystemProfitsLoading || state is GetBlogLoading || state is GetAllBlogLoading ? const Center(child: CircularProgressIndicator()):
-            SingleChildScrollView(
-              child: Column(
-            children: [
-
-                   Column(
+          body: state is GetSystemProfitsLoading ||
+                  state is GetBlogLoading ||
+                  state is GetAllBlogLoading
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Column(
+                  children: [
+                    Column(
                       children: [
                         Column(
                           children: [
@@ -704,14 +697,14 @@ class HomeMain extends StatelessWidget {
                       ],
                     ),
 
-              ///////////////
-              SizedBox(
-                height: 30.h,
-              ),
+                    ///////////////
+                    SizedBox(
+                      height: 30.h,
+                    ),
 
-              SizedBox(height: 20.h),
+                    SizedBox(height: 20.h),
 
-                   Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.w),
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -733,15 +726,15 @@ class HomeMain extends StatelessWidget {
                                   width: 30.w,
                                 ),
                                 CustomText(
-                                    text: "( 30 Blog)",
+                                    text: "( ${HomeCubit.get(context).getAllBlogModel?.totalCount.toString()} Blog)",
                                     size: 16.sp,
                                     color: darkGrey,
                                     fontWeight: FontWeight.w500),
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    controller.animateToPage(1,
-                                        duration: Duration(milliseconds: 300),
+                                    controller.animateToPage(3,
+                                        duration: const Duration(milliseconds: 300),
                                         curve: Curves.easeIn);
                                   },
                                   child: Container(
@@ -776,8 +769,11 @@ class HomeMain extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 10.h),
                               child: SizedBox(
                                 child: TextFormField(
-                                  controller: TextEditingController(),
+                                  controller: HomeCubit.get(context).search,
                                   maxLines: 1,
+                                  onChanged: (value){
+                                    HomeCubit.get(context).getAllBlog(0, 0);
+                                  },
                                   validator: (value) {},
                                   style: TextStyle(
                                     fontSize: 16.sp,
@@ -820,7 +816,7 @@ class HomeMain extends StatelessWidget {
                             SizedBox(height: 20.h),
                             SizedBox(
                                 height: 650.h,
-                                 width: 900.w,
+                                width: 900.w,
                                 child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     controller: HomeCubit.get(context).table,
@@ -834,7 +830,10 @@ class HomeMain extends StatelessWidget {
                                         SizedBox(
                                           width: 30.w,
                                         ),
-                                    itemCount: HomeCubit.get(context).getAllBlogModel!.data!.length)),
+                                    itemCount: HomeCubit.get(context)
+                                        .getAllBlogModel!
+                                        .data!
+                                        .length)),
                             SizedBox(height: 20.h),
                             Row(
                               children: [
@@ -874,7 +873,6 @@ class HomeMain extends StatelessWidget {
                                     HomeCubit.get(context).scrollRight(900.w);
 
                                     //HomeCubit.get(context).getAllBlog();
-
                                   },
                                   child: Container(
                                     width: 80.w,
@@ -910,8 +908,8 @@ class HomeMain extends StatelessWidget {
                         ),
                       ),
                     )
-            ],
-          )),
+                  ],
+                )),
         );
       },
     );
