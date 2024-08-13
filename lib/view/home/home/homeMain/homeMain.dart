@@ -19,24 +19,22 @@ class HomeMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeCubit.get(context).table.addListener(() {
-      if (HomeCubit.get(context).table.position.pixels == HomeCubit.get(context).table.position.maxScrollExtent) {
-        HomeCubit.get(context).getAllBlog(); // Load more data when scrolled to end
-      }
-    });
+    // HomeCubit.get(context).table.addListener(() {
+    //   if (HomeCubit.get(context).table.position.pixels == HomeCubit.get(context).table.position.maxScrollExtent) {
+    //     HomeCubit.get(context).getAllBlog(10,10); // Load more data when scrolled to end
+    //   }
+    // });
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          body: SingleChildScrollView(
+          body:
+          state is GetSystemProfitsLoading || state is GetBlogLoading || state is GetAllBlogLoading ? const Center(child: CircularProgressIndicator()):
+            SingleChildScrollView(
               child: Column(
             children: [
-              state is GetSystemProfitsLoading || state is GetBlogLoading
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(vertical: 150.h),
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                  : Column(
+
+                   Column(
                       children: [
                         Column(
                           children: [
@@ -64,7 +62,7 @@ class HomeMain extends StatelessWidget {
                                             color: blue,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           CustomText(
                                             text: HomeCubit.get(context)
                                                 .systemProfit!
@@ -712,8 +710,8 @@ class HomeMain extends StatelessWidget {
               ),
 
               SizedBox(height: 20.h),
-              state is GetAllBlogSuccessful
-                  ? Padding(
+
+                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.w),
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -820,9 +818,9 @@ class HomeMain extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.h),
-                            Container(
+                            SizedBox(
                                 height: 650.h,
-                                width: 900.w,
+                                 width: 900.w,
                                 child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     controller: HomeCubit.get(context).table,
@@ -841,7 +839,9 @@ class HomeMain extends StatelessWidget {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    HomeCubit.get(context).scrollLeft(900.w);
+                                  },
                                   child: Container(
                                     width: 109.w,
                                     height: 40.h,
@@ -910,7 +910,6 @@ class HomeMain extends StatelessWidget {
                         ),
                       ),
                     )
-                  : CircularProgressIndicator()
             ],
           )),
         );
