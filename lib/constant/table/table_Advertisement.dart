@@ -10,15 +10,16 @@ class HotelAccomandtion extends StatelessWidget {
   final PageController controller;
   BuildContext context;
 
-  HotelAccomandtion({super.key, required this.controller,required this.context});
+
+  HotelAccomandtion({super.key, required this.controller,required this.context,});
 
   List<DataRow> _createRows() {
     return List.generate(
       HomeCubit.get(context).getAllBlogModel!.data!.length,
           (index) => DataRow(
         onSelectChanged: (selected) {
-          // if (selected != null && selected) {
-          //   controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+             HomeCubit.get(context).getOneBlog(HomeCubit.get(context).getAllBlogModel!.data![index].id.toString());
+             controller.animateToPage(4, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
           // }
         },
         cells: [
