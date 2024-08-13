@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/homeNavigator/home_naviagtor.dart';
 import 'package:aser_dash_board/logic/homeNavigator/home_state.dart';
-import 'package:aser_dash_board/view/compaines/compaines.dart';
+import 'package:aser_dash_board/view/compaines/screen/compaines.dart';
 import 'package:aser_dash_board/view/home/booking/booking.dart';
 import 'package:aser_dash_board/view/home/home/home.dart';
 import 'package:aser_dash_board/view/home/notification/notification.dart';

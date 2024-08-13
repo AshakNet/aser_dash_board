@@ -49,7 +49,7 @@ class HomeCubit extends Cubit<HomeState> {
     final newOffset = (table.offset + distance).clamp(0.0, table.position.maxScrollExtent);
     table.animateTo(
       newOffset,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300,),
       curve: Curves.easeOut,
     );
 
