@@ -423,6 +423,7 @@ class HomeMain extends StatelessWidget {
                                       ],
                                     ),
                                   ),
+
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 10.h),
@@ -772,6 +773,9 @@ class HomeMain extends StatelessWidget {
                                   controller: HomeCubit.get(context).search,
                                   maxLines: 1,
                                   onChanged: (value){
+                                    HomeCubit.get(context).getAllBlog(0, 10);
+                                  },
+                                  onSaved: (value){
                                     HomeCubit.get(context).getAllBlog(0, 0);
                                   },
                                   validator: (value) {},

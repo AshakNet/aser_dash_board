@@ -17,14 +17,14 @@ class Compaines extends StatelessWidget {
         padding: EdgeInsets.all(20.w),
         child: Column(
           children: [
-            HeaderWidgets(),
+            const HeaderWidgets(),
             SizedBox(
               height: 20.h,
             ),
-            SearchPar(),
+            const SearchPar(),
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 InkWell(
                   onTap: () {},
                   child: Text("Reset",
@@ -38,7 +38,6 @@ class Compaines extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text("Search",style: TextStyle(color: Colors.white),),
                   style: TextButton.styleFrom(
                     backgroundColor: orange,
                     // Set the background color// Set the text color
@@ -46,6 +45,7 @@ class Compaines extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0), // Rounded corners
                     ),
                   ),
+                  child: const Text("Search",style: TextStyle(color: Colors.white),),
                 ),
               ],
             ),
@@ -62,7 +62,7 @@ class Compaines extends StatelessWidget {
                 ),
                 child: Padding(
                   padding:  EdgeInsets.all(12.0.w),
-                  child: BodyForCompany(),
+                  child: const BodyForCompany(),
                 ),
               ),
             )
