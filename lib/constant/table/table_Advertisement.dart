@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/home/home_cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
@@ -14,16 +16,17 @@ class HotelAccomandtion extends StatelessWidget {
   HotelAccomandtion({super.key, required this.controller,required this.context,});
 
   List<DataRow> _createRows() {
+
     return List.generate(
       HomeCubit.get(context).getAllBlogModel!.data!.length,
           (index) => DataRow(
         onSelectChanged: (selected) {
              HomeCubit.get(context).getOneBlog(HomeCubit.get(context).getAllBlogModel!.data![index].id.toString());
-             controller.animateToPage(4, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+             controller.animateToPage(4, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
           // }
         },
         cells: [
-          DataCell(CustomText(text: "${HomeCubit.get(context).getAllBlogModel!.data![index].category}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: "${HomeCubit.get(context).getAllBlogModel!.data![index].title}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
           DataCell(Text("${HomeCubit.get(context).getAllBlogModel!.data![index].startDate}", style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
@@ -84,7 +87,7 @@ class HotelAccomandtion extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         columns: [
-          DataColumn(label: CustomText(text: "Ad Type", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
+          DataColumn(label: CustomText(text: "Blog Type", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "Start Date", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "End Date", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "Addition date", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),

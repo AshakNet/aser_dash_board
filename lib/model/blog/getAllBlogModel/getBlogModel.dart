@@ -50,6 +50,7 @@ class Data {
   String? additionDate;
   String? addedBy;
   String? status;
+  String ? title;
 
   Data(
       {this.id,
@@ -58,6 +59,7 @@ class Data {
         this.endDate,
         this.additionDate,
         this.addedBy,
+        this.title,
         this.status});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -65,6 +67,7 @@ class Data {
     category = json['category'];
     startDate = json['startDate'];
     endDate = json['endDate'];
+    title = json['title'];
     additionDate = json['additionDate'];
     addedBy = json['addedBy'];
     status = json['status'];
@@ -77,6 +80,7 @@ class Data {
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
     data['additionDate'] = this.additionDate;
+    data['title'] = this.title;
     data['addedBy'] = this.addedBy;
     data['status'] = this.status;
     return data;

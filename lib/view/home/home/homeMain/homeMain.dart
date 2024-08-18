@@ -329,100 +329,7 @@ class HomeMain extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          children: [
-                                            CustomText(
-                                                text: "Blog  Type ",
-                                                size: 16.sp,
-                                                color: black,
-                                                fontWeight: FontWeight.w600),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: white,
-                                                  borderRadius:
-                                                      BorderRadiusDirectional
-                                                          .circular(10.r)),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20.w),
-                                                child: SizedBox(
-                                                  width: 150.w,
-                                                  child: DropdownButton(
-                                                      menuMaxHeight: 200.0,
-                                                      isExpanded: true,
-                                                      focusColor: white,
-                                                      dropdownColor: white,
-                                                      icon: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Icon(
-                                                              Icons
-                                                                  .keyboard_arrow_down,
-                                                              color: orange,
-                                                              size: 30.sp)),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.r),
-                                                      underline: SizedBox(),
-                                                      value:
-                                                          HomeCubit.get(context)
-                                                              .chosseTypeBlog,
-                                                      hint: CustomText(
-                                                          text: "Blog  Type",
-                                                          size: 12.sp,
-                                                          color: darkGrey,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                      items: HomeCubit.get(
-                                                              context)
-                                                          .blogTypeModel!
-                                                          .data
-                                                          ?.map((e) =>
-                                                              DropdownMenuItem(
-                                                                value: e.name,
-                                                                child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          right:
-                                                                              20.w),
-                                                                  child:
-                                                                      CustomText(
-                                                                    text: e.name
-                                                                        .toString(),
-                                                                    color:
-                                                                        orange,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                    size: 14.sp,
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                  ),
-                                                                ),
-                                                              ))
-                                                          .toList(),
-                                                      onChanged: (val) {
-                                                        HomeCubit.get(context)
-                                                            .chhoseBlogType(
-                                                                val!);
-                                                      }),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
+
 
                                   Padding(
                                     padding:
@@ -443,9 +350,12 @@ class HomeMain extends StatelessWidget {
                                             readOnly: true,
                                             onTap: () {
                                               HomeCubit.get(context).PickDate(
-                                                  context,
-                                                  HomeCubit.get(context)
-                                                      .addtionalDate);
+                                                 context:  context,
+                                                controller:   HomeCubit.get(context)
+                                                      .addtionalDate,
+                                              firstDate: DateTime(2000),
+                                                lastDate: DateTime.now()
+                                              );
                                             },
                                             validator: (value) {},
                                             style: TextStyle(
@@ -507,9 +417,12 @@ class HomeMain extends StatelessWidget {
                                             readOnly: true,
                                             onTap: () {
                                               HomeCubit.get(context).PickDate(
-                                                  context,
-                                                  HomeCubit.get(context)
-                                                      .endDate);
+                                                  context : context,
+                                                 controller:  HomeCubit.get(context)
+                                                      .endDate,
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime.now()
+                                              );
                                             },
                                             validator: (value) {},
                                             style: TextStyle(
@@ -773,10 +686,10 @@ class HomeMain extends StatelessWidget {
                                   controller: HomeCubit.get(context).search,
                                   maxLines: 1,
                                   onChanged: (value){
-                                    HomeCubit.get(context).getAllBlog(0, 10);
+                                    HomeCubit.get(context).getAllBlog(skip: 0,take:  10);
                                   },
                                   onSaved: (value){
-                                    HomeCubit.get(context).getAllBlog(0, 0);
+                                    HomeCubit.get(context).getAllBlog(skip: 0,take:  0);
                                   },
                                   validator: (value) {},
                                   style: TextStyle(
@@ -818,96 +731,99 @@ class HomeMain extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.h),
-                            SizedBox(
-                                height: 650.h,
-                                width: 900.w,
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    controller: HomeCubit.get(context).table,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) =>
-                                        HotelAccomandtion(
-                                          controller: controller,
-                                          context: context,
-                                        ),
-                                    separatorBuilder: (context, index) =>
-                                        SizedBox(
-                                          width: 30.w,
-                                        ),
-                                    itemCount: HomeCubit.get(context)
-                                        .getAllBlogModel!
-                                        .data!
-                                        .length)),
-                            SizedBox(height: 20.h),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    HomeCubit.get(context).scrollLeft(900.w);
-                                  },
-                                  child: Container(
-                                    width: 109.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadiusDirectional.circular(
-                                                10.r),
-                                        border: Border.all(
-                                            color: Colors.grey.shade500)),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.keyboard_arrow_left_sharp,
-                                          color: Colors.grey.shade500,
-                                        ),
-                                        CustomText(
-                                          text: "Previous",
-                                          size: 14.sp,
-                                          color: Colors.grey.shade500,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    HomeCubit.get(context).scrollRight(900.w);
+                            HomeCubit.get(context).getAllBlogModel?.totalCount == 0 ?
+                            Center(child: CustomText(text: "No exist Blogs ", size: 25.sp, color: orange , fontWeight: FontWeight.w700)) :
+                           Column(
+                             children: [
+                               SizedBox(
+                                 height: 650.h,
+                                 width: 950.w,
+                                 child: HotelAccomandtion(
+                                   controller: controller,
+                                   context: context,
+                                 ),
 
-                                    //HomeCubit.get(context).getAllBlog();
-                                  },
-                                  child: Container(
-                                    width: 80.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadiusDirectional.circular(
-                                                10.r),
-                                        border: Border.all(
-                                            color: Colors.grey.shade500)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CustomText(
-                                          text: "Next",
-                                          size: 14.sp,
-                                          color: Colors.grey.shade500,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                        Icon(
-                                          Icons.keyboard_arrow_right,
-                                          color: Colors.grey.shade500,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
+
+                               ),
+                               SizedBox(height: 20.h),
+                               Row(
+                                 children: [
+                                   GestureDetector(
+                                     onTap: () {
+
+                                       HomeCubit.get(context).scrollLeft();
+
+
+
+
+
+                                     },
+                                     child: Container(
+                                       width: 109.w,
+                                       height: 40.h,
+                                       decoration: BoxDecoration(
+                                           borderRadius:
+                                           BorderRadiusDirectional.circular(
+                                               10.r),
+                                           border: Border.all(
+                                               color: Colors.grey.shade500)),
+                                       child: Row(
+                                         children: [
+                                           Icon(
+                                             Icons.keyboard_arrow_left_sharp,
+                                             color: Colors.grey.shade500,
+                                           ),
+                                           CustomText(
+                                             text: "Previous",
+                                             size: 14.sp,
+                                             color: Colors.grey.shade500,
+                                             fontWeight: FontWeight.w600,
+                                             alignment: Alignment.center,
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Spacer(),
+                                   GestureDetector(
+                                     onTap: () {
+
+                                       HomeCubit.get(context).scrollRight();
+
+
+                                     },
+                                     child: Container(
+                                       width: 80.w,
+                                       height: 40.h,
+                                       decoration: BoxDecoration(
+                                           borderRadius:
+                                           BorderRadiusDirectional.circular(
+                                               10.r),
+                                           border: Border.all(
+                                               color: Colors.grey.shade500)),
+                                       child: Row(
+                                         mainAxisAlignment:
+                                         MainAxisAlignment.center,
+                                         children: [
+                                           CustomText(
+                                             text: "Next",
+                                             size: 14.sp,
+                                             color: Colors.grey.shade500,
+                                             fontWeight: FontWeight.w600,
+                                             alignment: Alignment.center,
+                                           ),
+                                           Icon(
+                                             Icons.keyboard_arrow_right,
+                                             color: Colors.grey.shade500,
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   )
+                                 ],
+                               )
+                             ],
+                           )
                           ],
                         ),
                       ),

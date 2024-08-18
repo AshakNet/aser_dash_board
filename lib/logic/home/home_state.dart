@@ -13,6 +13,7 @@ class ChangeStatusLoaded extends HomeState{}
 
 
 class PickDateBlocLoading extends HomeState{}
+class DeleteImage extends HomeState{}
 
 class PickDateBlocSSuccessfulState extends HomeState{}
 class SuccessfulImage extends HomeState{}
@@ -29,7 +30,13 @@ class GetSystemProfitsByIdSuccessful extends HomeState{}
 class ScrollSusccessfulLeft extends HomeState{}
 class ChangeReadLoaded extends HomeState{}
 
+class ChangeSussfulLength extends HomeState{}
+
+
 class ScrollSusccessfulRigth extends HomeState{}
+
+class ScrollSusccessfulError extends HomeState{}
+
 
 
 class GetSystemProfitsError extends HomeState{
@@ -56,6 +63,8 @@ class GetBlogError extends HomeState{
 class chooseTypeLoading extends HomeState{}
 
 class chooseTypeLoaded extends HomeState{}
+class chooseTypeLoadedEdit extends HomeState{}
+
 ///
 class GetAllBlogLoading extends HomeState{}
 
@@ -75,4 +84,31 @@ class GetOneBlogError extends HomeState{
   final String error;
 
   GetOneBlogError(this.error);
+}
+
+/// add blog
+class CreateBlogLoading extends HomeState{}
+class CreateBlogSuccessful extends HomeState{}
+class CreateBlogError extends HomeState{
+  final String error;
+
+  CreateBlogError(this.error);
+}
+
+/// update
+class EditBlogLoading extends HomeState{}
+class EditBlogSuccessful extends HomeState{}
+class EditBlogError extends HomeState{
+  final String error;
+
+  EditBlogError(this.error);
+}
+
+///
+class ChangeStatusLoading extends HomeState{}
+class ChangeStatusSuccessful extends HomeState{}
+class ChangeStatusError extends HomeState{
+  final String error;
+
+  ChangeStatusError(this.error);
 }

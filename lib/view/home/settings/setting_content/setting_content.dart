@@ -72,27 +72,32 @@ class SettingContent extends StatelessWidget {
             ),
           ),
           SizedBox(height: 40.h,),
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 140.w),
-            child: Container(
-              width: double.infinity,
-              height: 80.h,
-              decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(20.r)
-              ),
-              child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 30.w),
-                child: Row(
+          GestureDetector(
+            onTap: (){
+              settingContent.animateToPage(3, duration: const Duration(milliseconds: 30), curve: Curves.easeIn);
+            },
+            child: Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 140.w),
+              child: Container(
+                width: double.infinity,
+                height: 80.h,
+                decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(20.r)
+                ),
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 30.w),
+                  child: Row(
 
-                  children: [
-                    Image.asset("assets/images/home/member.png"),
-                    SizedBox(width: 20.w,),
-                    CustomText(text: "Members", size: 20.sp, color: const Color.fromRGBO(0, 25, 39, 1), fontWeight: FontWeight.w600),
-                    const Spacer(),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_forward_ios))
+                    children: [
+                      Image.asset("assets/images/home/member.png"),
+                      SizedBox(width: 20.w,),
+                      CustomText(text: "Members", size: 20.sp, color: const Color.fromRGBO(0, 25, 39, 1), fontWeight: FontWeight.w600),
+                      const Spacer(),
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_forward_ios))
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

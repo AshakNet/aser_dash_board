@@ -193,7 +193,7 @@ class Addadevirtes extends StatelessWidget {
                                 controller: HomeCubit.get(context).startDate,
                                 maxLines: 1,minLines: 1,
                                 onTap: (){
-                                  HomeCubit.get(context).PickDate(context, HomeCubit.get(context).startDate);
+                                  //HomeCubit.get(context).PickDate(context, HomeCubit.get(context).startDate);
                                 },
                                 validator: (value) {},
                                 style: TextStyle(
@@ -244,7 +244,7 @@ class Addadevirtes extends StatelessWidget {
                                 maxLines: 1,minLines: 1,
                                 readOnly: true,
                                 onTap: (){
-                                  HomeCubit.get(context).PickDate(context, HomeCubit.get(context).endDate);
+                                  //HomeCubit.get(context).PickDate(context, HomeCubit.get(context).endDate);
 
                                 },
                                 validator: (value) {},

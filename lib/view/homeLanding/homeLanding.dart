@@ -175,13 +175,13 @@ class HomeLanding extends StatelessWidget {
                         _sideBarBuilder(
                             image: 'assets/images/home/company.png', title: 'Companies', index: 5, iconWidth: 39.w, iconHeight: 28.h, context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/booking.png', title: 'Booking', index: 6, iconWidth: 39.w, iconHeight: 36.h, context: context),
+                            image: 'assets/images/home/booking.png', title: 'Booking', index: 6, iconWidth: 39.w, iconHeight: 28.h, context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/order.png', title: 'Orders', index: 7, iconWidth: 23.w, iconHeight: 36.h, context: context),
+                            image: 'assets/images/home/order.png', title: 'Orders', index: 7, iconWidth: 39.w, iconHeight: 28.h, context: context),
                         _sideBarBuilder(
                             image: 'assets/images/home/notification.png', title: 'Notifications', index: 8, iconWidth: 39.w, iconHeight: 36.h, context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/setting.png', title: 'Settings', index: 9, iconWidth: 36.w, iconHeight: 36.h, context: context),
+                            image: 'assets/images/home/setting.png', title: 'Settings', index: 9, iconWidth: 36.w, iconHeight: 28.h, context: context),
                       ],
                     ),
                   ),
