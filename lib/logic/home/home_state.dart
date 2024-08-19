@@ -61,6 +61,7 @@ class GetBlogError extends HomeState{
 
 
 class chooseTypeLoading extends HomeState{}
+class ChoosesMonthAccomandtionLoaded extends HomeState{}
 
 class chooseTypeLoaded extends HomeState{}
 class chooseTypeLoadedEdit extends HomeState{}
@@ -111,4 +112,14 @@ class ChangeStatusError extends HomeState{
   final String error;
 
   ChangeStatusError(this.error);
+}
+
+/// Accomandtion
+
+class GetProfitsAccomodationLoading extends HomeState{}
+class GetProfitsAccomodationSuccessful extends HomeState{}
+class GetProfitsAccomodationError extends HomeState{
+  final String error;
+
+  GetProfitsAccomodationError(this.error);
 }

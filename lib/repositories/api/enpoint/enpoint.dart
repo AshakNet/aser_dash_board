@@ -13,8 +13,12 @@ class EndPoint {
   static String updateBlog = apiUrl + "Blogs?Id=";
   static String changeStatus = apiUrl + "Blogs/ChangeStatus?Id=";
 
+  static String getGoverMent = apiUrl + "Governments";
 
+  static String accomandtionType = apiUrl + "AccomodationType/Types";
 
+  static String changeStatusAccomAccepted = apiUrl + "Accomodation/AcceptAccomodation?AccomidtionId=";
+  static String changeStatusAccomRejected = apiUrl + "Accomodation/RejectAccomodation?AccomidtionId=";
 
 
 

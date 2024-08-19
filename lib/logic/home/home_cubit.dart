@@ -52,6 +52,7 @@ class HomeCubit extends Cubit<HomeState> {
    bool read = true;
   BlogTypeModel? blogTypeModel;
   String? choosesMonth;
+  String? choosesMonthAccomandtion;
   File? image ;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -62,6 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
   List <String> year = ["2020","2021","2022","2023","2024"];
 
   String ? fix;
+  String ? fixAccomandtion;
   String? chooseYears;
   SystemProfitModel? systemProfit;
   GetAllBlogModel? getAllBlogModel;
@@ -74,10 +76,7 @@ class HomeCubit extends Cubit<HomeState> {
   String? accomandtionType;
 
 
-void calcChangeLength(){
-  lengthList = getAllBlogModel!.totalCount!;
-  emit(ChangeSussfulLength());
-}
+
     void changeRead(){
       read = !read;
       emit(ChangeReadLoaded());
@@ -100,8 +99,6 @@ void calcChangeLength(){
 
 
   }
-
-
 
 
   void scrollRight() {
@@ -128,8 +125,6 @@ void calcChangeLength(){
   }
 
 
-
-
   Future getImage(ImageSource imageSource) async {
     var pickerFile = await ImagePicker().pickImage(source: imageSource);
     if (pickerFile != null) {
@@ -139,12 +134,6 @@ void calcChangeLength(){
       emit(ErrorImage());
     }
   }
-
-  Future deleteImage() async {
-   image= null;
-   emit(DeleteImage());
-  }
-
 
 
   void PickDate(
@@ -169,21 +158,17 @@ void calcChangeLength(){
 
 
 
-  void chooseYearFunction(value) {
-    emit(StartDateChooseYears());
-    chooseYears = value;
-    emit(EndStartChooseYears());
-  }
-
-
   void chooseMonthFunction(value) {
     emit(StartDateChooseMonth());
     choosesMonth = value;
     emit(EndStartChooseMonth());
   }
 
+  void chooseMonthAccomandtion(value) {
 
-
+    choosesMonthAccomandtion = value;
+    emit(ChoosesMonthAccomandtionLoaded());
+  }
 
   /// choose type
 
@@ -209,20 +194,12 @@ void calcChangeLength(){
     emit(ChangeStatusLoaded());
   }
 
-  void choseMonthFunction(value) {
-
-    choseMonth = value;
-    emit(ChoseMonthLoaded());
-  }
-
   String? choseHours ;
   void choseHoursFunction(value) {
     emit(StartDate());
     choseHours = value;
     emit(EndStart());
   }
-
-
 
   void changeAccomandtionype(value) {
     emit(StartDate());
@@ -236,7 +213,6 @@ void calcChangeLength(){
     emit(EndStart());
   }
   /// end point s
-
 
   void load()async{
     await getSystemProfits();
@@ -441,6 +417,34 @@ void calcChangeLength(){
     else{
       print(response.body);
       emit(ChangeStatusError( jsonBody['message']));
+    }
+  }
+
+
+
+  /// Accomandtion
+
+
+
+
+  Future getProfitsAccomodation() async {
+
+    emit(GetProfitsAccomodationLoading());
+
+    final token = await storage.read(key: 'token');
+    print("tokn is person blog = $token");
+    http.Response response = await ApiConsumer().get(uri:
+    fix == null ?
+    "${EndPoint.apiUrl}Accomodation/AdminAccomidationStatistics" :
+    "${EndPoint.apiUrl}Accomodation/AdminAccomidationStatistics?MonthOrYear=$fixAccomandtion"
+        , token: token);
+    var responseData = await json.decode(response.body);
+    if (response.statusCode == 200) {
+      systemProfit = SystemProfitModel.fromJson(responseData);
+      emit(GetProfitsAccomodationSuccessful());
+    } else {
+      print(response.body);
+      emit(GetProfitsAccomodationError(response.body));
     }
   }
 

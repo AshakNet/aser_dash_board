@@ -1,5 +1,6 @@
-import 'package:aser_dash_board/logic/home/home_cubit.dart';
-import 'package:aser_dash_board/logic/home/home_state.dart';
+
+
+import 'package:aser_dash_board/logic/AcommandtionCubit/accomandtion_Cubit.dart';
 import 'package:aser_dash_board/view/home/services/accomandation/servicesHome/servicesHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,22 +17,18 @@ class Services extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomeCubit(),
-      child: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return PageView(
-            controller: servicesController,
-            children: [
-              HomeServices(accomandtion: servicesController,),
+      create: (BuildContext context) => AccomandtionCubit()..load(),
+      child:  PageView(
+      controller: servicesController,
+      children: [
+        HomeServices(accomandtion: servicesController,),
 
-              DetailsServices(detailsServices: servicesController,),
-              ///  in sigths
-              Insights(insights: servicesController,)
-            ],
-          );
-        },
-      ),
+        DetailsServices(detailsServices: servicesController,),
+        ///  in sigths
+        Insights(insights: servicesController,)
+      ],
+    )
+
     );
   }
 }

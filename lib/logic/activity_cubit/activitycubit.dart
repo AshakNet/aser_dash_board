@@ -1,11 +1,18 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:aser_dash_board/logic/activity_cubit/activity_state.dart';
+import 'package:aser_dash_board/model/activity/activitymodel.dart';
+import 'package:aser_dash_board/repositories/api/api%20consumer/apiConsumer.dart';
+import 'package:aser_dash_board/repositories/api/enpoint/enpoint.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+
 
 
 
@@ -13,10 +20,13 @@ class ActivityCubit extends Cubit<ActivityState> {
   ActivityCubit() : super(HomeInatialState());
 
   static ActivityCubit get(context) => BlocProvider.of(context);
+  final storage = new FlutterSecureStorage();
+
 
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
   TextEditingController addtionalDate = TextEditingController();
+  GetActivityModel? getActivityModel;
 
   int change = 0 ;
 
@@ -66,6 +76,7 @@ class ActivityCubit extends Cubit<ActivityState> {
 
   int selectedIndex = 0;
   String? accomandtionType;
+  TextEditingController search = TextEditingController();
   void changeAccomandtionype(value) {
     emit(StartDate());
     accomandtionType = value;
@@ -96,6 +107,36 @@ class ActivityCubit extends Cubit<ActivityState> {
     }
     emit(ChangeSingleRoom());
   }
+
+
+  /// get activity
+
+  Future getAllActivity({required int skip, required int take}) async {
+
+    emit(GetAllActivityLoading());
+
+    final token = await storage.read(key: 'token');
+
+    http.Response response = await ApiConsumer().get(uri:
+    search.text.trim().isEmpty?
+    "${EndPoint.apiUrl}Activities/GetAllActivitiesForAdmin?skip=$skip&take=$take" :
+
+    "${EndPoint.apiUrl}Activities/GetAllActivitiesForAdmin?SearchTerm=${search.text.trim()}&skip=$skip&take=$take"
+        , token: token);
+    var responseData = await json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      getActivityModel = GetActivityModel.fromJson(responseData);
+      emit(GetAllActivitySuccessful());
+
+    } else {
+      print(response.body);
+      emit(GetAllActivityError(response.body));
+    }
+
+
+  }
+
 
 
 
