@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/trips_cubit/tripe_cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,41 +8,37 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HotelDateTableTriple extends StatelessWidget {
   final PageController triple;
+  BuildContext context;
 
-  HotelDateTableTriple({super.key, required this.triple});
+  HotelDateTableTriple({super.key, required this.triple,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      TripsCubit.get(context).getAllTripsModel!.data!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
+            TripsCubit.get(context).loadOne(TripsCubit.get(context).getAllTripsModel!.data![index].id.toString());
             triple.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },
         cells: [
-          DataCell(CustomText(text: "The grand ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("Al Amal company", style: TextStyle(
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].name.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text(TripsCubit.get(context).getAllTripsModel!.data![index].companyName.toString(), style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "Aswan", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "15/6/2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "100 Seat", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "500000 EGP", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].destination.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].tripDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].totalSeats.toString(),alignment: Alignment.center, size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].totalBalance.toString(),alignment: Alignment.center, size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].additionDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].isActive.toString(), size: 14.sp, color:
+            TripsCubit.get(context).getAllTripsModel!.data![index].isActive == true ? Colors.green : Colors.red
+                , fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
 
@@ -51,33 +48,7 @@ class HotelDateTableTriple extends StatelessWidget {
     );
   }
 
-  static Color _getStatusColor(int index) {
-    switch (index % 4) {
-      case 0:
-        return Color.fromRGBO(231, 248, 240, 1);
-      case 1:
-        return Color.fromRGBO(244, 244, 244, 1);
-      case 2:
-        return Color.fromRGBO(160, 185, 251, 1);
-      case 3:
-      default:
-        return Color.fromRGBO(251, 201, 160, 1);
-    }
-  }
 
-  static String _getStatusText(int index) {
-    switch (index % 4) {
-      case 0:
-        return 'Pending';
-      case 1:
-        return 'Active';
-      case 2:
-        return 'Restricted';
-      case 3:
-      default:
-        return 'Done';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

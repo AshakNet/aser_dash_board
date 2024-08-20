@@ -10,15 +10,20 @@ class EndPoint {
   static String register = "${apiUrl}Admins/register";
   static String login = apiUrl + "Accounts/login";
   static String addBlog = apiUrl + "Blogs";
+  static String addActivity = apiUrl + "Activities/AddActivity";
   static String updateBlog = apiUrl + "Blogs?Id=";
   static String changeStatus = apiUrl + "Blogs/ChangeStatus?Id=";
 
   static String getGoverMent = apiUrl + "Governments";
+  static String getCompany = apiUrl + "Companies/GetCompaniesforSelect";
 
   static String accomandtionType = apiUrl + "AccomodationType/Types";
 
   static String changeStatusAccomAccepted = apiUrl + "Accomodation/AcceptAccomodation?AccomidtionId=";
   static String changeStatusAccomRejected = apiUrl + "Accomodation/RejectAccomodation?AccomidtionId=";
+  static String activeTrips = apiUrl + "AdminTrips/ActiveAndInActiveTrip?id=";
+  static String deleteTrips = apiUrl + "AdminTrips/DeleteTrip?id=";
+  static String addTrips = apiUrl + "AdminTrips/AddCompanyTrip";
 
 
 

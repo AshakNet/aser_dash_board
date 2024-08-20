@@ -19,26 +19,20 @@ class Trips extends StatelessWidget {
   Widget build(BuildContext context) {
     return  BlocProvider(
 
-      create: (BuildContext context)=>TripsCubit(),
-      child: BlocConsumer<TripsCubit,TripsState>(
-        listener: (context,state){},
-        builder: (context,state){
-         return PageView(
-           controller:tripsController ,
-           children: [
-             TripsContent(tripleContent: tripsController,),
-             TripDetails(detailsTrips: tripsController,),
-             InsightsTrips(insights: tripsController,),
-             OrdersTrips(order: tripsController,),
-             OrderDetails(detailsOrder: tripsController,),
-              AddTrips(addTrips: tripsController,)
+      create: (BuildContext context)=>TripsCubit()..load(),
+      child: PageView(
+        controller:tripsController ,
+        children: [
+          TripsContent(tripleContent: tripsController,),
+          TripDetails(detailsTrips: tripsController,),
+          InsightsTrips(insights: tripsController,),
+          OrdersTrips(order: tripsController,),
+          OrderDetails(detailsOrder: tripsController,),
+          AddTrips(addTrips: tripsController,)
 
 
-           ],
-         );
-        },
-
-      ),
+        ],
+      )
     );
   }
 }

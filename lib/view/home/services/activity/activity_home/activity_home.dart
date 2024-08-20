@@ -1,7 +1,6 @@
-import 'package:aser_dash_board/constant/table/HotelDateTableInsigthActivity.dart';
-import 'package:aser_dash_board/logic/activity_cubit/activity_state.dart';
+
 import 'package:aser_dash_board/logic/activity_cubit/activitycubit.dart';
-import 'package:aser_dash_board/view/home/services/activity/addorder/addActivity.dart';
+import 'package:aser_dash_board/view/home/services/activity/addActivity/addActivity.dart';
 import 'package:aser_dash_board/view/home/services/activity/detailsActivity/detailsActivity.dart';
 import 'package:aser_dash_board/view/home/services/activity/insight/insightActivity.dart';
 import 'package:aser_dash_board/view/home/services/activity/order/order.dart';
@@ -25,48 +24,30 @@ class ActivityHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return  BlocProvider(
 
-      create: (BuildContext context)=>ActivityCubit(),
-      child: BlocConsumer<ActivityCubit,ActivityState>(
-        listener: (context,state){},
-        builder: (context,state){
-          return PageView(
-            controller:activityHome ,
-            children:  [
-              /// 0
-              ActivityContent(activity: activityHome),
-              // /// 1
-              ActivityDetails(activity: activityHome,),
-           /// 2
-              InsightsActivityPage(insightsActivity: activityHome,),
+      create: (BuildContext context)=>ActivityCubit()..load(),
+      child: PageView(
+        controller:activityHome ,
+        children:  [
+          /// 0
+          ActivityContent(activity: activityHome),
+          // /// 1
+          ActivityDetails(activity: activityHome,),
+          /// 2
+          InsightsActivityPage(insightsActivity: activityHome,),
 
-              /// 3
-              OrderActivity(orderActivity: activityHome,),
-              /// 4 
-              OrderDetailsActivity(detailsOrderActivity: activityHome,),
+          /// 3
+          OrderActivity(orderActivity: activityHome,),
+          /// 4
+          OrderDetailsActivity(detailsOrderActivity: activityHome,),
 
-              /// 5
-              AddActivity(addActivity: activityHome,)
+          /// 5
+          AddActivity(addActivity: activityHome,)
 
-              /// add Activity
+          /// add Activity
 
 
-              // AddProducts(addProduct: productController,),
-              // /// 2
-              // ProductDetails(productDetails: productController,),
-              // /// 3
-              // InsightsProducts(insightsProduct: productController,),
-              // /// 4
-              // OrderProducts(order: productController,),
-              // /// 5
-              // OrderDetailsProduct(detailsOrder: productController,)
-
-
-
-            ],
-          );
-        },
-
-      ),
+        ],
+      )
     );
   }
 }

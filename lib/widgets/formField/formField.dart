@@ -61,7 +61,9 @@ Widget textFormFildBuilder(
       required TextEditingController controller,
       required final Function validation,
       bool obstructText = false,
+      bool read = false,
       TextInputType inputType = TextInputType.text,
+       VoidCallback? onTap,
       IconButton ?icon,
       int maxLines = 1,
       int manLines = 1
@@ -76,6 +78,8 @@ Widget textFormFildBuilder(
         controller: controller,
         maxLines: maxLines,
         minLines: manLines,
+        readOnly:read ,
+        onTap:onTap ,
         validator: (input) => validation(input),
         style: TextStyle(
           fontSize: 16.sp,

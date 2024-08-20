@@ -22,33 +22,27 @@ class ProductHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return  BlocProvider(
 
-      create: (BuildContext context)=>ProductCubit(),
-      child: BlocConsumer<ProductCubit,ProductState>(
-        listener: (context,state){},
-        builder: (context,state){
-          return PageView(
-            controller:productController ,
-            children: [
-              /// 0
-              Products(product: productController,),
-               /// 1
-              AddProducts(addProduct: productController,),
-              /// 2
-              ProductDetails(productDetails: productController,),
-              /// 3
-              InsightsProducts(insightsProduct: productController,),
-              /// 4
-              OrderProducts(order: productController,),
-              /// 5
-              OrderDetailsProduct(detailsOrder: productController,)
+      create: (BuildContext context)=>ProductCubit()..load(),
+      child: PageView(
+        controller:productController ,
+        children: [
+          /// 0
+          Products(product: productController,),
+          /// 1
+          AddProducts(addProduct: productController,),
+          /// 2
+          ProductDetails(productDetails: productController,),
+          /// 3
+          InsightsProducts(insightsProduct: productController,),
+          /// 4
+          OrderProducts(order: productController,),
+          /// 5
+          OrderDetailsProduct(detailsOrder: productController,)
 
 
 
-            ],
-          );
-        },
-
-      ),
+        ],
+      )
     );
   }
 }

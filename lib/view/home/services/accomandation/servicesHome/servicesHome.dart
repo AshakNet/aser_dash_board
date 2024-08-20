@@ -377,7 +377,20 @@ class HomeServices extends StatelessWidget {
                                           }),
                                     ),
                                   ),
-                                )
+                                ),
+
+                                SizedBox(width: 50.w,),
+
+                                Padding(
+                                  padding:  EdgeInsets.only(top: 30.h),
+                                  child: CustomText(text: "Reset",
+                                    function: (){
+                                    AccomandtionCubit.get(context).status = null;
+                                      AccomandtionCubit.get(context).statusNumber = null;
+                                      AccomandtionCubit.get(context).getAllAccomandtion(skip: 0, take: 10);
+                                    },
+                                    size: 18.sp, color: orange, fontWeight: FontWeight.w400,textDecoration: TextDecoration.underline,),
+                                ),
                               ],
                             ),
                           ),

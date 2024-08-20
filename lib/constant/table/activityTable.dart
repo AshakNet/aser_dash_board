@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/activity_cubit/activitycubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,41 +8,46 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ActivityTable extends StatelessWidget {
   final PageController activity;
+  BuildContext context;
 
-  ActivityTable({super.key, required this.activity});
+  ActivityTable({super.key, required this.activity,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      ActivityCubit.get(context).getActivityModel!.data!.activities.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
-            activity.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+
+            ActivityCubit.get(context).loadOneActivity(ActivityCubit.get(context).getActivityModel!.data!.activities[index].id.toString());
+
+            activity.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },
         cells: [
-          DataCell(CustomText(text: "Water Play Center", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("Egyption Store...", style: TextStyle(
+          DataCell(CustomText(text: ActivityCubit.get(context).getActivityModel!.data!.activities[index].name.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text(ActivityCubit.get(context).getActivityModel!.data!.activities[index].companyName.toString(), style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "1000/ Person", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "500000 EGP", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400,alignment: Alignment.center,)),
 
-          DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
-          ),
+          DataCell(Row(
+            children: [
+              CustomText(text: "${ActivityCubit.get(context).getActivityModel!.data!.activities[index].price.toString()}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: "Person/  ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+
+            ],
+          )),
+          DataCell(Row(
+            children: [
+              CustomText(text: "${ActivityCubit.get(context).getActivityModel!.data!.activities[index].revenue.toString()} ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: "   EGP   ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+            ],
+          )),
+          DataCell(CustomText(text: ActivityCubit.get(context).getActivityModel!.data!.activities[index].additionDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400,alignment: Alignment.center,)),
+
           const DataCell(Icon(Icons.more_vert))
 
 
@@ -87,7 +93,6 @@ class ActivityTable extends StatelessWidget {
           DataColumn(label: CustomText(text: "Price ( Start from)", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "Revenue", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "Addition date", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
-          DataColumn(label: CustomText(text: "Status", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
           DataColumn(label: CustomText(text: "", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w700)),
 
 

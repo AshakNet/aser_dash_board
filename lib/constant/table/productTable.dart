@@ -1,18 +1,21 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/productCubit/products_cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductTable extends StatelessWidget {
   final PageController triple;
+  BuildContext context;
 
-  ProductTable({super.key, required this.triple});
+  ProductTable({super.key, required this.triple,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      ProductCubit.get(context).getAllProductsModel!.data!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
@@ -21,16 +24,22 @@ class ProductTable extends StatelessWidget {
           }
         },
         cells: [
-          DataCell(CustomText(text: "Leather products ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("Egyption Store...", style: TextStyle(
+          DataCell(CustomText(text: ProductCubit.get(context).getAllProductsModel!.data![index].productName.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text(ProductCubit.get(context).getAllProductsModel!.data![index].companyName.toString(), style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "Handicrafts", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "500 EGP/Piece", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "100", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400,alignment: Alignment.center,)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: ProductCubit.get(context).getAllProductsModel!.data![index].craftType.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Row(
+            children: [
+              CustomText(text: ProductCubit.get(context).getAllProductsModel!.data![index].price.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: "EGP/Piece", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+
+            ],
+          )),
+          DataCell(CustomText(text:ProductCubit.get(context).getAllProductsModel!.data![index].availablePieces.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400,alignment: Alignment.center,)),
+          DataCell(CustomText(text: ProductCubit.get(context).getAllProductsModel!.data![index].additionDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
 
 
           const DataCell(Icon(Icons.more_vert))

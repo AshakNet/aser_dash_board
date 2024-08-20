@@ -267,7 +267,7 @@ class OrdersTrips extends StatelessWidget {
                             maxLines: 1,
                             readOnly: true,
                             onTap: (){
-                              TripsCubit.get(context).PickDate(context, TripsCubit.get(context).addtionalDate);
+                              //TripsCubit.get(context).PickDate(context, TripsCubit.get(context).addtionalDate);
                             },
                             validator: (value) {},
                             style: TextStyle(
