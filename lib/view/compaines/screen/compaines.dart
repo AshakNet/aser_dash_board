@@ -16,7 +16,7 @@ class Compaines extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
 
-      create: (BuildContext context)=>CompaniesCubit(),
+      create: (BuildContext context)=>CompaniesCubit()..load(),
       child: PageView(
         controller: company,
         children: [

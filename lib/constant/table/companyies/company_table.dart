@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/compaines/compines_cubit/companies_Cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,42 +8,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CompainesTable extends StatelessWidget {
   final PageController companyDetails;
+  BuildContext context;
 
-   CompainesTable({super.key, required this.companyDetails});
+   CompainesTable({super.key, required this.companyDetails,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      CompaniesCubit.get(context).getAllCompanyModel!.data!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
+            CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getAllCompanyModel!.data![index].id.toString());
             companyDetails.animateToPage(1, duration: Duration(milliseconds: 30), curve: Curves.easeIn);
           }
         },
         cells: [
-          DataCell(CustomText(text: "Moataz Elrawy ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("Accommodation", style: TextStyle(
+          DataCell(CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].name.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text(CompaniesCubit.get(context).getAllCompanyModel!.data![index].serviceType.toString(), style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "Cairo", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "3 services", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "500000 EGP", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].governate.toString(), size: 14.sp,alignment: Alignment.center, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Row(
+            children: [
+              CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].servicesNo.toString(), size: 14.sp,alignment: Alignment.center, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: "  services ", size: 14.sp,alignment: Alignment.center, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+            ],
+          )),
+          DataCell(Row(
+            children: [
+              CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].profits.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: " EGP ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+            ],
+          )),
+          DataCell(CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].additionalDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
 
 
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: CompaniesCubit.get(context).getAllCompanyModel!.data![index].status.toString(), size: 14.sp, color:
+
+
+            CompaniesCubit.get(context).getAllCompanyModel!.data![index].status == "Active" ? Colors.green  :
+            CompaniesCubit.get(context).getAllCompanyModel!.data![index].status == "Restricted" ? Colors.grey :
+            CompaniesCubit.get(context).getAllCompanyModel!.data![index].status == "Deleted" ? Colors.red :
+            Colors.black,
+
+
+                fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
 
@@ -52,34 +66,7 @@ class CompainesTable extends StatelessWidget {
     );
   }
 
-  static Color _getStatusColor(int index) {
-    switch (index % 4) {
-      case 0:
-        return Color.fromRGBO(231, 248, 240, 1);
-      case 1:
-        return Color.fromRGBO(244, 244, 244, 1);
-      case 2:
-        return Color.fromRGBO(244, 244, 244, 1);
-      case 3:
-      default:
-        return Color.fromRGBO(251, 201, 160, 1);
-    }
-  }
 
-  static String _getStatusText(int index) {
-    switch (index % 4) {
-      case 0:
-        return 'Active';
-      case 1:
-        return 'Pending';
-      case 2:
-        return 'Restricted';
-
-      case 3:
-      default:
-        return 'Deleted';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

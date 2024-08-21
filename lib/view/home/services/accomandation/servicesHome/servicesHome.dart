@@ -21,7 +21,11 @@ class HomeServices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AccomandtionCubit,AccomandtionState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is GetProfitsAccomodationSuccessful){
+          AccomandtionCubit.get(context).getAllAccomandtion(skip: 0, take: 10);
+        }
+      },
       builder: (context,state){
         var accomandtionCubit = AccomandtionCubit.get(context);
         return  Scaffold(
@@ -171,6 +175,7 @@ class HomeServices extends StatelessWidget {
                                           AccomandtionCubit.get(context)
                                               .chooseMonthAccomandtion(val);
                                           accomandtionCubit.getProfitsAccomodation();
+                                          
 
 
                                         }),

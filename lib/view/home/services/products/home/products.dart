@@ -20,12 +20,13 @@ class Products extends StatelessWidget {
         if(state is PickDateBlocSSuccessfulState ){
           ProductCubit.get(context).getAllProduct(skip: 0, take: 10);
         }
+
       },
       builder: (context,state){
         return Scaffold(
           body:
 
-          state is GetProfitsProductLoading   ?const CircularProgressIndicator() :
+          state is GetProfitsProductLoading ||  state is GetAllProductLoading   ? const Center(child: CircularProgressIndicator()) :
           SingleChildScrollView(
             child: Column(
               children: [
@@ -336,14 +337,14 @@ class Products extends StatelessWidget {
                                           underline: SizedBox(),
                                           value: ProductCubit.get(context).craft,
                                           hint: CustomText(text: "Type", size: 12.sp, color: black, fontWeight: FontWeight.w600),
-                                          items: ["5", "15", "10"]
-                                              .map((e) => DropdownMenuItem(
-                                            value: e,
+                                          items: ProductCubit.get(context).getAllCategoryProduct?.data
+                                              ?.map((e) => DropdownMenuItem(
+                                            value: e.name,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   right: 20.w),
                                               child: CustomText(
-                                                text: e,
+                                                text: e.name.toString(),
                                                 color: orange,
                                                 fontWeight: FontWeight.w700,
                                                 size: 14.sp,
@@ -436,7 +437,7 @@ class Products extends StatelessWidget {
                           },
                           size: 18.sp, color: darkGrey, fontWeight: FontWeight.w400,textDecoration: TextDecoration.underline,),
                       ),
-                      
+
 
                     ],
                   ),
@@ -454,6 +455,9 @@ class Products extends StatelessWidget {
                       controller: ProductCubit.get(context).search,
                       maxLines: 1,
                       validator: (value) {},
+                      onChanged: (value){
+                        ProductCubit.get(context).getAllProduct(skip: 0, take: 10);
+                      },
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.black,
@@ -493,12 +497,12 @@ class Products extends StatelessWidget {
                 ),
 
 
-                state is GetAllProductSuccessful ?
+
 
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 30.h),
                   child: Container(
-                    height: 900.h,
+
                     decoration: BoxDecoration(
                         color: white,
                         borderRadius: BorderRadiusDirectional.circular(10.r)
@@ -518,14 +522,14 @@ class Products extends StatelessWidget {
                               children: [
                                 CustomText(text: "Product", size: 20.sp, color: black, fontWeight: FontWeight.w600),
                                 SizedBox(width: 30.w,),
-                                CustomText(text: "( 5 Products)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
+                                CustomText(text: "( ${ProductCubit.get(context).getAllProductsModel!.totalCount} Products)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
                                 Spacer(),
                                 GestureDetector(
                                   onTap: (){
                                     product.animateToPage(1, duration: Duration(milliseconds: 20), curve: Curves.easeIn);
                                   },
                                   child: Container(
-                                    width: 80.w,
+                                    width: 90.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20.r),
@@ -565,6 +569,8 @@ class Products extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap:(){
+                                    ProductCubit.get(context).scrollLeft();
+
 
                                   },
                                   child: Container(
@@ -588,6 +594,7 @@ class Products extends StatelessWidget {
                                 Spacer(),
                                 GestureDetector(
                                   onTap: (){
+                                    ProductCubit.get(context).scrollRight();
 
                                   },
                                   child: Container(
@@ -623,9 +630,9 @@ class Products extends StatelessWidget {
                       ),
                     ),
                   ),
-                )   :CircularProgressIndicator(),
+                )   ,
 
-                SizedBox(height: 20.h),
+
 
 
 

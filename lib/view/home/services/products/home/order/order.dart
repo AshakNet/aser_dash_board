@@ -190,59 +190,59 @@ class OrderProducts extends StatelessWidget {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                  color: white,
-                                  borderRadius: BorderRadiusDirectional.circular(10.r)
-                              ),
-                              child: Padding(
-
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                child: SizedBox(
-                                  width: 150.w,
-                                  child: DropdownButton(
-                                      menuMaxHeight: 200.0,
-
-                                      isExpanded: true,
-                                      focusColor: white,
-                                      dropdownColor: white,
-
-                                      icon: Align(
-                                          alignment: Alignment.center,
-                                          child: Icon(Icons.keyboard_arrow_down,
-                                              color: orange, size: 30.sp)),
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      underline: SizedBox(),
-                                      value: ProductCubit.get(context).accomandtionType,
-                                      hint: CustomText(text: "Type", size: 12.sp, color: black, fontWeight: FontWeight.w600),
-                                      items: [
-                                        "Camp",
-                                        "Hotel",
-                                        "apertment"
-                                      ]
-                                          .map((e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              right: 20.w),
-                                          child: CustomText(
-                                            text: e,
-                                            color: orange,
-                                            fontWeight: FontWeight.w700,
-                                            size: 14.sp,
-                                            alignment: Alignment.center,
-                                          ),
-                                        ),
-                                      ))
-                                          .toList(),
-                                      onChanged: (val) {
-                                        ProductCubit.get(context)
-                                            .changeAccomandtionype(val);
-                                      }),
-                                ),
-                              ),
-                            )
+                            // Container(
+                            //
+                            //   decoration: BoxDecoration(
+                            //       color: white,
+                            //       borderRadius: BorderRadiusDirectional.circular(10.r)
+                            //   ),
+                            //   child: Padding(
+                            //
+                            //     padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            //     child: SizedBox(
+                            //       width: 150.w,
+                            //       child: DropdownButton(
+                            //           menuMaxHeight: 200.0,
+                            //
+                            //           isExpanded: true,
+                            //           focusColor: white,
+                            //           dropdownColor: white,
+                            //
+                            //           icon: Align(
+                            //               alignment: Alignment.center,
+                            //               child: Icon(Icons.keyboard_arrow_down,
+                            //                   color: orange, size: 30.sp)),
+                            //           borderRadius: BorderRadius.circular(10.r),
+                            //           underline: SizedBox(),
+                            //           value: ProductCubit.get(context).accomandtionType,
+                            //           hint: CustomText(text: "Type", size: 12.sp, color: black, fontWeight: FontWeight.w600),
+                            //           items: [
+                            //             "Camp",
+                            //             "Hotel",
+                            //             "apertment"
+                            //           ]
+                            //               .map((e) => DropdownMenuItem(
+                            //             value: e,
+                            //             child: Padding(
+                            //               padding: EdgeInsets.only(
+                            //                   right: 20.w),
+                            //               child: CustomText(
+                            //                 text: e,
+                            //                 color: orange,
+                            //                 fontWeight: FontWeight.w700,
+                            //                 size: 14.sp,
+                            //                 alignment: Alignment.center,
+                            //               ),
+                            //             ),
+                            //           ))
+                            //               .toList(),
+                            //           onChanged: (val) {
+                            //             ProductCubit.get(context)
+                            //                 .changeAccomandtionype(val);
+                            //           }),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         )
                       ],

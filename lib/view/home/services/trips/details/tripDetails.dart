@@ -55,7 +55,9 @@ class TripDetails extends StatelessWidget {
         },
         builder: (context,state){
           return SingleChildScrollView(
-            child: Column(
+            child:
+            state is GetOneTripsLoading ? const Center(child: CircularProgressIndicator()) :
+            Column(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
@@ -82,7 +84,7 @@ class TripDetails extends StatelessWidget {
                               color: darkGrey,
                               fontWeight: FontWeight.w600)),
                       CustomText(
-                          text: "The grand Egyptian Meusume<<",
+                          text: "${TripsCubit.get(context).getOneTripsModel!.data!.title.toString()}<<",
                           size: 12.sp,
                           color: black,
                           fontWeight: FontWeight.w700),
@@ -206,7 +208,7 @@ class TripDetails extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                state is GetOneTripsLoading ? const Center(child: CircularProgressIndicator()) :
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

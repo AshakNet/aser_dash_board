@@ -9,6 +9,8 @@ class EndPoint {
 
   static String register = "${apiUrl}Admins/register";
   static String login = apiUrl + "Accounts/login";
+  static String uploadImage = apiUrl + "Accomodation/Accomodation/UploadImage";
+
   static String addBlog = apiUrl + "Blogs";
   static String addActivity = apiUrl + "Activities/AddActivity";
   static String updateBlog = apiUrl + "Blogs?Id=";
@@ -16,6 +18,8 @@ class EndPoint {
 
   static String getGoverMent = apiUrl + "Governments";
   static String getCompany = apiUrl + "Companies/GetCompaniesforSelect";
+  static String getServicesCompany = apiUrl + "ApplicationServices";
+  static String getCategory = apiUrl + "Product/Product/GetAllProductCategory";
 
   static String accomandtionType = apiUrl + "AccomodationType/Types";
 

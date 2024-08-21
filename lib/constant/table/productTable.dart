@@ -20,6 +20,7 @@ class ProductTable extends StatelessWidget {
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
+            ProductCubit.get(context).loadOne(ProductCubit.get(context).getAllProductsModel!.data![index].id.toString());
             triple.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },
