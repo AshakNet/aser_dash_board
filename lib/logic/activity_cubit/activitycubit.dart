@@ -95,8 +95,8 @@ class ActivityCubit extends Cubit<ActivityState> {
         context: context,
 
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime.now());
+        firstDate: firstDate,
+        lastDate: lastDate);
 
     if (pickDate != null) {
       controller.text = pickDate.toString().split(" ")[0];

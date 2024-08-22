@@ -239,6 +239,8 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     http.Response response = await ApiConsumer().put(
         uri:"${EndPoint.apiUrl}Companies/RestrictCompany/$id", rawData: {
 
+          "RestrictedTill" : restricted.text.trim()
+
     },token: token);
     var jsonBody = json.decode(response.body);
     if(response.statusCode == 200){
@@ -356,6 +358,8 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     emit(EndStartChooseMonth());
   }
 
+  TextEditingController restricted = TextEditingController();
+
 
   void PickDate(
       {context, required TextEditingController controller,required DateTime firstDate,required DateTime lastDate,required DateTime initialDate}) async {
@@ -363,7 +367,6 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     DateTime? pickDate = await showDatePicker(
       //selectableDayPredicate: ,
         context: context,
-
         initialDate: initialDate,
         firstDate: firstDate,
         lastDate: lastDate);
@@ -373,6 +376,25 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     }
     emit(PickDateBlocSSuccessfulState());
   }
+
+
+  void PickDateChangeRestricted(
+
+      {context, required TextEditingController controller,required DateTime firstDate,required DateTime lastDate}) async {
+    emit(PickDateBlocLoading());
+    DateTime? pickDate = await showDatePicker(
+      //selectableDayPredicate: ,
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: firstDate,
+        lastDate: lastDate);
+
+    if (pickDate != null) {
+      controller.text = pickDate.toString().split(" ")[0];
+    }
+    emit(PickDateChangeStatusSSuccessfulState());
+  }
+
 
 
 }

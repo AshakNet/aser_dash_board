@@ -1,3 +1,4 @@
+
 import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/compaines/compaines_state/compaines_state.dart';
 import 'package:aser_dash_board/logic/compaines/compines_cubit/companies_Cubit.dart';
@@ -14,7 +15,55 @@ class CompaniesDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CompaniesCubit,CompaniesState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is ChangeStatusActiveSuccessful){
+          CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString());
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Change Successful'),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if(state is ChangeStatusActiveError){
+          ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.error),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if(state is PickDateChangeStatusSSuccessfulState){
+          CompaniesCubit.get(context).changeStatusCompainesRestrict(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString());
+        }
+        else if (state is ChangeStatusRejectedSuccessful){
+          CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString());
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Change Successful'),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if (state is ChangeStatusRejectedError){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.error),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+      },
       builder: (context,state){
         return Scaffold(
           body:
@@ -295,11 +344,37 @@ class CompaniesDetails extends StatelessWidget {
                                     SizedBox(
                                       width: 5.w,
                                     ),
-                                    CustomText(
-                                      text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.status}",
-                                      size: 14.sp,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w600,
+
+                                    Row(
+                                      children: [
+                                        CustomText(
+                                          text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.status}",
+                                          size: 14.sp,
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        SizedBox(width: 20.w,),
+
+                                        CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted"?
+                                        Row(
+                                          children: [
+                                            CustomText(
+                                              text: "Till",
+                                              size: 14.sp,
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            SizedBox(width: 10.w,),
+
+                                            CustomText(
+                                              text: CompaniesCubit.get(context).restricted.text.trim(),
+                                              size: 14.sp,
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ],
+                                        ) : SizedBox.shrink()
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -309,39 +384,78 @@ class CompaniesDetails extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      width: 120.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadiusDirectional.circular(
-                                              10.r),
-                                          border: Border.all(color: darkGrey)),
-                                      child: CustomText(
-                                        text: "Delete  ",
-                                        size: 16.sp,
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w600,
-                                        alignment: Alignment.center,
+                                    GestureDetector(
+                                      onTap : (){
+                                        // CompaniesCubit.get(context).changeStatusCompainesDelete(
+                                        //   CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                        // );
+                                      },
+                                      child: Container(
+                                        width: 120.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                10.r),
+                                            border: Border.all(color: darkGrey)),
+                                        child: CustomText(
+                                          text: "Delete  ",
+                                          size: 16.sp,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.w600,
+                                          alignment: Alignment.center,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 20.w,
                                     ),
-                                    Container(
-                                      width: 120.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadiusDirectional.circular(
-                                              10.r),
-                                          border: Border.all(color: darkGrey)),
-                                      child: CustomText(
-                                        text: "Restrict ",
-                                        size: 16.sp,
-                                        color: black,
-                                        fontWeight: FontWeight.w600,
-                                        alignment: Alignment.center,
+                                    CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Pending" ?
+                                    GestureDetector(
+                                      onTap: (){
+                                        CompaniesCubit.get(context).changeStatusCompainesActive(
+                                            CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                        );
+
+                                      },
+                                      child: Container(
+                                        width: 120.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                10.r),
+                                            border: Border.all(color: darkGrey)),
+                                        child: CustomText(
+                                          text: "Active ",
+                                          size: 16.sp,
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w600,
+                                          alignment: Alignment.center,
+                                        ),
+                                      ),
+                                    )
+                                        :
+                                    GestureDetector(
+                                      onTap: (){
+                                        CompaniesCubit.get(context).PickDateChangeRestricted(context: context,controller: CompaniesCubit.get(context).restricted, firstDate: DateTime.now(), lastDate: DateTime(2030),);
+
+                                      },
+                                      child: Container(
+                                        width: 120.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                10.r),
+                                            border: Border.all(color: darkGrey)),
+                                        child: CustomText(
+                                          text: "Restrict ",
+                                          size: 16.sp,
+                                          color: black,
+                                          fontWeight: FontWeight.w600,
+                                          alignment: Alignment.center,
+                                        ),
                                       ),
                                     ),
             

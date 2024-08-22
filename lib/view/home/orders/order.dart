@@ -15,7 +15,7 @@ class Orders extends StatelessWidget {
 
     return BlocProvider(
 
-      create: (BuildContext context)=>OrderCubit(),
+      create: (BuildContext context)=>OrderCubit()..load(),
       child: PageView(
         controller:bookingOrder,
         children: [

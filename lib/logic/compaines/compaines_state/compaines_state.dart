@@ -20,6 +20,7 @@ class ChangeContry extends CompaniesState{}
 class ChangeStatusLoaded extends CompaniesState{}
 
 class EndStartChooseMonth extends CompaniesState{}
+class PickDateChangeStatusSSuccessfulState extends CompaniesState{}
 
 class GetAllCompanyLoading extends CompaniesState{}
 class GetAllCompanySuccessful extends CompaniesState{}

@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/booking/bookingActivityAndTripsCubit/booking_activity_andtrips.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,39 +8,48 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookingTableActivity extends StatelessWidget {
   final PageController bookingTriple;
+  BuildContext context;
 
-  const BookingTableActivity({super.key, required this.bookingTriple});
+   BookingTableActivity({super.key, required this.bookingTriple,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
-            bookingTriple.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+            BookingActivityAndTripsCubit.get(context).getBookingDetailsActivity(
+              BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].id.toString()
+            );
+            bookingTriple.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },
         cells: [
-          DataCell(CustomText(text: "Moataz Elrawy ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("mo3tzelrawy111@gmail.com", style: TextStyle(
+          DataCell(CustomText(text: "${ BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].name}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text("${ BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].email}", style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "5000 EGP", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Row(
+            children: [
+              CustomText(text: "${ BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].price}", size: 14.sp,alignment: Alignment.center, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: " EGP ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+            ],
+          )),
+          DataCell(CustomText(text: "${ BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].bookingDate}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
 
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: "${ BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].status}", size: 14.sp, color:
+             BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].status == "Pending" ?
+                 Colors.black :
+             BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].status == "Upcoming" ?
+                 darkGrey :
+             BookingActivityAndTripsCubit.get(context).getAllBookingActivityModel!.data!.bookings![index].status == "Completed" ?
+                 Colors.green :
+                 Colors.red
+                , fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
 

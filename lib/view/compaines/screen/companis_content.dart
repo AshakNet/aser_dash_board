@@ -474,31 +474,7 @@ class CompanisContent extends StatelessWidget {
                                   SizedBox(width: 30.w,),
                                   CustomText(text: "( ${CompaniesCubit.get(context).getAllCompanyModel!.totalCount.toString()} Companies)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
                                   Spacer(),
-                                  GestureDetector(
-                                    onTap: (){
-                                      companyContent.animateToPage(5, duration: Duration(milliseconds: 20), curve: Curves.easeIn);
-                                    },
-                                    child: Container(
-                                      width: 170.w,
-                                      height: 50.h,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20.r),
-                                          color: orange
-                                      ),
-                                      child: Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal: 10.w),
-                                        child: Row(
 
-                                          children: [
-                                            Icon(Icons.add,color: white,),
-                                            SizedBox(width: 5.w,),
-
-                                            CustomText(text: "Add Company", size: 16.sp, color: white, fontWeight: FontWeight.w700,alignment: Alignment.center,),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
 
 
 

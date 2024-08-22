@@ -127,8 +127,11 @@ class ActivityContent extends StatelessWidget {
 
 
                     child: TextFormField(
-                      controller: TextEditingController(),
+                      controller: ActivityCubit.get(context).search,
                       maxLines: 1,
+                      onChanged: (value){
+                        ActivityCubit.get(context).getAllActivity(skip: 0, take: 10);
+                      },
                       validator: (value) {},
                       style: TextStyle(
                         fontSize: 16.sp,

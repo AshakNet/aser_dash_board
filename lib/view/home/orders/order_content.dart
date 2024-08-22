@@ -15,14 +15,19 @@ class OrderContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OrderCubit,OrderState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is PickDateBlocSSuccessfulState){
+          OrderCubit.get(context).getAllOrder(skip: 0, take: 10);
+        }
+
+      },
       builder: (context,state){
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 40.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 30.h),
                   child: Row(
                     mainAxisAlignment:
                     MainAxisAlignment.start,
@@ -46,14 +51,14 @@ class OrderContent extends StatelessWidget {
                                 maxLines: 1,
             
                                 onTap: () {
-                                  print("object");
+
                                   OrderCubit.get(context).PickDate(
                                       context : context,
                                       controller:
                                       OrderCubit.get(context)
                                           .addtionalDate,
-                                      lastDate: DateTime(2025),
-                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
             
                                       initialDate: DateTime.now()
             
@@ -209,6 +214,7 @@ class OrderContent extends StatelessWidget {
                                             }
                                             OrderCubit.get(context)
                                                 .changeStatus(val);
+                                            OrderCubit.get(context).getAllOrder(skip: 0, take: 10);
                                           }),
                                     ),
                                   ),
@@ -224,36 +230,73 @@ class OrderContent extends StatelessWidget {
                         child: CustomText(
                           text: "Reset",
                           size: 18.sp,
+                          function: (){
+                            OrderCubit.get(context).addtionalDate.clear();
+                            OrderCubit.get(context).status = null;
+                            OrderCubit.get(context).statusConvert = null;
+                            OrderCubit.get(context).getAllOrder(skip: 0, take: 10);
+                          },
                           color: darkGrey,
                           fontWeight: FontWeight.w400,
                           textDecoration: TextDecoration.underline,
                         ),
                       ),
-                      SizedBox(width: 40.w,),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30.h),
-                        child: Container(
-                          width: 90.w,
-                          height: 40.h,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadiusDirectional.circular(
-                                20.r),
-                            color: orange,
-                          ),
-                          child: CustomText(
-                            text: "Search",
-                            size: 18.sp,
-                            color: white,
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      )
+
                     ],
                   ),
                 ),
-                SizedBox(height: 30.h,),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 30.w),
+                  child: SizedBox(
+                    child: TextFormField(
+                      controller: OrderCubit.get(context).search,
+                      maxLines: 1,
+                      onChanged: (value){
+                        OrderCubit.get(context).getAllOrder(skip: 0, take: 10);
+                      },
+
+                      validator: (value) {},
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.black,
+                      ),
+                      decoration: InputDecoration(
+                        prefixIcon: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.search,
+                            color: darkGrey,
+                          ),
+                        ),
+                        //filled: true,
+
+                        fillColor:
+                        const Color.fromRGBO(247, 247, 247, 1),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 13.w,
+                          vertical: 20.h,
+                        ),
+                        constraints: BoxConstraints(
+                          minHeight: 64.h,
+                          minWidth: 372.w,
+                        ),
+
+                        hintStyle: TextStyle(
+                          fontSize: 16.sp,
+                          color: darkGrey,
+                        ),
+                        hintText: 'search',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                          borderSide: BorderSide(color: orange),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                state is GetAllOrderLoading ? const Center(child: CircularProgressIndicator()) :
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 20.w),
                   child: Container(
@@ -276,7 +319,7 @@ class OrderContent extends StatelessWidget {
                                 width: 30.w,
                               ),
                               CustomText(
-                                  text: "(23 Order)",
+                                  text: "(${OrderCubit.get(context).getAllOrderModel!.data!.totalCount} Order)",
                                   size: 16.sp,
                                   color: darkGrey,
                                   fontWeight: FontWeight.w500),
@@ -284,136 +327,86 @@ class OrderContent extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 20.h),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
-                            child: SizedBox(
-                              child: TextFormField(
-                                controller: TextEditingController(),
-                                maxLines: 1,
-                                onChanged: (value){
-                                  // HomeCubit.get(context).getAllBlog(0, 10);
+                          SizedBox(height: 30.h,),
+
+                          OrderBookingTable(orderBookingTable: orderContent,context: context),
+
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+
                                 },
-                                onSaved: (value){
-                                  // HomeCubit.get(context).getAllBlog(0, 0);
-                                },
-                                validator: (value) {},
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: Colors.black,
-                                ),
-                                decoration: InputDecoration(
-                                  prefixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.search,
-                                      color: darkGrey,
-                                    ),
-                                  ),
-                                  //filled: true,
-            
-                                  fillColor:
-                                  const Color.fromRGBO(247, 247, 247, 1),
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 13.w,
-                                    vertical: 20.h,
-                                  ),
-                                  constraints: BoxConstraints(
-                                    minHeight: 64.h,
-                                    minWidth: 372.w,
-                                  ),
-            
-                                  hintStyle: TextStyle(
-                                    fontSize: 16.sp,
-                                    color: darkGrey,
-                                  ),
-                                  hintText: 'search',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    borderSide: BorderSide(color: orange),
+                                child: Container(
+                                  width: 109.w,
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadiusDirectional.circular(
+                                          10.r),
+                                      border: Border.all(
+                                          color: Colors.grey.shade500)),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.keyboard_arrow_left_sharp,
+                                        color: Colors.grey.shade500,
+                                      ),
+                                      CustomText(
+                                        text: "Previous",
+                                        size: 14.sp,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.w600,
+                                        alignment: Alignment.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 20.h),
+                              Spacer(),
+                              GestureDetector(
+                                onTap: () {
+
+
+                                  //HomeCubit.get(context).getAllBlog();
+                                },
+                                child: Container(
+                                  width: 80.w,
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadiusDirectional.circular(
+                                          10.r),
+                                      border: Border.all(
+                                          color: Colors.grey.shade500)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: [
+                                      CustomText(
+                                        text: "Next",
+                                        size: 14.sp,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.w600,
+                                        alignment: Alignment.center,
+                                      ),
+                                      Icon(
+                                        Icons.keyboard_arrow_right,
+                                        color: Colors.grey.shade500,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+
                         ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 30.h,),
-            
-                OrderBookingTable(orderBookingTable: orderContent,),
-            
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-            
-                      },
-                      child: Container(
-                        width: 109.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadiusDirectional.circular(
-                                10.r),
-                            border: Border.all(
-                                color: Colors.grey.shade500)),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.keyboard_arrow_left_sharp,
-                              color: Colors.grey.shade500,
-                            ),
-                            CustomText(
-                              text: "Previous",
-                              size: 14.sp,
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.w600,
-                              alignment: Alignment.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-            
-            
-                        //HomeCubit.get(context).getAllBlog();
-                      },
-                      child: Container(
-                        width: 80.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadiusDirectional.circular(
-                                10.r),
-                            border: Border.all(
-                                color: Colors.grey.shade500)),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: "Next",
-                              size: 14.sp,
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.w600,
-                              alignment: Alignment.center,
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_right,
-                              color: Colors.grey.shade500,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                )
+
             
               ],
             ),

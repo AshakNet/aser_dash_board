@@ -228,7 +228,7 @@ class AddActivity extends StatelessWidget {
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                     child: Container(
                                       width: 597.w,
-                                      height: 200.h,
+
 
 
                                       decoration: BoxDecoration(
@@ -311,7 +311,7 @@ class AddActivity extends StatelessWidget {
                                                     width: 178.w,onTap: (){
                                                        ActivityCubit.get(context).PickDate(context : context,
                                                           controller:  ActivityCubit.get(context).activityStartDate,
-                                                       firstDate: DateTime.now(),
+                                                         firstDate: DateTime.now(),
                                                          lastDate: DateTime(2030)
                                                        );
                                                     },

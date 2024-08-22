@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/booking/order_cubit/order_cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,39 +8,50 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderBookingTable extends StatelessWidget {
   final PageController orderBookingTable;
+  BuildContext context;
 
-  const OrderBookingTable({super.key, required this.orderBookingTable});
+   OrderBookingTable({super.key, required this.orderBookingTable,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      OrderCubit.get(context).getAllOrderModel!.data!.bookings!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
           if (selected != null && selected) {
+
+            OrderCubit.get(context).getOrderDetails(
+                OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].id.toString()
+            );
+
             orderBookingTable.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },
         cells: [
-          DataCell(CustomText(text: "Moataz Elrawy ", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("mo3tzelrawy111@gmail.com", style: TextStyle(
+          DataCell(CustomText(text: "${OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].name}", size: 14.sp, color: const Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text("${OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].email}", style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "5000 EGP", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Row(
+            children: [
+              CustomText(text: "${OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].price}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+              CustomText(text: " EGP ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400),
+            ],
+          )),
+          DataCell(CustomText(text: "${OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].bookingDate}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
 
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: "${OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].status}", size: 14.sp, color:
+            OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].status == "Pending" ?
+            Colors.black :
+            OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].status == "Upcoming" ?
+            darkGrey :
+            OrderCubit.get(context).getAllOrderModel!.data!.bookings![index].status == "Completed" ?
+            Colors.green :
+            Colors.red
+                , fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
 
@@ -49,30 +61,6 @@ class OrderBookingTable extends StatelessWidget {
     );
   }
 
-  static Color _getStatusColor(int index) {
-    switch (index % 4) {
-      case 0:
-        return Color.fromRGBO(231, 248, 240, 1);
-      case 1:
-        return Color.fromRGBO(244, 244, 244, 1);
-      case 3:
-      default:
-        return const Color.fromRGBO(251, 201, 160, 1);
-    }
-  }
-
-  static String _getStatusText(int index) {
-    switch (index % 4) {
-      case 0:
-        return 'Pending';
-      case 1:
-        return 'Cancelled';
-
-      case 2:
-      default:
-        return 'Accepted';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
