@@ -61,3 +61,14 @@ class CreateTripsSuccessful extends TripsState{}
 class CreateTripsLoading extends TripsState{
 
 }
+
+class GetProfitsTripsError extends TripsState{
+  final String error;
+
+  GetProfitsTripsError(this.error);
+}
+class GetProfitsTripsSuccessful extends TripsState{}
+class ChoosesMonthTripsLoaded extends TripsState{}
+class GetProfitsTripsLoading extends TripsState{
+
+}

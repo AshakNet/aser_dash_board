@@ -3,16 +3,18 @@ import 'dart:ui';
 import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/homeNavigator/home_naviagtor.dart';
 import 'package:aser_dash_board/logic/homeNavigator/home_state.dart';
+import 'package:aser_dash_board/view/booking/booking.dart';
 import 'package:aser_dash_board/view/compaines/screen/compaines.dart';
-import 'package:aser_dash_board/view/home/booking/booking.dart';
 import 'package:aser_dash_board/view/home/home/home.dart';
-import 'package:aser_dash_board/view/home/notification/notification.dart';
-import 'package:aser_dash_board/view/home/orders/order.dart';
-import 'package:aser_dash_board/view/home/services/activity/activity_home/activity_home.dart';
-import 'package:aser_dash_board/view/home/services/products/home/productHome.dart';
-import 'package:aser_dash_board/view/home/services/accomandation/services.dart';
-import 'package:aser_dash_board/view/home/services/trips/home/tripsHome.dart';
-import 'package:aser_dash_board/view/home/settings/settings.dart';
+
+import 'package:aser_dash_board/view/individual/individual.dart';
+import 'package:aser_dash_board/view/notification/notification.dart';
+import 'package:aser_dash_board/view/orders/order.dart';
+import 'package:aser_dash_board/view/services/accomandation/services.dart';
+import 'package:aser_dash_board/view/services/activity/activity_home/activity_home.dart';
+import 'package:aser_dash_board/view/services/products/home/productHome.dart';
+import 'package:aser_dash_board/view/services/trips/home/tripsHome.dart';
+import 'package:aser_dash_board/view/settings/settings.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,7 @@ class HomeLanding extends StatelessWidget {
     Compaines(),
     Booking(),
     Orders(),
+    Individual(),
     NotificationPage(),
     Settings()
 
@@ -60,53 +63,7 @@ class HomeLanding extends StatelessWidget {
                 child: Text("Nomadica",style: TextStyle(fontWeight:FontWeight.w700,fontSize: 20.sp,color: orange),),
               ),
 
-              title: Padding(
 
-                padding:  EdgeInsets.symmetric(vertical: 10.h),
-                child: SizedBox(
-                  width: 500.w,
-
-                  child: TextFormField(
-                    controller: TextEditingController(),
-                    maxLines: 1,
-                    validator: (value) {},
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.search,
-                          color: darkGrey,
-                        ),
-                      ),
-                      filled: true,
-
-                      fillColor: Color.fromRGBO(247, 247, 247, 1),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 13.w,
-                        vertical: 20.h,
-                      ),
-                      constraints: BoxConstraints(
-                        minHeight: 64.h,
-                        minWidth: 372.w,
-                      ),
-
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        color: darkGrey,
-                      ),
-                      hintText: 'search',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               actions: [
                 Padding(
                   padding:  EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
@@ -138,13 +95,12 @@ class HomeLanding extends StatelessWidget {
                         Padding(
                           padding:  EdgeInsets.symmetric(horizontal: 10.w),
                           child: Container(
-                            width: 140.w,
 
                             decoration: BoxDecoration(
                                         color:  HomeNavigatorCubit.get(context).selectedIndex == 1 ? orange : white,
                                         borderRadius: BorderRadiusDirectional.circular(20.r)
                             ),
-                            child: ExpansionTile(
+                            child: ExpansionTile(initiallyExpanded: true,
 
                               title:  CustomText(
                                 text: "Services",
@@ -178,10 +134,13 @@ class HomeLanding extends StatelessWidget {
                             image: 'assets/images/home/booking.png', title: 'Booking', index: 6, iconWidth: 39.w, iconHeight: 28.h, context: context),
                         _sideBarBuilder(
                             image: 'assets/images/home/order.png', title: 'Orders', index: 7, iconWidth: 39.w, iconHeight: 28.h, context: context),
+
                         _sideBarBuilder(
-                            image: 'assets/images/home/notification.png', title: 'Notifications', index: 8, iconWidth: 39.w, iconHeight: 36.h, context: context),
+                            image: 'assets/images/home/order.png', title: 'Individual', index: 8, iconWidth: 39.w, iconHeight: 28.h, context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/setting.png', title: 'Settings', index: 9, iconWidth: 36.w, iconHeight: 28.h, context: context),
+                            image: 'assets/images/home/notification.png', title: 'Notifications', index: 9, iconWidth: 39.w, iconHeight: 36.h, context: context),
+                        _sideBarBuilder(
+                            image: 'assets/images/home/setting.png', title: 'Settings', index: 10, iconWidth: 36.w, iconHeight: 28.h, context: context),
                       ],
                     ),
                   ),

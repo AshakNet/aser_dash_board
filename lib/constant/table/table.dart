@@ -43,7 +43,14 @@ class HotelDataTable extends StatelessWidget {
           DataCell(
             CustomText(
                 alignment: Alignment.center,
-                text: AccomandtionCubit.get(context).allAccomandtionModel!.data![index].status.toString(), size: 14.sp, color: _getStatusColor(index), fontWeight: FontWeight.w400),
+                text: AccomandtionCubit.get(context).allAccomandtionModel!.data![index].status.toString(), size: 14.sp, color:
+
+            AccomandtionCubit.get(context).allAccomandtionModel!.data![index].status == "Accepted" ? Colors.green :
+            AccomandtionCubit.get(context).allAccomandtionModel!.data![index].status == "Rejected" ? Colors.red :
+                Colors.black
+                ,
+
+                fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
         ],

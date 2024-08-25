@@ -111,9 +111,12 @@ String ? fixInsight;
 
   void load()async{
     await getProfitsAccomodation();
+    await getAllAccomandtion(skip: 0, take: 10);
+
+
     await getGovernments();
     await getAccomandtionType();
-    await getAllAccomandtion(skip: 0, take: 10);
+
 
   }
 

@@ -1,5 +1,6 @@
 
 import 'package:aser_dash_board/constant/color.dart';
+import 'package:aser_dash_board/logic/user_cubit/user_cubit.dart';
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmployeeTable extends StatelessWidget {
    PageController employeeTable = PageController();
+   BuildContext context;
 
-   EmployeeTable({super.key, required this.employeeTable});
+   EmployeeTable({super.key, required this.employeeTable,required this.context});
 
   List<DataRow> _createRows() {
     return List.generate(
-      12,
+      UserCubit.get(context).getAllAdminModel!.data!.adminsData!.length,
           (index) => DataRow(
 
         onSelectChanged: (selected) {
@@ -21,27 +23,23 @@ class EmployeeTable extends StatelessWidget {
           }
         },
         cells: [
-          DataCell(CustomText(text: "Moataz Elrawy ", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(Text("mo3tzelrawy111@gmail.com", style: TextStyle(
+          DataCell(CustomText(text: "${UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].name.toString()}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(Text("${UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].email.toString()}", style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color.fromRGBO(93, 102, 121, 1)
           ))),
-          DataCell(CustomText(text: "01068622052", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
-          DataCell(CustomText(text: "18 Mai , 2024", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: "${UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].phone.toString()}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
+          DataCell(CustomText(text: "${UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].additionalDate.toString()}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
 
 
 
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: _getStatusText(index), size: 14.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: "${UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].status.toString()}", size: 14.sp, color:
+            UserCubit.get(context).getAllAdminModel?.data?.adminsData![index].status == "Active" ?
+                Colors.green :
+                Colors.red
+                , fontWeight: FontWeight.w400),
           ),
           const DataCell(Icon(Icons.more_vert))
 
@@ -51,25 +49,7 @@ class EmployeeTable extends StatelessWidget {
     );
   }
 
-  static Color _getStatusColor(int index) {
-    switch (index % 2) {
-      case 0:
-        return Color.fromRGBO(231, 248, 240, 1);
-      case 1:
-      default:
-        return Color.fromRGBO(251, 201, 160, 1);
-    }
-  }
 
-  static String _getStatusText(int index) {
-    switch (index % 2) {
-      case 0:
-        return 'Active';
-      case 1:
-      default:
-        return 'Deleted';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

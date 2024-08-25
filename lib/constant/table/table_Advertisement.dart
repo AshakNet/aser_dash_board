@@ -37,15 +37,12 @@ class HotelAccomandtion extends StatelessWidget {
 
           DataCell(CustomText(text: "${HomeCubit.get(context).getAllBlogModel!.data![index].addedBy}", size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
           DataCell(
-            Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                color: _getStatusColor(index),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 5.h),
-              child: CustomText(text: HomeCubit.get(context).getAllBlogModel!.data![index].status.toString(), size: 12.sp, color: black, fontWeight: FontWeight.w400),
-            ),
+            CustomText(text: HomeCubit.get(context).getAllBlogModel!.data![index].status.toString(), size: 12.sp, color:
+            HomeCubit.get(context).getAllBlogModel!.data![index].status == "Active" ?
+                Colors.green :
+                Colors.red
+
+                , fontWeight: FontWeight.w400),
           ),
           DataCell(Icon(Icons.more_vert))
         ],

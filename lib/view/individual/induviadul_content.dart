@@ -1,7 +1,10 @@
 import 'package:aser_dash_board/constant/color.dart';
-import 'package:aser_dash_board/constant/table/companyies/company_table.dart';
-import 'package:aser_dash_board/logic/compaines/compaines_state/compaines_state.dart';
-import 'package:aser_dash_board/logic/compaines/compines_cubit/companies_Cubit.dart';
+import 'package:aser_dash_board/constant/table/indavidual/induvadul.dart';
+import 'package:aser_dash_board/logic/indivdulCubit/indivadulCubit.dart';
+import 'package:aser_dash_board/logic/indivdulCubit/indivadulState.dart';
+
+
+
 
 import 'package:aser_dash_board/widgets/customText/customtext.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,16 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CompanisContent extends StatelessWidget {
-  PageController companyContent = PageController();
-   CompanisContent({super.key,required this.companyContent});
+class IndividualContent extends StatelessWidget {
+  PageController individualContent = PageController();
+  IndividualContent({super.key,required this.individualContent});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CompaniesCubit,CompaniesState>(
+    return BlocConsumer<IndividualCubit,IndividualState>(
       listener: (context,state){
         if(state is PickDateBlocSSuccessfulState){
-          CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+          IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
         }
       },
       builder: (context,state){
@@ -34,7 +37,7 @@ class CompanisContent extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap:(){
-                          companyContent.animateToPage(0, duration: Duration(microseconds: 30), curve: Curves.easeIn);
+                          individualContent.animateToPage(0, duration: Duration(microseconds: 30), curve: Curves.easeIn);
                         },
                         child: CustomText(
                             text: "Home",
@@ -53,9 +56,9 @@ class CompanisContent extends StatelessWidget {
                     ],
                   ),
                 ),
-            
+
                 SizedBox(height: 40.h,),
-            
+
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
@@ -68,7 +71,7 @@ class CompanisContent extends StatelessWidget {
                             Column(
                               children: [
                                 CustomText(
-                                    text: "Company Service",
+                                    text: "Gender",
                                     size: 16.sp,
                                     color: black,
                                     fontWeight: FontWeight.w600),
@@ -76,39 +79,39 @@ class CompanisContent extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Container(
-            
+
                                   decoration: BoxDecoration(
                                       color: white,
                                       borderRadius: BorderRadiusDirectional.circular(10.r)
                                   ),
                                   child: Padding(
-            
+
                                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                                     child: SizedBox(
                                       width: 150.w,
                                       child: DropdownButton(
                                           menuMaxHeight: 200.0,
-            
+
                                           isExpanded: true,
                                           focusColor: white,
                                           dropdownColor: white,
-            
+
                                           icon: Align(
                                               alignment: Alignment.center,
                                               child: Icon(Icons.keyboard_arrow_down,
                                                   color: orange, size: 30.sp)),
                                           borderRadius: BorderRadius.circular(10.r),
                                           underline: SizedBox(),
-                                          value: CompaniesCubit.get(context).selectCompanyVar,
-                                          hint: CustomText(text: "Service Type", size: 12.sp, color: black, fontWeight: FontWeight.w600),
-                                          items: CompaniesCubit.get(context).getApplicationServicesModel?.data
-                                              ?.map((e) => DropdownMenuItem(
-                                            value: e.id,
+                                          value: IndividualCubit.get(context).gender,
+                                          hint: CustomText(text: "Gender", size: 12.sp, color: black, fontWeight: FontWeight.w600),
+                                          items: ["male","female"]
+                                              .map((e) => DropdownMenuItem(
+                                            value: e,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   right: 20.w),
                                               child: CustomText(
-                                                text: e.serviceName.toString(),
+                                                text: e,
                                                 color: orange,
                                                 fontWeight: FontWeight.w700,
                                                 size: 14.sp,
@@ -118,9 +121,9 @@ class CompanisContent extends StatelessWidget {
                                           ))
                                               .toList(),
                                           onChanged: (val) {
-                                            CompaniesCubit.get(context)
-                                                .selectCompany(val);
-                                            CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+                                            IndividualCubit.get(context)
+                                                .changeGender(val);
+                                            IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
                                           }),
                                     ),
                                   ),
@@ -130,7 +133,7 @@ class CompanisContent extends StatelessWidget {
                           ],
                         ),
                       ),
-            
+
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Row(
@@ -138,7 +141,7 @@ class CompanisContent extends StatelessWidget {
                             Column(
                               children: [
                                 CustomText(
-                                    text: " Company governate",
+                                    text: "Transaction",
                                     size: 16.sp,
                                     color: black,
                                     fontWeight: FontWeight.w600),
@@ -146,39 +149,38 @@ class CompanisContent extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Container(
-            
+
                                   decoration: BoxDecoration(
                                       color: white,
                                       borderRadius: BorderRadiusDirectional.circular(10.r)
                                   ),
                                   child: Padding(
-            
+
                                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                                     child: SizedBox(
                                       width: 150.w,
                                       child: DropdownButton(
                                           menuMaxHeight: 200.0,
-            
+
                                           isExpanded: true,
                                           focusColor: white,
                                           dropdownColor: white,
-            
+
                                           icon: Align(
                                               alignment: Alignment.center,
                                               child: Icon(Icons.keyboard_arrow_down,
                                                   color: orange, size: 30.sp)),
                                           borderRadius: BorderRadius.circular(10.r),
                                           underline: SizedBox(),
-                                          value: CompaniesCubit.get(context).government,
-                                          hint: CustomText(text: "Governate", size: 12.sp, color: black, fontWeight: FontWeight.w600),
-                                          items: CompaniesCubit.get(context).governmentsModel?.data
-                                              ?.map((e) => DropdownMenuItem(
-                                            value: e.id,
+                                          value: IndividualCubit.get(context).transaction,
+                                          hint: CustomText(text: "Transaction", size: 12.sp, color: black, fontWeight: FontWeight.w600),
+                                          items: ["5","8","10"].map((e) => DropdownMenuItem(
+                                            value: e,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   right: 20.w),
                                               child: CustomText(
-                                                text: e.name.toString(),
+                                                text: e,
                                                 color: orange,
                                                 fontWeight: FontWeight.w700,
                                                 size: 14.sp,
@@ -188,9 +190,9 @@ class CompanisContent extends StatelessWidget {
                                           ))
                                               .toList(),
                                           onChanged: (val) {
-                                            CompaniesCubit.get(context)
-                                                .changeCountry(val);
-                                            CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+                                            IndividualCubit.get(context)
+                                                .changeTransaction(val);
+                                            IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
 
                                           }),
                                     ),
@@ -201,15 +203,15 @@ class CompanisContent extends StatelessWidget {
                           ],
                         ),
                       ),
-            
-                     
-            
+
+
+
                       Padding(
-            
+
                         padding:  EdgeInsets.symmetric(vertical: 10.h),
                         child: SizedBox(
                           width: 200.w,
-            
+
                           child: Column(
                             children: [
                               CustomText(
@@ -218,11 +220,11 @@ class CompanisContent extends StatelessWidget {
                                   color: black,
                                   fontWeight: FontWeight.w600),
                               TextFormField(
-                                controller: CompaniesCubit.get(context).addtionalDate,
+                                controller: IndividualCubit.get(context).addtionalDate,
                                 maxLines: 1,
                                 readOnly: true,
                                 onTap: (){
-                                  CompaniesCubit.get(context).PickDate(context : context, controller:  CompaniesCubit.get(context).addtionalDate,
+                                  IndividualCubit.get(context).PickDate(context : context, controller:  IndividualCubit.get(context).addtionalDate,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime(2000),
                                       lastDate: DateTime(2050-2-8)
@@ -251,7 +253,7 @@ class CompanisContent extends StatelessWidget {
                                     minHeight: 64.h,
                                     minWidth: 372.w,
                                   ),
-            
+
                                   hintStyle: TextStyle(
                                     fontSize: 16.sp,
                                     color: darkGrey,
@@ -267,7 +269,7 @@ class CompanisContent extends StatelessWidget {
                           ),
                         ),
                       ),
-            
+
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Row(
@@ -283,30 +285,30 @@ class CompanisContent extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Container(
-            
+
                                   decoration: BoxDecoration(
                                       color: white,
                                       borderRadius: BorderRadiusDirectional.circular(10.r)
                                   ),
                                   child: Padding(
-            
+
                                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                                     child: SizedBox(
                                       width: 150.w,
                                       child: DropdownButton(
                                           menuMaxHeight: 200.0,
-            
+
                                           isExpanded: true,
                                           focusColor: white,
                                           dropdownColor: white,
-            
+
                                           icon: Align(
                                               alignment: Alignment.center,
                                               child: Icon(Icons.keyboard_arrow_down,
                                                   color: orange, size: 30.sp)),
                                           borderRadius: BorderRadius.circular(10.r),
                                           underline: SizedBox(),
-                                          value: CompaniesCubit.get(context).status,
+                                          value: IndividualCubit.get(context).status,
                                           hint: CustomText(text: "Service status", size: 12.sp, color: black, fontWeight: FontWeight.w600),
                                           items: [
                                             "Active",
@@ -331,23 +333,23 @@ class CompanisContent extends StatelessWidget {
                                               .toList(),
                                           onChanged: (val) {
                                             if(val == "Active"){
-                                              CompaniesCubit.get(context).convertNumberStatus = "0";
+                                              IndividualCubit.get(context).convertNumberStatus = "0";
                                             }
                                             else if(val == "Deleted"){
-                                              CompaniesCubit.get(context).convertNumberStatus = "1";
+                                              IndividualCubit.get(context).convertNumberStatus = "1";
 
                                             }
                                             else if(val == "Restricted"){
-                                              CompaniesCubit.get(context).convertNumberStatus = "2";
+                                              IndividualCubit.get(context).convertNumberStatus = "2";
 
                                             }
                                             else{
-                                              CompaniesCubit.get(context).convertNumberStatus = "3";
+                                              IndividualCubit.get(context).convertNumberStatus = "3";
 
                                             }
-                                            CompaniesCubit.get(context)
+                                            IndividualCubit.get(context)
                                                 .changeStatus(val);
-                                            CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+                                            IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
 
                                           }),
                                     ),
@@ -367,12 +369,12 @@ class CompanisContent extends StatelessWidget {
                             child: CustomText(text: "Reset",
 
                               function: (){
-                                 CompaniesCubit.get(context).addtionalDate.clear();
-                                 CompaniesCubit.get(context).search.clear();
-                                 CompaniesCubit.get(context).status = null;
-                                 CompaniesCubit.get(context).selectCompanyVar = null;
-                                 CompaniesCubit.get(context).government = null;
-                                 CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+                                IndividualCubit.get(context).addtionalDate.clear();
+                                IndividualCubit.get(context).search.clear();
+                                IndividualCubit.get(context).status = null;
+                                IndividualCubit.get(context).convertNumberStatus = null;
+                                IndividualCubit.get(context).transaction = null;
+                                IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
 
 
                               },
@@ -382,12 +384,12 @@ class CompanisContent extends StatelessWidget {
 
                         ],
                       ),
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
                     ],
                   ),
                 ),
@@ -399,9 +401,9 @@ class CompanisContent extends StatelessWidget {
 
 
                     child: TextFormField(
-                      controller: CompaniesCubit.get(context).search,
+                      controller: IndividualCubit.get(context).search,
                       onChanged: (value){
-                        CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
+                        IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
                       },
                       maxLines: 1,
                       validator: (value) {},
@@ -446,7 +448,7 @@ class CompanisContent extends StatelessWidget {
 
 
 
-                state is GetAllCompanySuccessful ?
+                state is GetAllIndividualLoading ? const Center(child: CircularProgressIndicator()):
 
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 30.h),
@@ -470,9 +472,9 @@ class CompanisContent extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  CustomText(text: "Companies", size: 20.sp, color: black, fontWeight: FontWeight.w600),
+                                  CustomText(text: "Individual", size: 20.sp, color: black, fontWeight: FontWeight.w600),
                                   SizedBox(width: 30.w,),
-                                  CustomText(text: "( ${CompaniesCubit.get(context).getAllCompanyModel!.totalCount.toString()} Companies)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
+                                  CustomText(text: "( ${IndividualCubit.get(context).getAllIndividulsModel!.data!.totalCount} Customer)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
                                   Spacer(),
 
 
@@ -484,14 +486,14 @@ class CompanisContent extends StatelessWidget {
                               ),
                               SizedBox(height: 20.h),
 
-                              CompainesTable(companyDetails: companyContent,context: context,),
+                              IndividualTable(individualDetails: individualContent,context: context,),
                               SizedBox(height: 20.h),
                               Row(
 
                                 children: [
                                   GestureDetector(
                                     onTap:(){
-                                      CompaniesCubit.get(context).scrollLeft();
+                                      IndividualCubit.get(context).scrollLeft();
 
                                     },
                                     child: Container(
@@ -515,7 +517,7 @@ class CompanisContent extends StatelessWidget {
                                   Spacer(),
                                   GestureDetector(
                                     onTap: (){
-                                      CompaniesCubit.get(context).scrollRight();
+                                      IndividualCubit.get(context).scrollRight();
                                     },
                                     child: Container(
                                       width: 80.w,
@@ -552,13 +554,13 @@ class CompanisContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                ) :
-                const Center(child: CircularProgressIndicator())
+                )
 
 
 
-            
-            
+
+
+
               ],
             ),
           ),

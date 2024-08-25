@@ -6,6 +6,7 @@ import 'package:aser_dash_board/logic/trips_cubit/trips_state.dart';
 import 'package:aser_dash_board/model/activity/getselectCompany/getSelectCompany.dart';
 import 'package:aser_dash_board/model/trips/alltrips.dart';
 import 'package:aser_dash_board/model/trips/getOneTripModel.dart';
+import 'package:aser_dash_board/model/trips/profit_trip.dart';
 import 'package:aser_dash_board/repositories/api/api%20consumer/apiConsumer.dart';
 import 'package:aser_dash_board/repositories/api/enpoint/enpoint.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +43,11 @@ class TripsCubit extends Cubit<TripsState> {
   TextEditingController tripsEndDate = TextEditingController();
   String? selectCompanyVar  ;
   GetAllCompanyModel? getAllCompanyModel;
+  tripsCompanyModelProfit? getTripsProfitModel;
+  String ? fixTrips;
+  List <String> month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+
 
 
   final storage = new FlutterSecureStorage();
@@ -50,11 +56,21 @@ class TripsCubit extends Cubit<TripsState> {
   GetAllTripsModel? getAllTripsModel;
   GetOneTripsModel? getOneTripsModel;
 
+ String? choosesMonthTrips;
+
+  void chooseMonthTrips(value) {
+
+    choosesMonthTrips = value;
+    emit(ChoosesMonthTripsLoaded());
+  }
+
 
 
   void load()async{
+    await getProfitsTrips();
     await getAllTrips(skip: 0, take: 10);
     await getCompany();
+
 
   }
 
@@ -74,6 +90,29 @@ class TripsCubit extends Cubit<TripsState> {
     selectCompanyVar = value;
     emit(SelectCompanySuccessful());
   }
+  Future getProfitsTrips() async {
+
+    emit(GetProfitsTripsLoading());
+
+    final token = await storage.read(key: 'token');
+    print("tokn is person blog = $token");
+    http.Response response = await ApiConsumer().get(uri:
+    fixTrips == null ?
+    "${EndPoint.apiUrl}AdminTrips/GetCompanyAndIndividualTripCount" :
+    "${EndPoint.apiUrl}AdminTrips/GetCompanyAndIndividualTripCount?Month=$fixTrips"
+        , token: token);
+    var responseData = await json.decode(response.body);
+    if (response.statusCode == 200) {
+
+      getTripsProfitModel = tripsCompanyModelProfit.fromJson(responseData);
+
+      emit(GetProfitsTripsSuccessful());
+    } else {
+      print(response.body);
+      emit(GetProfitsTripsError(response.body));
+    }
+  }
+
 
   /// get All Trips
   Future getAllTrips({required int skip, required int take}) async {

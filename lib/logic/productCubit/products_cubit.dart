@@ -100,8 +100,8 @@ class ProductCubit extends Cubit<ProductState> {
 
   void load()async{
     await getProfitsProduct();
-
     await getAllProduct(skip: 0, take: 10);
+
     await getCompany();
     await getCategoryOfProduct();
   }

@@ -17,12 +17,16 @@ class HomeMain extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PickDateBlocSSuccessfulState){
+          HomeCubit.get(context).getAllBlog(skip: 0, take: 10);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: state is GetSystemProfitsLoading ||
-                  state is GetBlogLoading ||
-                  state is GetAllBlogLoading
+                  state is GetBlogLoading
+
               ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -245,7 +249,7 @@ class HomeMain extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadiusDirectional
                                                             .circular(20.r),
-                                                    color: Color.fromRGBO(
+                                                    color: const Color.fromRGBO(
                                                         249, 239, 233, 1)),
                                                 child: Column(
                                                   children: [
@@ -282,7 +286,7 @@ class HomeMain extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600),
-                                                          Spacer(),
+                                                          const Spacer(),
                                                           Image.asset(
                                                               items[index]
                                                                   ['image']!)
@@ -348,13 +352,16 @@ class HomeMain extends StatelessWidget {
                                                 .addtionalDate,
                                             maxLines: 1,
                                             readOnly: true,
+                                            onFieldSubmitted: (value){
+                                              HomeCubit.get(context).getAllBlog(skip: 0, take: 10);
+                                            },
                                             onTap: () {
                                               HomeCubit.get(context).PickDate(
                                                  context:  context,
                                                 controller:   HomeCubit.get(context)
                                                       .addtionalDate,
                                               firstDate: DateTime(2000),
-                                                lastDate: DateTime.now()
+                                                  lastDate: DateTime(2030)
                                               );
                                             },
                                             validator: (value) {},
@@ -363,14 +370,7 @@ class HomeMain extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             decoration: InputDecoration(
-                                              suffixIcon: IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  color: orange,
-                                                  size: 20.sp,
-                                                ),
-                                              ),
+
                                               filled: true,
                                               fillColor: white,
                                               contentPadding:
@@ -414,6 +414,9 @@ class HomeMain extends StatelessWidget {
                                             controller:
                                                 HomeCubit.get(context).endDate,
                                             maxLines: 1,
+                                            onFieldSubmitted: (value){
+                                              HomeCubit.get(context).getAllBlog(skip: 0, take: 10);
+                                            },
                                             readOnly: true,
                                             onTap: () {
                                               HomeCubit.get(context).PickDate(
@@ -421,7 +424,7 @@ class HomeMain extends StatelessWidget {
                                                  controller:  HomeCubit.get(context)
                                                       .endDate,
                                               firstDate: DateTime(2000),
-                                              lastDate: DateTime.now()
+                                              lastDate: DateTime(2030)
                                               );
                                             },
                                             validator: (value) {},
@@ -430,14 +433,7 @@ class HomeMain extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             decoration: InputDecoration(
-                                              suffixIcon: IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  color: orange,
-                                                  size: 20.sp,
-                                                ),
-                                              ),
+
                                               filled: true,
                                               fillColor: white,
                                               contentPadding:
@@ -564,6 +560,7 @@ class HomeMain extends StatelessWidget {
                                                         }
                                                         HomeCubit.get(context)
                                                             .changeStatus(val);
+                                                        HomeCubit.get(context).getAllBlog(skip: 0, take: 10);
                                                       }),
                                                 ),
                                               ),
@@ -578,37 +575,78 @@ class HomeMain extends StatelessWidget {
                                     child: CustomText(
                                       text: "Reset",
                                       size: 18.sp,
+                                      function: (){
+                                        HomeCubit.get(context).startDate.clear();
+                                        HomeCubit.get(context).endDate.clear();
+                                        HomeCubit.get(context).status = null;
+                                        HomeCubit.get(context).statusConvert = null;
+                                        HomeCubit.get(context).getAllBlog(skip: 0, take: 10);
+
+
+
+                                      },
                                       color: darkGrey,
                                       fontWeight: FontWeight.w400,
                                       textDecoration: TextDecoration.underline,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 30.h),
-                                    child: Container(
-                                      width: 90.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadiusDirectional.circular(
-                                                20.r),
-                                        color: orange,
-                                      ),
-                                      child: CustomText(
-                                        text: "Search",
-                                        size: 18.sp,
-                                        color: white,
-                                        fontWeight: FontWeight.w400,
-                                        alignment: Alignment.center,
-                                      ),
-                                    ),
-                                  )
+
                                 ],
                               ),
                             ),
                           ],
                         )
                       ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 30.w),
+                      child: SizedBox(
+                        child: TextFormField(
+                          controller: HomeCubit.get(context).search,
+                          maxLines: 1,
+                          onChanged: (value){
+                            HomeCubit.get(context).getAllBlog(skip: 0,take:  10);
+                          },
+
+                          validator: (value) {},
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            prefixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.search,
+                                color: darkGrey,
+                              ),
+                            ),
+                            //filled: true,
+
+                            fillColor:
+                            const Color.fromRGBO(247, 247, 247, 1),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 13.w,
+                              vertical: 20.h,
+                            ),
+                            constraints: BoxConstraints(
+                              minHeight: 64.h,
+                              minWidth: 372.w,
+                            ),
+
+                            hintStyle: TextStyle(
+                              fontSize: 16.sp,
+                              color: darkGrey,
+                            ),
+                            hintText: 'search by blog type',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: BorderSide(color: orange),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
 
                     ///////////////
@@ -617,6 +655,8 @@ class HomeMain extends StatelessWidget {
                     ),
 
                     SizedBox(height: 20.h),
+
+                    state is GetAllBlogLoading ? CircularProgressIndicator() :
 
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -678,66 +718,14 @@ class HomeMain extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20.h),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.h),
-                              child: SizedBox(
-                                child: TextFormField(
-                                  controller: HomeCubit.get(context).search,
-                                  maxLines: 1,
-                                  onChanged: (value){
-                                    HomeCubit.get(context).getAllBlog(skip: 0,take:  10);
-                                  },
-                                  onSaved: (value){
-                                    HomeCubit.get(context).getAllBlog(skip: 0,take:  0);
-                                  },
-                                  validator: (value) {},
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    color: Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    prefixIcon: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: darkGrey,
-                                      ),
-                                    ),
-                                    //filled: true,
 
-                                    fillColor:
-                                        const Color.fromRGBO(247, 247, 247, 1),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 13.w,
-                                      vertical: 20.h,
-                                    ),
-                                    constraints: BoxConstraints(
-                                      minHeight: 64.h,
-                                      minWidth: 372.w,
-                                    ),
-
-                                    hintStyle: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: darkGrey,
-                                    ),
-                                    hintText: 'search',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      borderSide: BorderSide(color: orange),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             SizedBox(height: 20.h),
                             HomeCubit.get(context).getAllBlogModel?.totalCount == 0 ?
                             Center(child: CustomText(text: "No exist Blogs ", size: 25.sp, color: orange , fontWeight: FontWeight.w700)) :
                            Column(
                              children: [
                                SizedBox(
-                                 height: 650.h,
-                                 width: 950.w,
+
                                  child: HotelAccomandtion(
                                    controller: controller,
                                    context: context,
