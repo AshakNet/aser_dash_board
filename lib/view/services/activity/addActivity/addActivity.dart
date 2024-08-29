@@ -145,64 +145,59 @@ class AddActivity extends StatelessWidget {
                                   ),
                                   SizedBox(height: 10.h,),
 
-                                  Row(
-                                    children: [
-                                      Padding(
+                                  Padding(
 
-                                        padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                        child: SizedBox(
-                                          width:597 ,
+                                    padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                                    child: SizedBox(
+                                      width:597 ,
 
-                                          child: TextFormField(
-                                            controller: ActivityCubit.get(context).priceActivity,
-                                            maxLines: 1,
-                                            minLines: 1,
+                                      child: TextFormField(
+                                        controller: ActivityCubit.get(context).priceActivity,
+                                        maxLines: 1,
+                                        minLines: 1,
 
 
-                                            validator: (value){
-                                              if (value!.isEmpty) {
-                                                return "Please Enter price";
-                                              }
-                                            },
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly, // Allow only digits
-                                            ],
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: Colors.black,
-                                            ),
-                                            decoration: InputDecoration(
+                                        validator: (value){
+                                          if (value!.isEmpty) {
+                                            return "Please Enter price";
+                                          }
+                                        },
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly, // Allow only digits
+                                        ],
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          color: Colors.black,
+                                        ),
+                                        decoration: InputDecoration(
 
 
-                                              fillColor: Color.fromRGBO(247, 247, 247, 1),
-                                              contentPadding: EdgeInsets.symmetric(
-                                                horizontal: 13.w,
-                                                vertical: 20.h,
-                                              ),
-                                              constraints: BoxConstraints(
-                                                minHeight: 64.h,
-                                                minWidth: 372.w,
-                                              ),
+                                          fillColor: Color.fromRGBO(247, 247, 247, 1),
+                                          contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 13.w,
+                                            vertical: 20.h,
+                                          ),
+                                          constraints: BoxConstraints(
+                                            minHeight: 64.h,
+                                            minWidth: 372.w,
+                                          ),
 
-                                              hintStyle: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: darkGrey,
-                                              ),
-                                              hintText: "Enter the activity price",
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(8.r),
-                                                borderSide: BorderSide(color: orange),
-                                              ),
-                                            ),
+                                          hintStyle: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: darkGrey,
+                                          ),
+                                          hintText: "Enter the activity price",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8.r),
+                                            borderSide: BorderSide(color: orange),
                                           ),
                                         ),
-                                      )
+                                      ),
+                                    ),
+                                  )
 
-                                     ,
-                                      SizedBox(width: 5.w,),
-
-                                    ],
-                                  ),
+                                                                       ,
+                                  SizedBox(width: 5.w,),
                                   SizedBox(height: 10.h,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),

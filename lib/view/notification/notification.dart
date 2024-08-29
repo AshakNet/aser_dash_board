@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'notification_content/ntification_content.dart';
+import 'notification_content/sinngelt page.dart';
 
 class NotificationPage extends StatelessWidget {
    NotificationPage({super.key});
@@ -11,7 +12,7 @@ class NotificationPage extends StatelessWidget {
     return PageView(
       controller: notification,
       children: [
-        NotificationContent(notificationContent: notification,)
+        SignalRPage()
       ],
     );
   }

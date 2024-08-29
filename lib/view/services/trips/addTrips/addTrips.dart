@@ -362,7 +362,7 @@ class AddTrips extends StatelessWidget {
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                     child: Container(
                                       width: 708.w,
-                                      height: 200.h,
+
 
 
                                       decoration: BoxDecoration(

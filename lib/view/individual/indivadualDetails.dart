@@ -34,8 +34,7 @@ class IndividualDetails extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      //detailsOrderBooking.animateToPage(0, duration: const Duration(microseconds: 30), curve: Curves.easeIn);
-
+                      detailIndividualsBooking.animateToPage(0, duration: const Duration(microseconds: 30), curve: Curves.easeIn);
                     },
                     child: CustomText(
                         text: "Individuals",

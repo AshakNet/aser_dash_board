@@ -3,27 +3,23 @@ import 'dart:io';
 
 import 'package:aser_dash_board/repositories/api/enpoint/enpoint.dart';
 import 'package:aser_dash_board/repositories/shared/cacheNetwork.dart';
+import 'package:aser_dash_board/view/notification/notification_content/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:signalr_core/signalr_core.dart';
 import 'package:window_manager/window_manager.dart';
 import 'constant//route/route.dart' as route;
 import 'constant/color.dart';
 import 'logic/observe/observe.dart';
 var token ;
 var hubConnection;
+SignalRServicem servicem = SignalRServicem();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-   hubConnection = HubConnectionBuilder()
-      .withUrl('http://ashal.runasp.net/notificationHub')
-      .build();
-   // hubConnection = HubConnectionBuilder()
-   //    .withUrl('${EndPoint.baseUrl}/notificationHub')
-   //    .build();
+
   await CacheNetwork.cacheInitialization();
   final storage = new FlutterSecureStorage();
 
@@ -31,6 +27,9 @@ Future<void> main() async {
   print( " token of person is \n $token");
 
   await windowManager.ensureInitialized();
+  print("mahmoud");
+  await servicem.initPlatformDartServer();
+  print("zahran");
 
   runApp(const MyApp());
 }

@@ -168,6 +168,31 @@ class IndividualCubit extends Cubit<IndividualState> {
 
   }
 
+
+  void addNotification()async{
+
+    var token  =await storage.read(key: 'token');
+    http.Response response = await ApiConsumer().post(
+        uri: "${EndPoint.apiUrl}Notification/send?UserId=09d91489-cb95-4c3e-a515-2751e65426eb" , rawData: {
+
+          "Title" : "Mahmoud Ahmed",
+          "Body" : "zahran barkat mostafa dcddokf"
+
+    },token: token);
+    print(response.statusCode);
+    // var jsonBody = json.decode(response.body);
+    if(response.statusCode == 200){
+      print(response.body);
+      
+
+
+    }
+    else{
+      print(response.body);
+
+    }
+  }
+
   void scrollRight() {
 
 

@@ -203,7 +203,7 @@ class ActivityContent extends StatelessWidget {
                                     activity.animateToPage(5, duration: Duration(milliseconds: 20), curve: Curves.easeIn);
                                   },
                                   child: Container(
-                                    width: 90.w,
+                                    width: 100.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20.r),

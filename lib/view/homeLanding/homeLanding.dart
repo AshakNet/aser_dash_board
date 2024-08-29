@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 import 'package:aser_dash_board/constant/color.dart';
 import 'package:aser_dash_board/logic/homeNavigator/home_naviagtor.dart';
@@ -39,7 +38,6 @@ class HomeLanding extends StatelessWidget {
     Individual(),
     NotificationPage(),
     Settings()
-
   ];
 
   @override
@@ -53,94 +51,160 @@ class HomeLanding extends StatelessWidget {
             backgroundColor: white,
             //appBar: CustomAppBar(context: context),
             appBar: AppBar(
-
               backgroundColor: white,
               centerTitle: true,
               toolbarHeight: 80.h,
               leadingWidth: 120.w,
-              leading:Padding(
-                padding:  EdgeInsets.symmetric(vertical: 10.h,horizontal: 5.w),
-                child: Text("Nomadica",style: TextStyle(fontWeight:FontWeight.w700,fontSize: 20.sp,color: orange),),
+              leading: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
+                child: Image.asset('assets/images/home/logo.png',fit: BoxFit.cover,color: black,height: 200.h,width: 200.w,),
+
               ),
-
-
               actions: [
                 Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
-                  child: Icon(Icons.notifications,color: Color.fromRGBO(93, 102, 121, 1),),
-                ),
-                Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
-                  child: CircleAvatar(
-                    child: Image.asset("assets/images/profile.png"),
+                  padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+                  child: Icon(
+                    Icons.notifications,
+                    color: Color.fromRGBO(93, 102, 121, 1),
                   ),
-                )
+                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+                //   child: CircleAvatar(
+                //     child: Image.asset("assets/images/profile.png"),
+                //   ),
+                // )
               ],
-
             ),
             body: Row(
               children: <Widget>[
                 SizedBox(
                   width: 180.w,
                   child: Drawer(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                    shape:
+                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                     backgroundColor: white,
                     surfaceTintColor: white,
                     child: ListView(
                       children: <Widget>[
-
                         _sideBarBuilder(
-                            image: 'assets/images/home/home.png', title: 'DashBoard', index: 0, iconWidth: 39.w, iconHeight: 35.h, context: context),
-
+                            image: 'assets/images/home/home.png',
+                            title: 'DashBoard',
+                            index: 0,
+                            iconWidth: 39.w,
+                            iconHeight: 35.h,
+                            context: context),
                         Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 10.w),
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Container(
-
                             decoration: BoxDecoration(
-                                        color:  HomeNavigatorCubit.get(context).selectedIndex == 1 ? orange : white,
-                                        borderRadius: BorderRadiusDirectional.circular(20.r)
-                            ),
-                            child: ExpansionTile(initiallyExpanded: true,
-
-                              title:  CustomText(
+                                color: HomeNavigatorCubit.get(context)
+                                            .selectedIndex ==
+                                        1
+                                    ? orange
+                                    : white,
+                                borderRadius:
+                                    BorderRadiusDirectional.circular(20.r)),
+                            child: ExpansionTile(
+                              initiallyExpanded: true,
+                              title: CustomText(
                                 text: "Services",
-                                size: 16.sp,function: (){
-                                HomeNavigatorCubit.get(context).onItemTapped(1);
-                              },
-                                color: HomeNavigatorCubit.get(context).selectedIndex == 1 ? white :  darkGrey,
+                                size: 16.sp,
+                                function: () {
+                                  HomeNavigatorCubit.get(context)
+                                      .onItemTapped(1);
+                                },
+                                color: HomeNavigatorCubit.get(context)
+                                            .selectedIndex ==
+                                        1
+                                    ? white
+                                    : darkGrey,
                                 fontWeight: FontWeight.w600,
                               ),
-                              trailing: Icon(Icons.keyboard_arrow_down_sharp,color:HomeNavigatorCubit.get(context).selectedIndex == 1 ? white : black,),
+                              trailing: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                color: HomeNavigatorCubit.get(context)
+                                            .selectedIndex ==
+                                        1
+                                    ? white
+                                    : black,
+                              ),
                               leading: Image.asset(
-                                           "assets/images/home/services.png",color: HomeNavigatorCubit.get(context).selectedIndex == 1 ? white : black,),
+                                "assets/images/home/services.png",
+                                color: HomeNavigatorCubit.get(context)
+                                            .selectedIndex ==
+                                        1
+                                    ? white
+                                    : black,
+                              ),
                               children: <Widget>[
-
                                 _sideBarBuilder(
-                                    image: 'assets/images/home/company.png', title: 'Trips', index: 2, iconWidth: 39.w, iconHeight: 28.h, context: context),
+                                    image: 'assets/images/home/company.png',
+                                    title: 'Trips',
+                                    index: 2,
+                                    iconWidth: 39.w,
+                                    iconHeight: 28.h,
+                                    context: context),
                                 _sideBarBuilder(
-                                    image: 'assets/images/home/company.png', title: 'Products', index: 3, iconWidth: 39.w, iconHeight: 28.h, context: context),
-
+                                    image: 'assets/images/home/company.png',
+                                    title: 'Products',
+                                    index: 3,
+                                    iconWidth: 39.w,
+                                    iconHeight: 28.h,
+                                    context: context),
                                 _sideBarBuilder(
-                                    image: 'assets/images/home/company.png', title: 'Activity', index: 4, iconWidth: 39.w, iconHeight: 28.h, context: context),
+                                    image: 'assets/images/home/company.png',
+                                    title: 'Activity',
+                                    index: 4,
+                                    iconWidth: 39.w,
+                                    iconHeight: 28.h,
+                                    context: context),
                               ],
                             ),
                           ),
                         ),
-
-
                         _sideBarBuilder(
-                            image: 'assets/images/home/company.png', title: 'Companies', index: 5, iconWidth: 39.w, iconHeight: 28.h, context: context),
+                            image: 'assets/images/home/company.png',
+                            title: 'Companies',
+                            index: 5,
+                            iconWidth: 39.w,
+                            iconHeight: 28.h,
+                            context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/booking.png', title: 'Booking', index: 6, iconWidth: 39.w, iconHeight: 28.h, context: context),
+                            image: 'assets/images/home/booking.png',
+                            title: 'Booking',
+                            index: 6,
+                            iconWidth: 39.w,
+                            iconHeight: 28.h,
+                            context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/order.png', title: 'Orders', index: 7, iconWidth: 39.w, iconHeight: 28.h, context: context),
-
+                            image: 'assets/images/home/order.png',
+                            title: 'Orders',
+                            index: 7,
+                            iconWidth: 39.w,
+                            iconHeight: 28.h,
+                            context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/order.png', title: 'Individual', index: 8, iconWidth: 39.w, iconHeight: 28.h, context: context),
+                            image: 'assets/images/home/order.png',
+                            title: 'Individual',
+                            index: 8,
+                            iconWidth: 39.w,
+                            iconHeight: 28.h,
+                            context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/notification.png', title: 'Notifications', index: 9, iconWidth: 39.w, iconHeight: 36.h, context: context),
+                            image: 'assets/images/home/notification.png',
+                            title: 'Notifications',
+                            index: 9,
+                            iconWidth: 39.w,
+                            iconHeight: 36.h,
+                            context: context),
                         _sideBarBuilder(
-                            image: 'assets/images/home/setting.png', title: 'Settings', index: 10, iconWidth: 36.w, iconHeight: 28.h, context: context),
+                            image: 'assets/images/home/setting.png',
+                            title: 'Settings',
+                            index: 10,
+                            iconWidth: 36.w,
+                            iconHeight: 28.h,
+                            context: context),
                       ],
                     ),
                   ),
@@ -160,11 +224,11 @@ class HomeLanding extends StatelessWidget {
 
   Widget _sideBarBuilder(
       {required String image,
-        required String title,
-        required int index,
-        required double iconWidth,
-        required double iconHeight,
-        required BuildContext context}) {
+      required String title,
+      required int index,
+      required double iconWidth,
+      required double iconHeight,
+      required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
       child: GestureDetector(
@@ -175,24 +239,30 @@ class HomeLanding extends StatelessWidget {
         child: Container(
           width: 140.w,
           height: 60.h,
-
           decoration: BoxDecoration(
-            color:  HomeNavigatorCubit.get(context).selectedIndex == index ? orange : white,
-            borderRadius: BorderRadiusDirectional.circular(20.r)
-          ),
+              color: HomeNavigatorCubit.get(context).selectedIndex == index
+                  ? orange
+                  : white,
+              borderRadius: BorderRadiusDirectional.circular(20.r)),
           child: Row(
             children: [
               Image.asset(
                 image,
                 width: iconWidth,
                 height: iconHeight,
-                color:HomeNavigatorCubit.get(context).selectedIndex == index ? white :  blue,
+                color: HomeNavigatorCubit.get(context).selectedIndex == index
+                    ? white
+                    : blue,
               ),
-             SizedBox(width: 5.w,),
+              SizedBox(
+                width: 5.w,
+              ),
               CustomText(
                 text: title,
                 size: 18.sp,
-                color: HomeNavigatorCubit.get(context).selectedIndex == index ? white :  darkGrey,
+                color: HomeNavigatorCubit.get(context).selectedIndex == index
+                    ? white
+                    : darkGrey,
                 fontWeight: FontWeight.w600,
               ),
             ],

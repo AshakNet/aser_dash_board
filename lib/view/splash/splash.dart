@@ -29,12 +29,12 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 300.h,),
-            Center(child: Text("Nomadica",style: TextStyle(fontWeight:FontWeight.w700,letterSpacing : 20.w,fontSize: 60.sp,color: white),)),
-
-            Center(child: Text("Unleash the explorer within you",style: TextStyle(fontWeight:FontWeight.w700,letterSpacing : 5.w ,fontSize: 10.sp,color: white),)),
+            Image.asset('assets/images/home/logo.png'),
             Spacer(),
+
             Image.asset('assets/images/load.gif',width: 400.w,height: 200.h,color: white,),
+
+
 
 
 

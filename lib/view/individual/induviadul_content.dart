@@ -369,12 +369,13 @@ class IndividualContent extends StatelessWidget {
                             child: CustomText(text: "Reset",
 
                               function: (){
-                                IndividualCubit.get(context).addtionalDate.clear();
-                                IndividualCubit.get(context).search.clear();
-                                IndividualCubit.get(context).status = null;
-                                IndividualCubit.get(context).convertNumberStatus = null;
-                                IndividualCubit.get(context).transaction = null;
-                                IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
+                              IndividualCubit.get(context).addNotification();
+                                // IndividualCubit.get(context).addtionalDate.clear();
+                                // IndividualCubit.get(context).search.clear();
+                                // IndividualCubit.get(context).status = null;
+                                // IndividualCubit.get(context).convertNumberStatus = null;
+                                // IndividualCubit.get(context).transaction = null;
+                                // IndividualCubit.get(context).getAllIndividual(skip: 0, take: 10);
 
 
                               },
