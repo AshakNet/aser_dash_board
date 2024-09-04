@@ -45,6 +45,7 @@ class Login extends StatelessWidget {
 
           }
            else if (state is LoginError){
+             Navigator.pop(context);
             ScaffoldMessenger.of(context).showSnackBar( SnackBar(
               content: Text(state.error),
               backgroundColor: Colors.red,

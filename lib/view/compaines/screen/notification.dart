@@ -15,7 +15,26 @@ class NotificationCompaines extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CompaniesCubit,CompaniesState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is SendNotificationSuccessful){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor:Colors.green,
+              content: Text('send Notification SuccessFul'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+        else if (state is SendNotificationError){
+          ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(
+              backgroundColor:Colors.red,
+              content: Text(state.error),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      },
       builder: (context,state){
         return Scaffold(
           body: Column(
@@ -35,6 +54,7 @@ class NotificationCompaines extends StatelessWidget {
                     GestureDetector(
                       onTap: (){
                         notification.animateToPage(0, duration: const Duration(microseconds: 30), curve: Curves.easeIn);
+                        CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
                       },
                       child: CustomText(
                           text: "Companies<<",
@@ -299,7 +319,7 @@ class NotificationCompaines extends StatelessWidget {
                                        SizedBox(
                                          width:  600.w,
                                          child: TextFormField(
-                                           controller: TextEditingController(),
+                                           controller: CompaniesCubit.get(context).titleNotification,
                                            maxLines: 1,minLines: 1,
                                            validator: (value) {},
                                            style: TextStyle(
@@ -340,7 +360,7 @@ class NotificationCompaines extends StatelessWidget {
                                        SizedBox(
                                          width:  600.w,
                                          child: TextFormField(
-                                           controller: TextEditingController(),
+                                           controller: CompaniesCubit.get(context).contentNotification,
                                            maxLines: 4,minLines: 3,
                                            validator: (value) {},
                                            style: TextStyle(
@@ -381,17 +401,24 @@ class NotificationCompaines extends StatelessWidget {
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
                                          children: [
-                                           Container(
-                                             width: 120.w,
-                                             height: 40.h,
+                                           GestureDetector(
+                                             onTap:(){
+                                                CompaniesCubit.get(context).sendNotification(ownerId:
+                                                CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                                );
+                                             },
+                                             child: Container(
+                                               width: 120.w,
+                                               height: 40.h,
 
-                                             decoration: BoxDecoration(
-                                               borderRadius: BorderRadiusDirectional.circular(10.r),
-                                               color: orange,
+                                               decoration: BoxDecoration(
+                                                 borderRadius: BorderRadiusDirectional.circular(10.r),
+                                                 color: orange,
 
 
+                                               ),
+                                               child: CustomText(text: "Send", size: 18.sp, color: white, fontWeight: FontWeight.w400,alignment: Alignment.center,),
                                              ),
-                                             child: CustomText(text: "Send", size: 18.sp, color: white, fontWeight: FontWeight.w400,alignment: Alignment.center,),
                                            ),
                                          ],
                                        ),
@@ -474,11 +501,11 @@ class NotificationCompaines extends StatelessWidget {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/images/home/pesrson.png"),
+                                backgroundImage: NetworkImage(
+                                    "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.logo}"),
                               ),
                               CustomText(
-                                text: "Al Amal Company",
+                                text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.companyName}",
                                 size: 20.sp,
                                 color: black,
                                 fontWeight: FontWeight.w600,
@@ -495,7 +522,7 @@ class NotificationCompaines extends StatelessWidget {
                                     width: 10.w,
                                   ),
                                   CustomText(
-                                    text: "mahmoud",
+                                    text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.ownerName}",
                                     size: 14.sp,
                                     color: black,
                                     fontWeight: FontWeight.w600,
@@ -526,58 +553,46 @@ class NotificationCompaines extends StatelessWidget {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  CustomText(
-                                    text: "Active",
-                                    size: 14.sp,
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 120.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadiusDirectional.circular(
-                                            10.r),
-                                        border: Border.all(color: darkGrey)),
-                                    child: CustomText(
-                                      text: "Delete  ",
-                                      size: 16.sp,
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      alignment: Alignment.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20.w,
-                                  ),
-                                  Container(
-                                    width: 120.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadiusDirectional.circular(
-                                            10.r),
-                                        border: Border.all(color: darkGrey)),
-                                    child: CustomText(
-                                      text: "Restrict ",
-                                      size: 16.sp,
-                                      color: black,
-                                      fontWeight: FontWeight.w600,
-                                      alignment: Alignment.center,
-                                    ),
-                                  ),
 
+                                  Row(
+                                    children: [
+                                      CustomText(
+                                        text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.status}",
+                                        size: 14.sp,
+                                        color:
+                                        CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted" ||
+                                            CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Deleted"
+                                            ? Colors.red :
+                                        Colors.green,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      SizedBox(width: 20.w,),
+
+                                      CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted"?
+                                      Row(
+                                        children: [
+                                          CustomText(
+                                            text: "Till",
+                                            size: 14.sp,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          SizedBox(width: 10.w,),
+
+                                          CustomText(
+                                            text: CompaniesCubit.get(context).restricted.text.trim(),
+                                            size: 14.sp,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ) : SizedBox.shrink()
+                                    ],
+                                  ),
                                 ],
                               ),
+
+
                               SizedBox(height: 20.h,),
                               Column(
                                 children: [
@@ -601,7 +616,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Accommodation",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.service}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -627,7 +642,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Cairo",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.governate}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -653,7 +668,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Address",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.address}",
                                           size: 14.sp,
                                           color: orange,
                                           textDecoration: TextDecoration.underline,
@@ -681,7 +696,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Website",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.website}",
                                           size: 14.sp,
                                           color: orange,
                                           textDecoration: TextDecoration.underline,
@@ -718,7 +733,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Esraa Badwy",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.ownerName}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -744,7 +759,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "mo3tzelrawy151@gmail.com",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.email}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -770,7 +785,7 @@ class NotificationCompaines extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "01117191258",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.phone}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),

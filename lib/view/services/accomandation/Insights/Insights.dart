@@ -523,7 +523,7 @@ class Insights extends StatelessWidget {
                       Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 0.w,vertical: 30.h),
                         child: Container(
-                          height: 900.h,
+
                           decoration: BoxDecoration(
                               color: white,
                               borderRadius: BorderRadiusDirectional.circular(10.r)

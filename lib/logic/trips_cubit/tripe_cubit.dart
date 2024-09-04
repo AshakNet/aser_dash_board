@@ -6,6 +6,7 @@ import 'package:aser_dash_board/logic/trips_cubit/trips_state.dart';
 import 'package:aser_dash_board/model/activity/getselectCompany/getSelectCompany.dart';
 import 'package:aser_dash_board/model/trips/alltrips.dart';
 import 'package:aser_dash_board/model/trips/getOneTripModel.dart';
+import 'package:aser_dash_board/model/trips/insightModelTrips/insightModelTrips.dart';
 import 'package:aser_dash_board/model/trips/profit_trip.dart';
 import 'package:aser_dash_board/repositories/api/api%20consumer/apiConsumer.dart';
 import 'package:aser_dash_board/repositories/api/enpoint/enpoint.dart';
@@ -76,11 +77,12 @@ class TripsCubit extends Cubit<TripsState> {
 
   void loadOne(String id)async{
     await getOneTripsMethod(id);
+    await getProfitsInsightTrips(id);
 
   }
 
   getCompany() async {
-    var response = await http.get(Uri.parse(EndPoint.getCompany));
+    var response = await http.get(Uri.parse(EndPoint.getCompanyTrips));
     print(response.body);
     var databody = json.decode(response.body);
     getAllCompanyModel = GetAllCompanyModel.fromJson(databody);
@@ -99,7 +101,7 @@ class TripsCubit extends Cubit<TripsState> {
     http.Response response = await ApiConsumer().get(uri:
     fixTrips == null ?
     "${EndPoint.apiUrl}AdminTrips/GetCompanyAndIndividualTripCount" :
-    "${EndPoint.apiUrl}AdminTrips/GetCompanyAndIndividualTripCount?Month=$fixTrips"
+    "${EndPoint.apiUrl}AdminTrips/GetCompanyAndIndividualTripCount?MonthOrYear=Month&Month=$fixTrips"
         , token: token);
     var responseData = await json.decode(response.body);
     if (response.statusCode == 200) {
@@ -273,7 +275,7 @@ class TripsCubit extends Cubit<TripsState> {
       'Title': tripName.text.trim(),
       'AvailableSeats': numberOfSeats.text.trim(),
       'Price': tripPrice.text,
-      'IsPricePerPerson': tripPricePerPerson.text,
+      'IsPricePerPerson': "1",
       'Description': tripsDescription.text.trim(),
       'TripRoles' : tripsRules.text.trim() ,
       'MeetingPoint': meetingPoint.text,
@@ -380,7 +382,30 @@ class TripsCubit extends Cubit<TripsState> {
     status = value;
     emit(EndStart());
   }
+  GetInsightTripsModel? getInsightTripsModel;
 
+  Future getProfitsInsightTrips(String id) async {
+
+    emit(GetInsightLoading());
+
+    final token = await storage.read(key: 'token');
+    print("tokn is person blog = $token");
+    http.Response response = await ApiConsumer().get(uri:
+
+    "${EndPoint.apiUrl}AdminTrips/GetTripInsights?TripId=$id"
+
+        , token: token);
+    var responseData = await json.decode(response.body);
+    if (response.statusCode == 200) {
+
+      getInsightTripsModel = GetInsightTripsModel.fromJson(responseData);
+
+      emit(GetInsightSuccessful());
+    } else {
+      print(response.body);
+      emit(GetInsightError(response.body));
+    }
+  }
 
 
 }

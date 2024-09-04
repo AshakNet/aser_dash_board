@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:aser_dash_board/logic/activity_cubit/activity_state.dart';
 import 'package:aser_dash_board/model/accomandtion/review.dart';
 import 'package:aser_dash_board/model/activity/activitymodel.dart';
+import 'package:aser_dash_board/model/activity/getInsightModel/getInsightModelActivity.dart';
 import 'package:aser_dash_board/model/activity/get_one_activity.dart';
 import 'package:aser_dash_board/model/activity/getselectCompany/getSelectCompany.dart';
 import 'package:aser_dash_board/repositories/api/api%20consumer/apiConsumer.dart';
@@ -51,6 +52,13 @@ class ActivityCubit extends Cubit<ActivityState> {
   GetOneActivity? getOneActivityModel;
   GetReviewModel? getReviewModel;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String? chooseMonthInsight;
+  void chooseMonthActivityInsight(value) {
+
+    chooseMonthInsight = value;
+    emit(ChoosesMonthActivityInsightLoaded());
+  }
+
 
 
 
@@ -198,7 +206,7 @@ class ActivityCubit extends Cubit<ActivityState> {
   }
 
   getCompany() async {
-    var response = await http.get(Uri.parse(EndPoint.getCompany));
+    var response = await http.get(Uri.parse(EndPoint.getCompanyActivity));
     print(response.body);
     var databody = json.decode(response.body);
     getAllCompanyModel = GetAllCompanyModel.fromJson(databody);
@@ -254,6 +262,7 @@ class ActivityCubit extends Cubit<ActivityState> {
   void loadOneActivity(String id)async{
     await getOneActivityMethod(id);
     await getReview(id: id, skip: 0,take: 10);
+
   }
 
   Future getOneActivityMethod(String id) async {
@@ -309,7 +318,31 @@ class ActivityCubit extends Cubit<ActivityState> {
 
 
 
+  String ? fixInsight;
+  GetInsightActivityModel? getInsightActivityModel;
 
+  Future getProfitsInsightActivity(String id) async {
+
+    emit(GetInsightLoading());
+
+    final token = await storage.read(key: 'token');
+    print("tokn is person blog = $token");
+    http.Response response = await ApiConsumer().get(uri:
+    fixInsight == null ?
+    "${EndPoint.apiUrl}Activities/GetActiviteInsights?ActivityId=$id":
+    "${EndPoint.apiUrl}Activities/GetActiviteInsights?ActivityId=$id&MonthOrYear=Month&Month=$fixInsight"
+        , token: token);
+    var responseData = await json.decode(response.body);
+    if (response.statusCode == 200) {
+
+      getInsightActivityModel = GetInsightActivityModel.fromJson(responseData);
+
+      emit(GetInsightSuccessful());
+    } else {
+      print(response.body);
+      emit(GetInsightError(response.body));
+    }
+  }
 
 
 

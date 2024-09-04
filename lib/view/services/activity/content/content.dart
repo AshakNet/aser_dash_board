@@ -64,7 +64,7 @@ class ActivityContent extends StatelessWidget {
                           onFieldSubmitted: (value){
                           },
                           onTap: (){
-                            ActivityCubit.get(context).PickDate(context : context, controller:  ActivityCubit.get(context).addtionalDate, firstDate: DateTime.now(),lastDate: DateTime(2030));
+                            ActivityCubit.get(context).PickDate(context : context, controller:  ActivityCubit.get(context).addtionalDate, firstDate: DateTime(2000),lastDate: DateTime.now());
                           },
                           validator: (value) {},
                           style: TextStyle(

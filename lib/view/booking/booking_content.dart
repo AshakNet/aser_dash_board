@@ -104,7 +104,7 @@ class BookingContentActivity extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     CustomText(
-                                        text: " Order Date",
+                                        text: " Booking Date",
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w600),

@@ -48,3 +48,21 @@ class GetOrderDetailsError extends OrderState{
   GetOrderDetailsError(this.error);
 }
 
+
+class AddDeliveryLoading extends OrderState{}
+class AddDeliverySuccessful extends OrderState{}
+class AddDeliveryError extends OrderState{
+  final String error;
+
+  AddDeliveryError(this.error);
+}
+
+
+class ConfirmOrderLoading extends OrderState{}
+class ConfirmOrderSuccessful extends OrderState{}
+class ConfirmOrderError extends OrderState{
+  final String error;
+
+  ConfirmOrderError(this.error);
+}
+

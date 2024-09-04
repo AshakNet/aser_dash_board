@@ -22,6 +22,8 @@ class ActivityTable extends StatelessWidget {
 
             ActivityCubit.get(context).loadOneActivity(ActivityCubit.get(context).getActivityModel!.data!.activities[index].id.toString());
 
+
+
             activity.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
           }
         },

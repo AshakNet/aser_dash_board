@@ -79,12 +79,7 @@ class Products extends StatelessWidget {
                                             color: blue,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          CustomText(
-                                            text: " EGP",
-                                            size: 20.sp,
-                                            color: blue,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+
                                         ],
                                       ),
                                     ],

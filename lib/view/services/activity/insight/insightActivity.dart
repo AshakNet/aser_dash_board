@@ -101,41 +101,7 @@ class InsightsActivityPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: (){
-                          insightsActivity.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-                          ActivityCubit.get(context).toggle(1);
 
-
-                        },
-                        child: Container(
-                          width: 167.w,
-                          height: 50.h,
-                          color:  ActivityCubit.get(context).change == 1 ? orange : white,
-
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Image.asset(
-                                "assets/images/home/chart.png",
-                                color: black,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              CustomText(
-                                text: "Orders",
-                                size: 14.sp,
-                                color: black,
-                                fontWeight: FontWeight.w600,
-                                alignment: Alignment.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       GestureDetector(
                         onTap: (){
                           ActivityCubit.get(context).toggle(2);
@@ -178,7 +144,7 @@ class InsightsActivityPage extends StatelessWidget {
                 ),
 
                 /// left side
-
+                 state is changeBackGround ? Center(child: CircularProgressIndicator()) :
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 40.w),
                   child: Column(
@@ -199,72 +165,107 @@ class InsightsActivityPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Container(
-                                        width: 80.w,
-                                        height: 45.h,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.w),
                                         decoration: BoxDecoration(
-                                            color: lightGrey,
+                                            border:
+                                            Border.all(color: darkGrey),
+                                            //color: orange,
                                             borderRadius:
-                                            BorderRadiusDirectional.circular(10.r)),
-                                        child: CustomText(
-                                          text: "Yearly",
-                                          size: 14.sp,
-                                          color: black,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      Container(
-                                        width: 80.w,
-                                        height: 45.h,
-                                        decoration: BoxDecoration(
-                                            color: orange,
+                                            BorderRadiusDirectional
+                                                .circular(10.r)),
+                                        child: DropdownButton(
+                                            focusColor: lightGrey,
+                                            dropdownColor: white,
+                                            icon: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: orange,
+                                                size: 30.sp),
                                             borderRadius:
-                                            BorderRadiusDirectional.circular(10.r)),
-                                        child: CustomText(
-                                          text: "Monthly",
-                                          size: 14.sp,
-                                          color: white,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: orange),
-                                            borderRadius: BorderRadiusDirectional.circular(15.r)
-                                        ),
-                                        child: Padding(
-                                          padding:  EdgeInsets.symmetric(horizontal: 5.w),
-                                          child: DropdownButton(
+                                            BorderRadius.circular(10.r),
+                                            underline: SizedBox(),
+                                            value: ActivityCubit.get(context)
+                                                .chooseMonthInsight,
+                                            hint: CustomText(
+                                                text: "Month",
+                                                size: 12.sp,
+                                                color: darkGrey,
+                                                fontWeight:
+                                                FontWeight.w600),
+                                            items: ActivityCubit.get(context)
+                                                .month
+                                                .map((e) =>
+                                                DropdownMenuItem(
+                                                  value: e,
+                                                  child: Padding(
+                                                    padding:
+                                                    EdgeInsets.only(
+                                                        right:
+                                                        20.w),
+                                                    child: CustomText(
+                                                        text: e,
+                                                        color: orange,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w700,
+                                                        size: 16.sp),
+                                                  ),
+                                                ))
+                                                .toList(),
+                                            onChanged: (val) {
+                                              if (val == "January") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "1";
+                                              } else if (val ==
+                                                  "February") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "2";
+                                              } else if (val == "March") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "2";
+                                              } else if (val == "April") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "4";
+                                              } else if (val == "May") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "5";
+                                              } else if (val == "June") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "6";
+                                              } else if (val == "July") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "7";
+                                              } else if (val == "August") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "8";
+                                              } else if (val ==
+                                                  "September") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "9";
+                                              } else if (val == "October") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "10";
+                                              } else if (val ==
+                                                  "November") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "11";
+                                              } else if (val ==
+                                                  "December") {
+                                                ActivityCubit.get(context).fixInsight =
+                                                "12";
+                                              }
+                                              print(ActivityCubit.get(context)
+                                                  .fixInsight);
+                                              ActivityCubit.get(context)
+                                                  .chooseMonthActivityInsight(val);
+                                              ActivityCubit.get(context).getProfitsInsightActivity(
+                                                  ActivityCubit.get(context).getOneActivityModel!.data!.id.toString()
+                                              );
 
 
-                                              focusColor: lightGrey,
-                                              dropdownColor: white,
-                                              icon: Icon(Icons.keyboard_arrow_down, color: orange, size: 30.sp),
-                                              borderRadius: BorderRadius.circular(10.r),
 
-                                              underline: SizedBox(),
-                                              value: ActivityCubit.get(context).choseHours,
-                                              hint:CustomText(text:  "يناير", size: 12.sp, color: darkGrey, fontWeight: FontWeight.w600),
-                                              //ExamCubit.get(context).choseHours,
-                                              items: [ "ديسمبر","نوقمبر","اكتوبر","ابريل","مارس",'يناير'].map((e) =>
-                                                  DropdownMenuItem(
-
-                                                    value: e,
-                                                    child: Padding(
-                                                      padding:  EdgeInsets.only(right: 20.w),
-                                                      child: CustomText(text: e,color: orange,fontWeight: FontWeight.w700,size: 16.sp),
-                                                    ),)
-                                              ).toList(),
-                                              onChanged: (val){
-                                                ActivityCubit.get(context).choseHoursFunction(val);
-                                              }),
-                                        ),
-                                      ),
+                                            }),
+                                      )
                                     ],
                                   ),
                                   SizedBox(height: 60.h,),
@@ -276,7 +277,7 @@ class InsightsActivityPage extends StatelessWidget {
                                           Column(
                                             children: [
                                               CustomText(
-                                                text: '200 ',
+                                                text: '${ActivityCubit.get(context).getInsightActivityModel!.data!.bookingstatus!.total}',
                                                 size: 20.sp,
                                                 color: black,
                                                 fontWeight: FontWeight.w700,
@@ -313,14 +314,14 @@ class InsightsActivityPage extends StatelessWidget {
                                       Icon(Icons.circle,size: 8.sp,color: orange,),
                                       SizedBox(width: 15.w,),
                                       CustomText(
-                                        text: 'Confirmed',
+                                        text: 'Pending',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
                                       ),
                                       Spacer(),
                                       CustomText(
-                                        text: '150',
+                                        text: '${ActivityCubit.get(context).getInsightActivityModel!.data!.bookingstatus!.pending}',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
@@ -334,14 +335,14 @@ class InsightsActivityPage extends StatelessWidget {
                                       Icon(Icons.circle,size: 8.sp,color: Colors.brown,),
                                       SizedBox(width: 15.w,),
                                       CustomText(
-                                        text: 'Pending',
+                                        text: 'upComing',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
                                       ),
                                       Spacer(),
                                       CustomText(
-                                        text: '150',
+                                        text: '${ActivityCubit.get(context).getInsightActivityModel!.data!.bookingstatus!.upComming}',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
@@ -355,14 +356,14 @@ class InsightsActivityPage extends StatelessWidget {
                                       Icon(Icons.circle,size: 8.sp,color: Colors.greenAccent,),
                                       SizedBox(width: 15.w,),
                                       CustomText(
-                                        text: 'Declined',
+                                        text: 'Cancelled',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
                                       ),
                                       Spacer(),
                                       CustomText(
-                                        text: '18',
+                                        text: '${ActivityCubit.get(context).getInsightActivityModel!.data!.bookingstatus!.cancelled}',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
@@ -383,7 +384,7 @@ class InsightsActivityPage extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       CustomText(
-                                        text: '15',
+                                        text: '${ActivityCubit.get(context).getInsightActivityModel!.data!.bookingstatus!.completed}',
                                         size: 16.sp,
                                         color: black,
                                         fontWeight: FontWeight.w400,
@@ -419,7 +420,7 @@ class InsightsActivityPage extends StatelessWidget {
                                             SizedBox(height: 30.h,),
                                             Row(
                                               children: [
-                                                CustomText(text: "500", size: 24.sp, color: orange, fontWeight: FontWeight.w600),
+                                                CustomText(text: "${ActivityCubit.get(context).getInsightActivityModel!.data!.price}", size: 24.sp, color: orange, fontWeight: FontWeight.w600),
                                                 SizedBox(width: 5.w,),
                                                 CustomText(text: "EGP", size: 24.sp, color: black, fontWeight: FontWeight.w600),
                                                 SizedBox(width: 2.w,),
@@ -448,7 +449,7 @@ class InsightsActivityPage extends StatelessWidget {
                                             SizedBox(height: 30.h,),
                                             Row(
                                               children: [
-                                                CustomText(text: "5", size: 24.sp, color: orange, fontWeight: FontWeight.w600),
+                                                CustomText(text: "${ActivityCubit.get(context).getInsightActivityModel!.data!.duration}", size: 24.sp, color: orange, fontWeight: FontWeight.w600),
                                                 SizedBox(width: 5.w,),
                                                 CustomText(text: "days", size: 24.sp, color: black, fontWeight: FontWeight.w600),
 
@@ -487,7 +488,12 @@ class InsightsActivityPage extends StatelessWidget {
                                               Column(
                                                 children: [
                                                   Image.asset("assets/images/home/room.png"),
-                                                  CustomText(text: "8500.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                  Row(
+                                                    children: [
+                                                      CustomText(text: "${ActivityCubit.get(context).getInsightActivityModel!.data!.revenue!.total}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                      CustomText(text: "EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                    ],
+                                                  ),
                                                   CustomText(text: "Total Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                                 ],
@@ -496,7 +502,12 @@ class InsightsActivityPage extends StatelessWidget {
                                               Column(
                                                 children: [
                                                   Image.asset("assets/images/home/aval.png"),
-                                                  CustomText(text: "2500.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                  Row(
+                                                    children: [
+                                                      CustomText(text: "${ActivityCubit.get(context).getInsightActivityModel!.data!.revenue!.paid}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                      CustomText(text: "EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                    ],
+                                                  ),
                                                   CustomText(text: "Paid Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                                 ],
@@ -505,7 +516,12 @@ class InsightsActivityPage extends StatelessWidget {
                                               Column(
                                                 children: [
                                                   Image.asset("assets/images/home/aval.png"),
-                                                  CustomText(text: "6000.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                  Row(
+                                                    children: [
+                                                      CustomText(text: "${ActivityCubit.get(context).getInsightActivityModel!.data!.revenue!.pending}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                      CustomText(text: " EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                                    ],
+                                                  ),
                                                   CustomText(text: "Pending Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                                 ],
@@ -524,157 +540,7 @@ class InsightsActivityPage extends StatelessWidget {
                           )
                         ],
                       ),
-                      ///
-                      SizedBox(height: 30.h,),
-                      Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 0.w,vertical: 30.h),
-                        child: Container(
-                          height: 900.h,
-                          decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadiusDirectional.circular(10.r)
-                          ),
-                          child: Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: 0.w),
-                            child: Container(
 
-                              padding: EdgeInsets.symmetric(horizontal: 0.w,vertical: 10.h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadiusDirectional.circular(10.r),
-                                color: white,
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      CustomText(text: "Guests Bookings", size: 20.sp, color: black, fontWeight: FontWeight.w600),
-                                      SizedBox(width: 30.w,),
-                                      CustomText(text: "( 196 Guest)", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500),
-
-
-
-
-                                    ],
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  Padding(
-
-                                    padding:  EdgeInsets.symmetric(vertical: 10.h),
-                                    child: SizedBox(
-
-
-                                      child: TextFormField(
-                                        controller: TextEditingController(),
-                                        maxLines: 1,
-                                        validator: (value) {},
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: Colors.black,
-                                        ),
-                                        decoration: InputDecoration(
-                                          prefixIcon: IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.search,
-                                              color: darkGrey,
-                                            ),
-                                          ),
-                                          //filled: true,
-
-                                          fillColor: Color.fromRGBO(247, 247, 247, 1),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 13.w,
-                                            vertical: 20.h,
-                                          ),
-                                          constraints: BoxConstraints(
-                                            minHeight: 64.h,
-                                            minWidth: 372.w,
-                                          ),
-
-                                          hintStyle: TextStyle(
-                                            fontSize: 16.sp,
-                                            color: darkGrey,
-                                          ),
-                                          hintText: 'search',
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(8.r),
-                                            borderSide: BorderSide(color: orange),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  Container(
-                                    width: double.infinity,
-
-                                    child: HotelDateTableInsigthActivity( activity:  insightsActivity),
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  Row(
-
-                                    children: [
-                                      GestureDetector(
-                                        onTap:(){
-
-                                        },
-                                        child: Container(
-                                          width: 109.w,
-                                          height: 40.h,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadiusDirectional.circular(10.r),
-                                              border: Border.all(
-                                                  color: Colors.grey.shade500
-                                              )
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.keyboard_arrow_left_sharp,color : Colors.grey.shade500,),
-
-                                              CustomText(text: "Previous", size: 14.sp, color: Colors.grey.shade500, fontWeight: FontWeight.w600,alignment: Alignment.center,),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                        onTap: (){
-
-                                        },
-                                        child: Container(
-                                          width: 80.w,
-                                          height: 40.h,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadiusDirectional.circular(10.r),
-                                              border: Border.all(
-                                                  color: Colors.grey.shade500
-                                              )
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-
-                                            children: [
-
-
-                                              CustomText(text: "Next", size: 14.sp, color: Colors.grey.shade500, fontWeight: FontWeight.w600,alignment: Alignment.center,),
-                                              Icon(Icons.keyboard_arrow_right,color : Colors.grey.shade500,),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )
-
-
-
-
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 )

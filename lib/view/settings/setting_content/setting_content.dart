@@ -6,10 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SettingContent extends StatelessWidget {
   PageController settingContent = PageController();
    SettingContent({super.key,required this.settingContent});
+  final storage = new FlutterSecureStorage();
+
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +137,33 @@ class SettingContent extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 80.h,),
+
+              GestureDetector(
+                onTap: ()async {
+                  await storage.delete(key: "token");
+                  Navigator.pushReplacementNamed(context, 'login');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                      size: 20.sp,
+                    ),
+                    Text(
+                      'logout',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
             ],
           ),
         );

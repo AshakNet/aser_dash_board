@@ -14,7 +14,13 @@ class InsightCompanies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CompaniesCubit,CompaniesState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is EndStartChooseMonth){
+          CompaniesCubit.get(context).getProfitsInsightCompaines(
+            CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString()
+          );
+        }
+      },
       builder: (context,state){
         return Scaffold(
           body: Column(
@@ -34,6 +40,7 @@ class InsightCompanies extends StatelessWidget {
                     GestureDetector(
                       onTap: (){
                         insightCompaines.animateToPage(0, duration: const Duration(microseconds: 30), curve: Curves.easeIn);
+                        CompaniesCubit.get(context).getAllCompany(skip: 0, take: 10);
                       },
                       child: CustomText(
                           text: "Companies<<",
@@ -64,6 +71,8 @@ class InsightCompanies extends StatelessWidget {
                       onTap:(){
                         CompaniesCubit.get(context).toggle(0);
                         insightCompaines.animateToPage(1, duration: const Duration(milliseconds: 30), curve: Curves.easeIn);
+
+
 
                       },
                       child: Container(
@@ -242,55 +251,54 @@ class InsightCompanies extends StatelessWidget {
                                             ))
                                             .toList(),
                                         onChanged: (val) {
-                                          // if (val == "January") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "1";
-                                          // } else if (val ==
-                                          //     "February") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "2";
-                                          // } else if (val == "March") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "2";
-                                          // } else if (val == "April") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "4";
-                                          // } else if (val == "May") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "5";
-                                          // } else if (val == "June") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "6";
-                                          // } else if (val == "July") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "7";
-                                          // } else if (val == "August") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "8";
-                                          // } else if (val ==
-                                          //     "September") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "9";
-                                          // } else if (val == "October") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "10";
-                                          // } else if (val ==
-                                          //     "November") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "11";
-                                          // } else if (val ==
-                                          //     "December") {
-                                          //   HomeCubit.get(context).fix =
-                                          //   "12";
-                                          // }
-                                          // print(HomeCubit.get(context)
-                                          //     .fix);
+                                           if (val == "January") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "1";
+                                           } else if (val ==
+                                               "February") {
+                                             CompaniesCubit.get(context).fixInsight ="2";
+                                           } else if (val == "March") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "2";
+                                           } else if (val == "April") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "4";
+                                           } else if (val == "May") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "5";
+                                           } else if (val == "June") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "6";
+                                           } else if (val == "July") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "7";
+                                           } else if (val == "August") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                            "8";
+                                          } else if (val ==
+                                               "September") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                            "9";
+                                           } else if (val == "October") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "10";
+                                           } else if (val ==
+                                               "November") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "11";
+                                           } else if (val ==
+                                               "December") {
+                                             CompaniesCubit.get(context).fixInsight =
+                                             "12";
+                                           }
+                                           print(CompaniesCubit.get(context)
+                                               .fixInsight);
                                           CompaniesCubit.get(context)
                                               .chooseMonthFunction(val);
-                                          // HomeCubit.get(context)
-                                          //     .getSystemProfits();
 
-                                          // HomeCubit.get(context).chooseYears = null ;
+
+
+                                          // CompaniesCubit.get(context).chooseYears = null ;
                                         }),
                                   ),
                                 ],
@@ -302,7 +310,12 @@ class InsightCompanies extends StatelessWidget {
                                   Column(
                                     children: [
                                       Image.asset("assets/images/home/room.png"),
-                                      CustomText(text: "8500.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                      Row(
+                                        children: [
+                                          CustomText(text: "${CompaniesCubit.get(context).getInsightCompainesModel!.data!.total}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                          CustomText(text: "EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
                                       CustomText(text: "Total Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                     ],
@@ -311,7 +324,12 @@ class InsightCompanies extends StatelessWidget {
                                   Column(
                                     children: [
                                       Image.asset("assets/images/home/aval.png"),
-                                      CustomText(text: "2500.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                      Row(
+                                        children: [
+                                          CustomText(text: "${CompaniesCubit.get(context).getInsightCompainesModel!.data!.paid}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                          CustomText(text: " EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
                                       CustomText(text: "Paid Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                     ],
@@ -320,7 +338,12 @@ class InsightCompanies extends StatelessWidget {
                                   Column(
                                     children: [
                                       Image.asset("assets/images/home/aval.png"),
-                                      CustomText(text: "6000.00 EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                      Row(
+                                        children: [
+                                          CustomText(text: "${CompaniesCubit.get(context).getInsightCompainesModel!.data!.pending}", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                          CustomText(text: "EGP", size: 20.sp, color: text, fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
                                       CustomText(text: "Pending Balance", size: 16.sp, color: darkGrey, fontWeight: FontWeight.w500)
 
                                     ],
@@ -347,11 +370,11 @@ class InsightCompanies extends StatelessWidget {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/images/home/pesrson.png"),
+                                backgroundImage: NetworkImage(
+                                    "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.logo}"),
                               ),
                               CustomText(
-                                text: "Al Amal Company",
+                                text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.companyName}",
                                 size: 20.sp,
                                 color: black,
                                 fontWeight: FontWeight.w600,
@@ -368,7 +391,7 @@ class InsightCompanies extends StatelessWidget {
                                     width: 10.w,
                                   ),
                                   CustomText(
-                                    text: "mahmoud",
+                                    text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.ownerName}",
                                     size: 14.sp,
                                     color: black,
                                     fontWeight: FontWeight.w600,
@@ -399,58 +422,46 @@ class InsightCompanies extends StatelessWidget {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  CustomText(
-                                    text: "Active",
-                                    size: 14.sp,
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 120.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadiusDirectional.circular(
-                                            10.r),
-                                        border: Border.all(color: darkGrey)),
-                                    child: CustomText(
-                                      text: "Delete  ",
-                                      size: 16.sp,
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      alignment: Alignment.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20.w,
-                                  ),
-                                  Container(
-                                    width: 120.w,
-                                    height: 40.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadiusDirectional.circular(
-                                            10.r),
-                                        border: Border.all(color: darkGrey)),
-                                    child: CustomText(
-                                      text: "Restrict ",
-                                      size: 16.sp,
-                                      color: black,
-                                      fontWeight: FontWeight.w600,
-                                      alignment: Alignment.center,
-                                    ),
-                                  ),
 
+                                  Row(
+                                    children: [
+                                      CustomText(
+                                        text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.status}",
+                                        size: 14.sp,
+                                        color:
+                                        CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted" ||
+                                            CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Deleted"
+                                            ? Colors.red :
+                                        Colors.green,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      SizedBox(width: 20.w,),
+
+                                      CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted"?
+                                      Row(
+                                        children: [
+                                          CustomText(
+                                            text: "Till",
+                                            size: 14.sp,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          SizedBox(width: 10.w,),
+
+                                          CustomText(
+                                            text: CompaniesCubit.get(context).restricted.text.trim(),
+                                            size: 14.sp,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ) : SizedBox.shrink()
+                                    ],
+                                  ),
                                 ],
                               ),
+
+
                               SizedBox(height: 20.h,),
                               Column(
                                 children: [
@@ -474,7 +485,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Accommodation",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.service}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -500,7 +511,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Cairo",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.governate}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -526,7 +537,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Address",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.address}",
                                           size: 14.sp,
                                           color: orange,
                                           textDecoration: TextDecoration.underline,
@@ -554,7 +565,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Website",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.website}",
                                           size: 14.sp,
                                           color: orange,
                                           textDecoration: TextDecoration.underline,
@@ -591,7 +602,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "Esraa Badwy",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.ownerName}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -617,7 +628,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "mo3tzelrawy151@gmail.com",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.email}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
@@ -643,7 +654,7 @@ class InsightCompanies extends StatelessWidget {
 
                                         CustomText(
                                           text:
-                                          "01117191258",
+                                          "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.phone}",
                                           size: 14.sp,
                                           color: black,
                                           fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),

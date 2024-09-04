@@ -141,7 +141,7 @@ class AddActivity extends StatelessWidget {
 
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: CustomText(text: "Activity Price (EGP)", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
+                                    child: CustomText(text: " Price per Person (EGP)", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
                                   ),
                                   SizedBox(height: 10.h,),
 
@@ -149,7 +149,7 @@ class AddActivity extends StatelessWidget {
 
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                     child: SizedBox(
-                                      width:597 ,
+                                      width:597.w ,
 
                                       child: TextFormField(
                                         controller: ActivityCubit.get(context).priceActivity,
@@ -215,7 +215,7 @@ class AddActivity extends StatelessWidget {
                                   SizedBox(height: 10.h,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: CustomText(text: "Photo of destination", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
+                                    child: CustomText(text: "Photos", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
                                   ),
                                   SizedBox(height: 10.h,),
 
@@ -257,7 +257,7 @@ class AddActivity extends StatelessWidget {
                                     ),
                                   ),
 
-
+                                  SizedBox(height: 30.h,),
 
 
 

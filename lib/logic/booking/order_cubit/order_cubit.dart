@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:intl/intl.dart';
 import 'order_state.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,6 +67,18 @@ class OrderCubit extends Cubit<OrderState> {
     emit(PickDateBlocSSuccessfulState());
   }
 
+  ///
+  ///
+  ///
+  Future<void> pickTime(BuildContext context) async {
+    TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+       timeController.text = picked.format(context);
+    }
+  }
   void load ()async{
     await getAllOrder(skip: 0,take: 10);
   }
@@ -106,7 +118,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(AcceptOrderLoading());
     var token  =await storage.read(key: 'token');
     http.Response response = await ApiConsumer().post(
-        uri:"${EndPoint.apiUrl}Order/AcceptOrder?id=$id", rawData: {
+        uri:"${EndPoint.apiUrl}Orders/AcceptOrder?BookingId=$id", rawData: {
 
     },token: token);
     var jsonBody = json.decode(response.body);
@@ -125,7 +137,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(CancelOrderLoading());
     var token  =await storage.read(key: 'token');
     http.Response response = await ApiConsumer().post(
-        uri:"${EndPoint.apiUrl}Order/CancelOrder?id=$id", rawData: {
+        uri:"${EndPoint.apiUrl}Orders/CancelOrder?BookingId=$id", rawData: {
     },token: token);
     var jsonBody = json.decode(response.body);
     if(response.statusCode == 200){
@@ -166,6 +178,70 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
 
+  /// delever order
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
+  String convertTimeTo24HourFormat(String time) {
+    final DateFormat inputFormat = DateFormat("hh:mm a");
+    final DateFormat outputFormat = DateFormat("HH:mm:ss");
+    final DateTime parsedTime = inputFormat.parse(time);
+    final String formattedTime = outputFormat.format(parsedTime);
+    return formattedTime;
+  }
 
+  Future<void> addDeliveryTime({required String id}) async {
+    String formattedTime = convertTimeTo24HourFormat(timeController.text.trim());
+
+
+    emit(AddDeliveryLoading());
+    var token = await storage.read(key: 'token');
+    try {
+      http.Response response = await http.put(
+        Uri.parse("${EndPoint.apiUrl}Individuals/AddOrderDeliveryTime/$id"),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          "date": dateController.text.trim(),
+          "time": formattedTime,
+        }),
+      );
+      var jsonBody = json.decode(response.body);
+      if (response.statusCode == 200) {
+        emit(AddDeliverySuccessful());
+      } else {
+        print(jsonBody['message']);
+        print(dateController.text.trim());
+        print(timeController.text.trim());
+        emit(AddDeliveryError(jsonBody['message']));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(AddDeliveryError(e.toString()));
+    }
+  }
+/// confirm order
+
+
+  void confirmOrder(String id)async{
+    emit(ConfirmOrderLoading());
+    var token  =await storage.read(key: 'token');
+    http.Response response = await ApiConsumer().put(
+        uri:"${EndPoint.apiUrl}Orders/ConfirmOrderDelivery?BookingId=$id", rawData: {
+
+    },token: token);
+    var jsonBody = json.decode(response.body);
+    if(response.statusCode == 200){
+      print(response.body);
+      emit(ConfirmOrderSuccessful());
+    }
+    else{
+      print(jsonBody['message']);
+      emit(ConfirmOrderError( jsonBody['message']));
+    }
+  }
 
 }
+
+

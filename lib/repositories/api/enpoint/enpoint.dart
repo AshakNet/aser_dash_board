@@ -17,7 +17,9 @@ class EndPoint {
   static String changeStatus = apiUrl + "Blogs/ChangeStatus?Id=";
 
   static String getGoverMent = apiUrl + "Governments";
-  static String getCompany = apiUrl + "Companies/GetCompaniesforSelect";
+  static String getCompanyActivity = apiUrl + "Companies/GetActivityCompaniesforSelect";
+  static String getCompanyProduct = apiUrl + "Companies/GetProductCompaniesforSelect";
+  static String getCompanyTrips = apiUrl + "Companies/GetTripCompaniesforSelect";
   static String getServicesCompany = apiUrl + "ApplicationServices";
   static String getCategory = apiUrl + "Product/Product/GetAllProductCategory";
 

@@ -39,4 +39,5 @@ class AddMemberError extends UserState {
 
 
 class ScrollSusccessfulLeft extends UserState {}
+class ChangePassword extends UserState {}
 class ScrollSusccessfulRigth extends UserState {}

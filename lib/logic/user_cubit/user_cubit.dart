@@ -48,6 +48,12 @@ class UserCubit extends Cubit<UserState> {
     await getAllAdmins(skip: 0, take: 10);
   }
 
+  bool isPasswordChange = true;
+
+  void changPasswordIcon(){
+    isPasswordChange = !isPasswordChange;
+    emit(ChangePassword());
+  }
   void scrollLeft() {
 
 
@@ -200,7 +206,7 @@ class UserCubit extends Cubit<UserState> {
       emit(AddMemberLoaded());
     } else {
       //print(jsonBody['message']);
-      emit(AddMemberError(jsonBody["message"]));
+      emit(AddMemberError(jsonBody["errors"][0]));
     }
   }
 

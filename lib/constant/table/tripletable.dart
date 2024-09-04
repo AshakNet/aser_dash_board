@@ -36,7 +36,7 @@ class HotelDateTableTriple extends StatelessWidget {
           DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].totalBalance.toString(),alignment: Alignment.center, size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
           DataCell(CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].additionDate.toString(), size: 14.sp, color: Color.fromRGBO(93, 102, 121, 1), fontWeight: FontWeight.w400)),
           DataCell(
-            CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].isActive.toString(), size: 14.sp, color:
+            CustomText(text: TripsCubit.get(context).getAllTripsModel!.data![index].isActive == true ? "Active" : "InActive",  size: 14.sp, color:
             TripsCubit.get(context).getAllTripsModel!.data![index].isActive == true ? Colors.green : Colors.red
                 , fontWeight: FontWeight.w400),
           ),

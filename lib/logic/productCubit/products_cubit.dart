@@ -59,7 +59,7 @@ class ProductCubit extends Cubit<ProductState> {
 
 
   getCompany() async {
-    var response = await http.get(Uri.parse(EndPoint.getCompany));
+    var response = await http.get(Uri.parse(EndPoint.getCompanyProduct));
     print(response.body);
     var databody = json.decode(response.body);
     getAllCompanyModel = GetAllCompanyModel.fromJson(databody);

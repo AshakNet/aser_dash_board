@@ -134,41 +134,7 @@ class TripDetails extends StatelessWidget {
                         ),
                       ),
 
-                      GestureDetector(
-                        onTap: (){
 
-                          detailsTrips.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-                          TripsCubit.get(context).toggle(1);
-
-
-                        },
-                        child: Container(
-                          width: 167.w,
-                          height: 50.h,
-                          color:  TripsCubit.get(context).change == 1 ? orange : white,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Image.asset(
-                                "assets/images/home/chart.png",
-                                color: black,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              CustomText(
-                                text: "Orders",
-                                size: 14.sp,
-                                color: black,
-                                fontWeight: FontWeight.w600,
-                                alignment: Alignment.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       GestureDetector(
                         onTap: (){
                           detailsTrips.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
@@ -299,26 +265,7 @@ class TripDetails extends StatelessWidget {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                SizedBox(
-                                  height: 80.h,
-                                  child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) => ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(15.r),
-                                        child: Image.network(
-                                          "https://www.shutterstock.com/image-photo/credit-card-on-holiday-blurred-600nw-441566938.jpg",
-                                          width: 60.w,
-                                          height: 60.h,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                      itemCount: 6),
-                                ),
+
                                 SizedBox(
                                   height: 20.h,
                                 ),
@@ -397,9 +344,16 @@ class TripDetails extends StatelessWidget {
                                         width: 5.w,
                                       ),
                                       CustomText(
-                                        text: TripsCubit.get(context).getOneTripsModel!.data!.isActive.toString(),
+                                        text:
+
+
+                                        TripsCubit.get(context).getOneTripsModel!.data!.isActive == true ?
+                                        "Active" : "InActive",
                                         size: 14.sp,
-                                        color: Colors.green,
+                                        color:
+
+                                        TripsCubit.get(context).getOneTripsModel!.data!.isActive == true ?
+                                        Colors.green : Colors.red,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ],
@@ -410,30 +364,7 @@ class TripDetails extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      GestureDetector(
-                                        onTap: (){
-                                          TripsCubit.get(context).deleteTrips(TripsCubit.get(context).getOneTripsModel!.data!.id.toString());
-                                        },
-                                        child: Container(
-                                          width: 120.w,
-                                          height: 40.h,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadiusDirectional.circular(
-                                                  10.r),
-                                              border: Border.all(color: darkGrey)),
-                                          child: CustomText(
-                                            text: "Delete ",
-                                            size: 16.sp,
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.w600,
-                                            alignment: Alignment.center,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
+
                                       GestureDetector(
                                         onTap: (){
                                           TripsCubit.get(context).activeTrips(TripsCubit.get(context).getOneTripsModel!.data!.id.toString());
@@ -447,9 +378,14 @@ class TripDetails extends StatelessWidget {
                                                   10.r),
                                               border: Border.all(color: darkGrey)),
                                           child: CustomText(
-                                            text: "Edit ",
+                                            text:
+                                            TripsCubit.get(context).getOneTripsModel!.data!.isActive == false ?
+
+                                            "Active " : "InActive",
                                             size: 16.sp,
-                                            color: black,
+                                            color:
+                                            TripsCubit.get(context).getOneTripsModel!.data!.isActive == false ?
+                                            Colors.green : Colors.red,
                                             fontWeight: FontWeight.w600,
                                             alignment: Alignment.center,
                                           ),
@@ -706,7 +642,7 @@ class TripDetails extends StatelessWidget {
                                       Padding(
                                         padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                         child: CustomText(
-                                          text: " EGP / Individual ",
+                                          text: " EGP / person ",
                                           size: 14.sp,
                                           color: darkGrey,
                                           alignment: Alignment.centerLeft,

@@ -132,7 +132,7 @@ class EditProfile extends StatelessWidget {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        CustomText(text: "First Name", size: 14.sp, color: black, fontWeight: FontWeight.w500),
+                                        CustomText(text: "User Name", size: 14.sp, color: black, fontWeight: FontWeight.w500),
                                         Padding(
                                           padding: EdgeInsets.symmetric(vertical: 10.h),
                                           child: SizedBox(
@@ -236,6 +236,7 @@ class EditProfile extends StatelessWidget {
                                 SizedBox(height: 20.h,),
 
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,55 +290,6 @@ class EditProfile extends StatelessWidget {
 
                                     SizedBox(width: 20.h,),
 
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        CustomText(text: "last Name", size: 14.sp, color: black, fontWeight: FontWeight.w500),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 10.h),
-                                          child: SizedBox(
-                                            width: 447.w,
-                                            child: TextFormField(
-                                              controller: UserCubit.get(context).lName,
-
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Please Enter Last Name";
-                                                }
-                                                return null;
-                                              },
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: Colors.black,
-                                              ),
-                                              decoration: InputDecoration(
-
-                                                fillColor:
-                                                const Color.fromRGBO(247, 247, 247, 1),
-                                                contentPadding: EdgeInsets.symmetric(
-                                                  horizontal: 13.w,
-                                                  vertical: 20.h,
-                                                ),
-                                                constraints: BoxConstraints(
-                                                  minHeight: 64.h,
-                                                  minWidth: 372.w,
-                                                ),
-
-                                                hintStyle: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: darkGrey,
-                                                ),
-                                                hintText: '01068622014 ',
-                                                border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(8.r),
-                                                  borderSide: BorderSide(color: orange),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   ],
                                 ),
                               ],

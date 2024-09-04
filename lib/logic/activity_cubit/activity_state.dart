@@ -27,6 +27,7 @@ class GetAllActivityError extends ActivityState{
   GetAllActivityError(this.error);
 }
 class CreateActivityLoading extends ActivityState{}
+class ChoosesMonthActivityInsightLoaded extends ActivityState{}
 class CreateActivitySuccessful extends ActivityState{}
 class CreateActivityError extends ActivityState{
   final String error;
@@ -46,4 +47,11 @@ class GetReviewError extends ActivityState{
   final String error;
 
   GetReviewError(this.error);
+}
+class GetInsightLoading extends ActivityState{}
+class GetInsightSuccessful extends ActivityState{}
+class GetInsightError extends ActivityState{
+  final String error;
+
+  GetInsightError(this.error);
 }

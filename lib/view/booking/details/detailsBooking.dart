@@ -39,6 +39,9 @@ class DetailsBooking extends StatelessWidget {
          }
 
          else if(state is CancelBookingSuccessful ){
+           BookingActivityAndTripsCubit.get(context).getBookingDetailsActivity(
+               BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.id.toString()
+           );
            ScaffoldMessenger.of(context).showSnackBar(
              const SnackBar(
                backgroundColor: Colors.green,
@@ -113,7 +116,7 @@ class DetailsBooking extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
-                                  child: CustomText(text: "Order Details", size: 20.sp, color: black, fontWeight: FontWeight.w600,alignment: Alignment.centerLeft,),
+                                  child: CustomText(text: "Booking Details", size: 20.sp, color: black, fontWeight: FontWeight.w600,alignment: Alignment.centerLeft,),
                                 ),
                                 SizedBox(height: 20.h,),
                                 Padding(
@@ -189,6 +192,7 @@ class DetailsBooking extends StatelessWidget {
                                 SizedBox(height: 20.h,),
                                 BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.status == "Pending"
                                     || BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.status == "Upcoming" ?
+
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -222,7 +226,7 @@ class DetailsBooking extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: (){
-                                        BookingActivityAndTripsCubit.get(context).acceptBooking(
+                                        BookingActivityAndTripsCubit.get(context).cancelBooking(
                                             BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.id.toString()
 
                                         );
@@ -248,7 +252,6 @@ class DetailsBooking extends StatelessWidget {
 
                                   ],
                                 ) :SizedBox.shrink()
-
 
                               ],
                             ),
@@ -317,7 +320,10 @@ class DetailsBooking extends StatelessWidget {
                                       CustomText(
                                         text: "${BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.status}",
                                         size: 14.sp,
-                                        color: Colors.green,
+                                        color:
+                                        BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.status == "Cancelled" ?
+                                            Colors.red :
+                                        Colors.green,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ],
@@ -388,33 +394,8 @@ class DetailsBooking extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Padding(
-                                    padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: Row(
-
-                                      children: [
-                                        CustomText(
-                                          text:
-                                          " : Gender",
-                                          size: 14.sp,
-                                          color: black,
-                                          fontWeight: FontWeight.w700,alignment: Alignment.centerLeft,),
-                                        SizedBox(width: 10.h,),
-
-                                        CustomText(
-                                          text:
-                                          "${BookingActivityAndTripsCubit.get(context).getBookingDetailsActivityModel!.data!.gender}",
-                                          size: 14.sp,
-                                          color: black,
-                                          fontWeight: FontWeight.w400,alignment: Alignment.centerRight,),
 
 
-                                      ],
-                                    ),
-                                  ),
                                   SizedBox(
                                     height: 20.h,
                                   ),

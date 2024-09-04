@@ -35,6 +35,17 @@ class AddTrips extends StatelessWidget {
         }
         else if(state is CreateTripsSuccessful){
           // TripsCubit.get(context).getAllTrips(skip: 0, take: 10);
+          TripsCubit.get(context).tripName.clear();
+          TripsCubit.get(context).numberOfSeats.clear();
+          TripsCubit.get(context).tripPrice.clear();
+          TripsCubit.get(context).tripsDescription.clear();
+          TripsCubit.get(context).tripsRules.clear();
+          TripsCubit.get(context).meetingPoint.clear();
+          TripsCubit.get(context).tripDestention.clear();
+          TripsCubit.get(context).tripsStartDate.clear();
+          TripsCubit.get(context).tripsEndDate.clear();
+          TripsCubit.get(context).selectCompanyVar =null;
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               backgroundColor: Colors.green,
@@ -51,6 +62,7 @@ class AddTrips extends StatelessWidget {
               duration: const Duration(seconds: 2),
             ),
           );
+
           Navigator.pop(context);
         }
       },
@@ -202,15 +214,10 @@ class AddTrips extends StatelessWidget {
                                     children: [
                                       Padding(
                                         padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                        child: CustomText(text: "Trip Price (EGP)", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
-                                      ),
-
-                                      SizedBox(width: 200.w,),
-
-                                      Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                         child: CustomText(text: "Trip Price per person (EGP)", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
                                       ),
+
+
                                     ],
                                   ),
                                   SizedBox(height: 10.h,),
@@ -221,7 +228,7 @@ class AddTrips extends StatelessWidget {
 
                                         padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                         child: SizedBox(
-                                          width:280.w ,
+                                          width:597.w ,
 
                                           child: TextFormField(
                                             controller: TripsCubit.get(context).tripPrice,
@@ -267,57 +274,7 @@ class AddTrips extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 5.w,),
-                                      Padding(
 
-                                        padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                        child: SizedBox(
-                                          width:280.w ,
-
-                                          child: TextFormField(
-                                            controller: TripsCubit.get(context).tripPricePerPerson,
-                                            maxLines: 1,
-                                            minLines: 1,
-
-
-                                            validator: (value){
-                                              if (value!.isEmpty) {
-                                                return "Please Enter PricePerPerson";
-                                              }
-                                            },
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly, // Allow only digits
-                                            ],
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: Colors.black,
-                                            ),
-                                            decoration: InputDecoration(
-
-
-                                              fillColor: Color.fromRGBO(247, 247, 247, 1),
-                                              contentPadding: EdgeInsets.symmetric(
-                                                horizontal: 13.w,
-                                                vertical: 20.h,
-                                              ),
-                                              constraints: BoxConstraints(
-                                                minHeight: 64.h,
-                                                minWidth: 372.w,
-                                              ),
-
-                                              hintStyle: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: darkGrey,
-                                              ),
-                                              hintText: "Enter the person price",
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(8.r),
-                                                borderSide: BorderSide(color: orange),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
 
 
 
@@ -332,7 +289,7 @@ class AddTrips extends StatelessWidget {
                                   ),
                                   SizedBox(height: 10.h,),
 
-                                  textFormFildBuilder(context, width: 579.w, hint: "Trip Description", controller: TripsCubit.get(context).tripsDescription, validation: (value){
+                                  textFormFildBuilder(context, width: 597.w, hint: "Trip Description", controller: TripsCubit.get(context).tripsDescription, validation: (value){
                                     if (value!.isEmpty) {
                                       return "Please Enter description";
                                     }
@@ -345,7 +302,7 @@ class AddTrips extends StatelessWidget {
                                   ),
                                   SizedBox(height: 10.h,),
 
-                                  textFormFildBuilder(context, width: 579.w, hint: "Enter the trip rules", controller: TripsCubit.get(context).tripsRules, validation: (value){
+                                  textFormFildBuilder(context, width: 597.w, hint: "Enter the trip rules", controller: TripsCubit.get(context).tripsRules, validation: (value){
                                     if (value!.isEmpty) {
                                       return "Please Enter tripRules";
                                     }
@@ -354,14 +311,14 @@ class AddTrips extends StatelessWidget {
                                   SizedBox(height: 10.h,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: CustomText(text: "Photo of destination", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
+                                    child: CustomText(text: "Photo", size: 14.sp, color: black, fontWeight: FontWeight.w500,alignment: Alignment.centerLeft,),
                                   ),
                                   SizedBox(height: 10.h,),
 
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20.w),
                                     child: Container(
-                                      width: 708.w,
+                                      width: 597.w,
 
 
 
@@ -395,6 +352,8 @@ class AddTrips extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+
+                                  SizedBox(height: 30.h,),
 
 
 
@@ -439,14 +398,8 @@ class AddTrips extends StatelessWidget {
                                                   child: CustomText(text: "Meeting Point", size: 14.sp, color: black, fontWeight: FontWeight.w500),
                                                 ),
                                                 SizedBox(height: 10.h,),
-                                                textFormFildBuilder(context, width: 178.w,read: true,
-                                                    onTap: (){
-                                                     TripsCubit.get(context).PickDate(context : context,
-                                                     controller:     TripsCubit.get(context).meetingPoint,
-                                                         first: DateTime.now(),
-                                                         lastTime: DateTime(2030)
-                                                     );
-                                                    },
+                                                textFormFildBuilder(context, width: 178.w,read: false,
+
                                                     hint: "Enter meeting point", controller: TripsCubit.get(context).meetingPoint, validation: (value){
                                                   if (value!.isEmpty) {
                                                     return "Please Enter startDate";
@@ -465,14 +418,8 @@ class AddTrips extends StatelessWidget {
                                                 ),
                                                 SizedBox(height: 10.h,),
                                                 textFormFildBuilder(context, width: 178.w,
-                                                    read: true,
-                                                    onTap: (){
-                                                      TripsCubit.get(context).PickDate(context :context,
-                                                          first: DateTime.now(),
-                                                          lastTime: DateTime(2030),
-                                                          controller:  TripsCubit.get(context).tripDestention);
+                                                    read: false,
 
-                                                    },
                                                     hint: "Enter destination ", controller: TripsCubit.get(context).tripDestention, validation: (value){
                                                   if (value!.isEmpty) {
                                                     return "Please Enter destination";
@@ -653,15 +600,29 @@ class AddTrips extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 20.h,),
-                                Container(
-                                  width: double.infinity,
-                                  height: 60.h,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: darkGrey),
-                                    borderRadius: BorderRadiusDirectional.circular(10.r),
+                                GestureDetector(
+                                  onTap: (){
+                                    TripsCubit.get(context).tripName.clear();
+                                    TripsCubit.get(context).numberOfSeats.clear();
+                                    TripsCubit.get(context).tripPrice.clear();
+                                    TripsCubit.get(context).tripsDescription.clear();
+                                    TripsCubit.get(context).tripsRules.clear();
+                                    TripsCubit.get(context).meetingPoint.clear();
+                                    TripsCubit.get(context).tripDestention.clear();
+                                    TripsCubit.get(context).tripsStartDate.clear();
+                                    TripsCubit.get(context).tripsEndDate.clear();
+                                    TripsCubit.get(context).selectCompanyVar =null;
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 60.h,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: darkGrey),
+                                      borderRadius: BorderRadiusDirectional.circular(10.r),
 
+                                    ),
+                                    child: CustomText(text: "Clear", size: 16.sp, color: orange, fontWeight: FontWeight.w600,alignment: Alignment.center,),
                                   ),
-                                  child: CustomText(text: "Clear", size: 16.sp, color: orange, fontWeight: FontWeight.w600,alignment: Alignment.center,),
                                 )
                               ],
                             ))

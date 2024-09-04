@@ -28,6 +28,20 @@ class CompaniesDetails extends StatelessWidget {
 
           );
         }
+
+        else if(state is ChangeProfitSuccessful){
+          CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString());
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Profit Successful'),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+
         else if(state is ChangeStatusActiveError){
           ScaffoldMessenger.of(context).showSnackBar(
              SnackBar(
@@ -58,6 +72,40 @@ class CompaniesDetails extends StatelessWidget {
             SnackBar(
               backgroundColor: Colors.red,
               content: Text(state.error),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if (state is ChangeStatusUnRestrictSuccessful){
+          CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString());
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Change Successful'),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if(state is ChangeStatusUnRestrictError){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.error),
+              duration: Duration(seconds: 2),
+            ),
+
+          );
+        }
+        else if (state is ChangeStatusDeleteSuccessful){
+          CompaniesCubit.get(context).loadOne(CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString());
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Change Successful'),
               duration: Duration(seconds: 2),
             ),
 
@@ -270,6 +318,23 @@ class CompaniesDetails extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  width: 140.w,
+                                  height: 50.h,
+                                  decoration: BoxDecoration(
+                                    color: black,
+                                    borderRadius: BorderRadiusDirectional.circular(20.r)
+                                  ),
+                                  child: CustomText(text: "zeroProfit", size: 18.sp,alignment: Alignment.center, color: white, fontWeight: FontWeight.w700,function: (){
+                                    CompaniesCubit.get(context).zeroProfit(
+                                  
+                                        CompaniesCubit.get(context).getCampnyDetailsModel!.data!.companyId.toString()
+                                    );
+                                  },),
+                                )
+
+
             
 
             
@@ -350,7 +415,11 @@ class CompaniesDetails extends StatelessWidget {
                                         CustomText(
                                           text: "${CompaniesCubit.get(context).getCampnyDetailsModel?.data!.status}",
                                           size: 14.sp,
-                                          color: Colors.green,
+                                          color:
+                                          CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted" ||
+                                              CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Deleted"
+                                          ? Colors.red :
+                                          Colors.green,
                                           fontWeight: FontWeight.w600,
                                         ),
                                         SizedBox(width: 20.w,),
@@ -361,7 +430,7 @@ class CompaniesDetails extends StatelessWidget {
                                             CustomText(
                                               text: "Till",
                                               size: 14.sp,
-                                              color: Colors.green,
+                                              color: Colors.red,
                                               fontWeight: FontWeight.w600,
                                             ),
                                             SizedBox(width: 10.w,),
@@ -369,7 +438,7 @@ class CompaniesDetails extends StatelessWidget {
                                             CustomText(
                                               text: CompaniesCubit.get(context).restricted.text.trim(),
                                               size: 14.sp,
-                                              color: Colors.green,
+                                              color: Colors.red,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ],
@@ -381,14 +450,41 @@ class CompaniesDetails extends StatelessWidget {
                                 SizedBox(
                                   height: 20.h,
                                 ),
+                                CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Deleted" ?
+                                GestureDetector(
+                                  onTap : (){
+                                    CompaniesCubit.get(context).changeStatusCompainesActive(
+                                      CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                    );
+
+
+                                  },
+                                  child: Container(
+                                    width: 180.w,
+                                    height: 40.h,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadiusDirectional.circular(
+                                            10.r),
+                                        border: Border.all(color: darkGrey)),
+                                    child: CustomText(
+                                      text: "Active",
+                                      size: 16.sp,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.w600,
+                                      alignment: Alignment.center,
+                                    ),
+                                  ),
+                                ) :
+
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     GestureDetector(
                                       onTap : (){
-                                        // CompaniesCubit.get(context).changeStatusCompainesDelete(
-                                        //   CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
-                                        // );
+                                        CompaniesCubit.get(context).changeStatusCompainesDelete(
+                                          CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                        );
                                       },
                                       child: Container(
                                         width: 120.w,
@@ -434,9 +530,32 @@ class CompaniesDetails extends StatelessWidget {
                                           alignment: Alignment.center,
                                         ),
                                       ),
-                                    )
-                                        :
+                                    ) :
+                                    CompaniesCubit.get(context).getCampnyDetailsModel!.data!.status == "Restricted" ?
                                     GestureDetector(
+                                      onTap: (){
+                                        CompaniesCubit.get(context).changeStatusCompainesUnRestrict(
+                                          CompaniesCubit.get(context).getCampnyDetailsModel!.data!.ownerId.toString()
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 120.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                10.r),
+                                            border: Border.all(color: darkGrey)),
+                                        child: CustomText(
+                                          text: "UnRestrict",
+                                          size: 16.sp,
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w600,
+                                          alignment: Alignment.center,
+                                        ),
+                                      ),
+                                    )
+                                        : GestureDetector(
                                       onTap: (){
                                         CompaniesCubit.get(context).PickDateChangeRestricted(context: context,controller: CompaniesCubit.get(context).restricted, firstDate: DateTime.now(), lastDate: DateTime(2030),);
 
@@ -457,7 +576,8 @@ class CompaniesDetails extends StatelessWidget {
                                           alignment: Alignment.center,
                                         ),
                                       ),
-                                    ),
+                                    )
+
             
                                   ],
                                 ),

@@ -3,8 +3,7 @@ import 'package:aser_dash_board/logic/activity_cubit/activitycubit.dart';
 import 'package:aser_dash_board/view/services/activity/addActivity/addActivity.dart';
 import 'package:aser_dash_board/view/services/activity/detailsActivity/detailsActivity.dart';
 import 'package:aser_dash_board/view/services/activity/insight/insightActivity.dart';
-import 'package:aser_dash_board/view/services/activity/order/order.dart';
-import 'package:aser_dash_board/view/services/activity/order/orderDetails.dart';
+
 
 
 import 'package:flutter/cupertino.dart';
@@ -34,11 +33,6 @@ class ActivityHome extends StatelessWidget {
           ActivityDetails(activity: activityHome,),
           /// 2
           InsightsActivityPage(insightsActivity: activityHome,),
-
-          /// 3
-          OrderActivity(orderActivity: activityHome,),
-          /// 4
-          OrderDetailsActivity(detailsOrderActivity: activityHome,),
 
           /// 5
           AddActivity(addActivity: activityHome,)

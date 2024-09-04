@@ -24,6 +24,22 @@ class PickDateChangeStatusSSuccessfulState extends CompaniesState{}
 
 class GetAllCompanyLoading extends CompaniesState{}
 class GetAllCompanySuccessful extends CompaniesState{}
+class ChangeProfitLoading extends CompaniesState{}
+
+class SendNotificationLoading extends CompaniesState{}
+class SendNotificationSuccessful extends CompaniesState{}
+class SendNotificationError extends CompaniesState{
+  final String error;
+
+  SendNotificationError(this.error);
+}
+
+class ChangeProfitSuccessful extends CompaniesState{}
+class ChangeProfitError extends CompaniesState{
+  final String error;
+
+  ChangeProfitError(this.error);
+}
 
 class GetAllCompanyError extends CompaniesState{
   final String error;
@@ -80,6 +96,16 @@ class ChangeStatusRejectedError extends CompaniesState{
   final String error;
 
   ChangeStatusRejectedError(this.error);
+}
+
+class GetInsightCompainesSuccessful extends CompaniesState{}
+class GetInsightCompainesLoading extends CompaniesState{}
+
+
+class GetInsightCompainesError extends CompaniesState{
+  final String error;
+
+  GetInsightCompainesError(this.error);
 }
 
 

@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passwordLogin = TextEditingController();
   TextEditingController emailLogin = TextEditingController();
 
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
 
 
@@ -64,23 +64,27 @@ class AuthCubit extends Cubit<AuthState> {
 // login Method
 
   void login() async {
+try {
+  emit(LoginLoading());
+  var response = await ApiConsumer().post(uri: EndPoint.login, rawData: {'email': emailLogin.text.trim(), 'password': passwordLogin.text});
+  var jsonBody = json.decode(response.body);
+  print(jsonBody.toString());
+  print(jsonBody['data']['token']);
+  if (response.statusCode == 200) {
+    await storage.write(key: "token", value: jsonBody['data']['token']);
 
-      emit(LoginLoading());
-      var response = await ApiConsumer().post(uri: EndPoint.login, rawData: {'email': emailLogin.text.trim(), 'password': passwordLogin.text});
-      var jsonBody = json.decode(response.body);
-      print(jsonBody.toString());
-      print(jsonBody['data']['token']);
-      if (response.statusCode == 200) {
-        await storage.write(key: "token", value: jsonBody['data']['token']);
+    var token = await storage.read(key: 'token');
 
-        var token = await storage.read(key: 'token');
+    print("Login token $token");
 
-        print("Login token $token");
+    emit(LoginLoaded());
+  } else {
+    emit(LoginError(jsonBody["message"]));
+  }
+}catch (error){
+  emit(LoginError("Email Or Password is Not Correct"));
+}
 
-        emit(LoginLoaded());
-      } else {
-        emit(LoginError(jsonBody["message"]));
-      }
     }
 
   bool isVisible = true;

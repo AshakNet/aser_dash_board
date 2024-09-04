@@ -37,7 +37,7 @@ class AddEmployee extends StatelessWidget {
              SnackBar(
               backgroundColor: Colors.red,
               content: Text(state.error),
-              duration: Duration(seconds: 2),
+              duration: const Duration(seconds: 2),
             ),
           );
         }
@@ -112,7 +112,7 @@ class AddEmployee extends StatelessWidget {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      CustomText(text: "First Name", size: 14.sp, color: black, fontWeight: FontWeight.w500),
+                                      CustomText(text: "User Name", size: 14.sp, color: black, fontWeight: FontWeight.w500),
                                       Padding(
                                         padding: EdgeInsets.symmetric(vertical: 10.h),
                                         child: SizedBox(
@@ -353,11 +353,18 @@ class AddEmployee extends StatelessWidget {
                                               }
                                               return null;
                                             },
+                                            obscureText: UserCubit.get(context).isPasswordChange,
+
                                             style: TextStyle(
                                               fontSize: 16.sp,
                                               color: Colors.black,
                                             ),
                                             decoration: InputDecoration(
+
+                                              suffixIcon: IconButton(onPressed: (){
+                                                UserCubit.get(context).changPasswordIcon();
+                                              }, icon:  UserCubit.get(context).isPasswordChange == true ?
+                                              const Icon(Icons.visibility_off) : const Icon(Icons.visibility)),
 
                                               fillColor:
                                               const Color.fromRGBO(247, 247, 247, 1),
@@ -398,6 +405,7 @@ class AddEmployee extends StatelessWidget {
                                           width: 447.w,
                                           child: TextFormField(
                                             controller: UserCubit.get(context).confirmPassword,
+                                            obscureText: UserCubit.get(context).isPasswordChange,
 
                                             validator: (value) {
                                               if (value!.isEmpty) {
@@ -410,6 +418,11 @@ class AddEmployee extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             decoration: InputDecoration(
+                                              suffixIcon: IconButton(onPressed: (){
+                                                UserCubit.get(context).changPasswordIcon();
+
+                                              }, icon:        UserCubit.get(context).isPasswordChange == true ? 
+                                                  Icon(Icons.visibility_off) : Icon(Icons.visibility)),
 
                                               fillColor:
                                               const Color.fromRGBO(247, 247, 247, 1),

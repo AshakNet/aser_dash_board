@@ -98,44 +98,13 @@ class ActivityDetails extends StatelessWidget {
                         ),
                       ),
 
+
                       GestureDetector(
                         onTap: (){
-
-                          activity.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-                          ActivityCubit.get(context).toggle(1);
-
-
-                        },
-                        child: Container(
-                          width: 167.w,
-                          height: 50.h,
-                          color:  ActivityCubit.get(context).change == 1 ? orange : white,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Image.asset(
-                                "assets/images/home/chart.png",
-                                color: black,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              CustomText(
-                                text: "Orders",
-                                size: 14.sp,
-                                color: black,
-                                fontWeight: FontWeight.w600,
-                                alignment: Alignment.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          activity.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                          ActivityCubit.get(context).getProfitsInsightActivity(
+                              ActivityCubit.get(context).getOneActivityModel!.data!.id.toString()
+                          );
+                          activity.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
                           ActivityCubit.get(context).toggle(2);
 
                         },
@@ -307,72 +276,8 @@ class ActivityDetails extends StatelessWidget {
                                   SizedBox(
                                     height: 20.h,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomText(
-                                        text: " : Status  ",
-                                        size: 14.sp,
-                                        color: black,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                      SizedBox(
-                                        width: 5.w,
-                                      ),
-                                      CustomText(
-                                        text:ActivityCubit.get(context).getOneActivityModel!.data!.companyDetails!.status.toString(),
-                                        size: 14.sp,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 120.w,
-                                        height: 40.h,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadiusDirectional.circular(
-                                                10.r),
-                                            border: Border.all(color: darkGrey)),
-                                        child: CustomText(
-                                          text: "Edit ",
-                                          size: 16.sp,
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      Container(
-                                        width: 120.w,
-                                        height: 40.h,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadiusDirectional.circular(
-                                                10.r),
-                                            border: Border.all(color: darkGrey)),
-                                        child: CustomText(
-                                          text: "Cancel ",
-                                          size: 16.sp,
-                                          color: black,
-                                          fontWeight: FontWeight.w600,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
+
+
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                                     child: CustomText(

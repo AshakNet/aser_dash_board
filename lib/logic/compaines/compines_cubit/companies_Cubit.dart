@@ -6,6 +6,7 @@ import 'package:aser_dash_board/model/company/getAllCompany.dart';
 import 'package:aser_dash_board/model/company/getAplicationServicesModel.dart';
 import 'package:aser_dash_board/model/company/getCompanydetails.dart';
 import 'package:aser_dash_board/model/company/get_company_services.dart';
+import 'package:aser_dash_board/model/company/insightCompany.dart';
 import 'package:aser_dash_board/repositories/api/api%20consumer/apiConsumer.dart';
 import 'package:aser_dash_board/repositories/api/enpoint/enpoint.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,8 @@ class CompaniesCubit extends Cubit<CompaniesState> {
 
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
+  TextEditingController titleNotification = TextEditingController();
+  TextEditingController contentNotification = TextEditingController();
   TextEditingController addtionalDate = TextEditingController();
   String? statusConvert;
   String ? companyServices;
@@ -180,6 +183,7 @@ class CompaniesCubit extends Cubit<CompaniesState> {
   void loadOne(String id)async{
     await getCompanyDetails(id);
     await getCompanyDetailsInside(id);
+    await getProfitsInsightCompaines(id);
   }
 
   Future getCompanyDetails(String id) async {
@@ -326,11 +330,6 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     emit(ChoseCompanyServices());
   }
 
-  // void changeGovernment(value) {
-  //
-  //   government = value;
-  //   emit(ChooseGovernment());
-  // }
 
 
   void changeProfits(value) {
@@ -393,6 +392,74 @@ class CompaniesCubit extends Cubit<CompaniesState> {
       controller.text = pickDate.toString().split(" ")[0];
     }
     emit(PickDateChangeStatusSSuccessfulState());
+  }
+  String? fixInsight;
+  GetInsightCompainesModel? getInsightCompainesModel;
+
+  Future getProfitsInsightCompaines(String id) async {
+
+    emit(GetInsightCompainesLoading());
+
+    final token = await storage.read(key: 'token');
+    print("tokn is person blog = $token");
+    http.Response response = await ApiConsumer().get(uri:
+    fixInsight == null ?
+    "${EndPoint.apiUrl}Companies/GetCompanyRevenues?CompanyId=$id":
+    "${EndPoint.apiUrl}Companies/GetCompanyRevenues?CompanyId=$id&MonthOrYear=Month&Month=$fixInsight"
+        , token: token);
+    var responseData = await json.decode(response.body);
+    if (response.statusCode == 200) {
+
+      getInsightCompainesModel = GetInsightCompainesModel.fromJson(responseData);
+
+      emit(GetInsightCompainesSuccessful());
+    } else {
+      print(response.body);
+      emit(GetInsightCompainesError(response.body));
+    }
+  }
+
+
+  void zeroProfit(String id)async{
+    emit(ChangeProfitLoading());
+    var token  =await storage.read(key: 'token');
+    http.Response response = await ApiConsumer().put(
+        uri:"${EndPoint.apiUrl}Profits?PartnerId=$id", rawData: {
+
+    },token: token);
+    var jsonBody = json.decode(response.body);
+    if(response.statusCode == 200){
+      print(response.body);
+      emit(ChangeProfitSuccessful());
+    }
+    else{
+      print(response.body);
+      emit(ChangeProfitError( jsonBody['message']));
+    }
+  }
+
+
+  /// send notification
+
+  void sendNotification({required String ownerId})async{
+    emit(SendNotificationLoading());
+    var token  =await storage.read(key: 'token');
+    http.Response response = await ApiConsumer().post(
+        uri:"${EndPoint.apiUrl}Notification/send", rawData: {
+          "Title" : titleNotification.text.trim(),
+          "Body" : contentNotification.text.trim(),
+          "UserId" :  ownerId
+
+    },token: token);
+    var jsonBody = json.decode(response.body);
+    if(response.statusCode == 200){
+      print(response.body);
+      emit(SendNotificationSuccessful());
+    }
+    else{
+      print(response.body);
+      emit(SendNotificationError( jsonBody['message']));
+    }
   }
 
 

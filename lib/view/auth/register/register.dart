@@ -133,9 +133,10 @@ class Register extends StatelessWidget {
                             controller: AuthCubit.get(context).password,
                             height: 56,
                             width: 458,
+
                             hintText: 'enter Password',
                             validator: () {},
-                            isPassword: true),
+                            isPassword: false),
                       ),
                       SizedBox(
                         height: 20.h,
@@ -163,7 +164,7 @@ class Register extends StatelessWidget {
                             width: 458,
                             hintText: 'enter phone',
                             validator: () {},
-                            isPassword: true),
+                            isPassword: false),
                       ),
                       SizedBox(
                         height: 20.h,
